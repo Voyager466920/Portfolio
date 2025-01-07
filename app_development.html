@@ -7,153 +7,15 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f8f8f8;
-            overflow: hidden;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
         .container {
             display: flex;
             width: 90%;
             height: 80%;
             background-color: transparent;
             box-shadow: none;
-            margin-top: 60px; /* 메뉴 높이만큼 여백 추가 */
-        }
-
-        .sidebar {
-            width: 20%;
-            padding: 20px;
-            background-color: transparent;
-            box-shadow: none;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar li {
-            margin: 20px 0;
-            cursor: pointer;
-            font-size: 18px;
-            color: #333;
-            transition: color 0.3s;
-        }
-
-        .sidebar li:hover {
-            color: #007aff;
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            background-color: transparent;
-            box-shadow: none;
-            overflow: hidden;
-        }
-
-        .intro-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 36px;
-            font-weight: bold;
-            color: #333;
-            text-align: center;
-            z-index: 1;
-            pointer-events: none; /* 클릭 방지 */
-        }
-
-        .video-preview {
-            width: 360px;
-            height: 780px;
-            background-color: #000;
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            border-radius: 42px;
-            z-index: 2;
-        }
-
-        .video-preview video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 20px;
-        }
-
-        /* 상단 메뉴 스타일 */
-        .top-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items:center;
-            justify-content:space-evenly;
-            z-index: 10;
-            padding: 0 0px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .top-menu a {
-            text-decoration: none;
-            color: #333;
-            font-size: 16px;
-            padding: 10px 15px;
-            transition: color 0.3s;
-        }
-
-        .top-menu a:hover {
-            color: #007aff;
-        }
-
-        .dark-mode {
-            background-color: #121212;
-            color: #ffffff;
-        }
-
-        .dark-mode .top-menu {
-            background-color: #1f1f1f;
-            color: #ffffff;
-        }
-
-        .dark-mode a {
-            color: #ffffff;
-        }
-
-        #darkModeToggle {
-            font-size: 20px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        #darkModeToggle:hover {
-            color: #007aff;
-        }
-
-        .dark-mode #darkModeToggle {
-            color: #ffffff;
-        }    </style>
+            margin-top: 60px;
+        }        
+    </style>
 </head>
 <body>
     <!-- 상단 메뉴 -->
@@ -164,8 +26,6 @@
         <a href="contact.html">Contact</a>
         <i id="darkModeToggle" class="fas fa-moon"></i>
     </div>
-
-    
 
     <div class="intro-text" id="home">Hi, I'm developer</div>
     <div class="container" id="projects">
@@ -189,21 +49,41 @@
         const mainVideo = document.getElementById('mainVideo');
         const sidebarItems = document.querySelectorAll('.sidebar li');
         const darkModeToggle = document.getElementById('darkModeToggle');
+        const closeButton = document.getElementById('closeButton');
         let darkModeEnabled = false;
 
-        sidebarItems.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                const videoSrc = item.getAttribute('data-video');
-                mainVideo.src = videoSrc;
-                videoPreview.style.display = 'block';
-            });
+        // 화면 너비에 따라 모바일 여부 판단
+        const isMobile = window.innerWidth <= 768;
 
-            item.addEventListener('mouseleave', () => {
-                videoPreview.style.display = 'none';
-                mainVideo.src = '';
-            });
+        sidebarItems.forEach(item => {
+            if (isMobile) {
+                // 모바일: 클릭 시 비디오 미리보기
+                item.addEventListener('click', () => {
+                    const videoSrc = item.getAttribute('data-video');
+                    mainVideo.src = videoSrc;
+                    videoPreview.style.display = 'block';
+                });
+            } else {
+                // 데스크톱: 마우스 hover 시 비디오 미리보기
+                item.addEventListener('mouseenter', () => {
+                    const videoSrc = item.getAttribute('data-video');
+                    mainVideo.src = videoSrc;
+                    videoPreview.style.display = 'block';
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    videoPreview.style.display = 'none';
+                    mainVideo.src = '';
+                });
+            }
         });
-    
+
+        // 닫기 버튼 클릭 시 비디오 미리보기 닫기
+        closeButton.addEventListener('click', () => {
+            videoPreview.style.display = 'none';
+            mainVideo.src = '';
+        });
+
         if (localStorage.getItem('darkMode') === 'enabled') {
             darkModeEnabled = true;
             document.body.classList.add('dark-mode');
