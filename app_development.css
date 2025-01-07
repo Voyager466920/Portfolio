@@ -47,3 +47,56 @@
     object-fit: cover;
     border-radius: 20px;
 }
+
+.close-button {
+    display: none; /* 데스크톱에서는 숨김 */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    z-index: 3;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .mobile-project-list {
+        display: block;
+        padding: 20px;
+    }
+
+    .mobile-project-list ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .mobile-project-list li {
+        margin: 10px 0;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1.5;
+        color: #333;
+        transition: color 0.3s;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .mobile-project-list li:hover {
+        color: #007aff;
+    }
+
+    .close-button {
+        display: block; /* 모바일에서는 닫기 버튼 보이도록 설정 */
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-project-list {
+        display: none; /* 데스크톱에서는 모바일 리스트 숨김 */
+    }
+}

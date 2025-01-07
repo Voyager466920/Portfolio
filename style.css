@@ -33,7 +33,6 @@ body {
     align-items: center;
     justify-content: space-evenly;
     z-index: 10;
-    padding: 0 20px;
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -48,6 +47,8 @@ body {
 .top-menu a:hover {
     color: #007aff;
 }
+
+
 
 /* 다크모드 스타일 */
 .dark-mode {
@@ -89,19 +90,6 @@ body {
         width: 100%;
         margin: 20px auto;
         padding: 10px;
-    }
-
-    .sidebar {
-        width: 100%;
-        padding: 10px;
-        background-color: transparent;
-        box-shadow: none;
-    }
-
-    .sidebar li {
-        font-size: 16px;
-        margin: 8px 0;
-        background-color: transparent;
     }
 
     .main-content {

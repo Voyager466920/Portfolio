@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- 상단 메뉴 -->
+<!-- 상단 메뉴 -->
     <div class="top-menu">
         <a href="index.html">Home</a>
         <a href="ai_development.html">AI</a>
@@ -17,10 +17,20 @@
         <a href="contact.html">Contact</a>
         <i id="darkModeToggle" class="fas fa-moon"></i>
     </div>
-
     <div class="intro-text" id="home">Hi, I'm developer</div>
     <div class="container" id="projects">
         <div class="sidebar">
+            <ul>
+                <li data-video="project1.mp4">Ending Credit</li>
+                <li data-video="project2.mp4">FEELM</li>
+                <li data-video="project3.mp4">PLANTABIT</li>
+                <li data-video="project4.mp4">SOGAK</li>
+                <li data-video="project5.mp4">Pequod</li>
+                <li data-video="project6.mp4">Wait, However</li>
+            </ul>
+        </div>
+        <!-- 모바일 전용 프로젝트 리스트 -->
+        <div class="mobile-project-list">
             <ul>
                 <li data-video="project1.mp4">Ending Credit</li>
                 <li data-video="project2.mp4">FEELM</li>
@@ -34,6 +44,7 @@
     </div>
 
     <div class="video-preview" id="videoPreview">
+        <button id="closeButton" class="close-button">&times;</button>
         <video id="mainVideo" autoplay muted loop></video>
     </div>
 
@@ -41,29 +52,42 @@
         const videoPreview = document.getElementById('videoPreview');
         const mainVideo = document.getElementById('mainVideo');
         const sidebarItems = document.querySelectorAll('.sidebar li');
+        const mobileProjectItems = document.querySelectorAll('.mobile-project-list li');
         const isMobile = window.innerWidth <= 768;
 
+        // 데스크톱용 사이드바 이벤트
         sidebarItems.forEach(item => {
-            if (isMobile) {
-                item.addEventListener('click', () => {
+            item.addEventListener('mouseenter', () => {
+                if (!isMobile) {
                     const videoSrc = item.getAttribute('data-video');
                     mainVideo.src = videoSrc;
                     videoPreview.style.display = 'block';
-                });
-            } else {
-                item.addEventListener('mouseenter', () => {
-                    const videoSrc = item.getAttribute('data-video');
-                    mainVideo.src = videoSrc;
-                    videoPreview.style.display = 'block';
-                });
+                }
+            });
 
-                item.addEventListener('mouseleave', () => {
+            item.addEventListener('mouseleave', () => {
+                if (!isMobile) {
                     videoPreview.style.display = 'none';
                     mainVideo.src = '';
-                });
-            }
+                }
+            });
         });
 
+        // 모바일용 리스트 클릭 이벤트
+        mobileProjectItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const videoSrc = item.getAttribute('data-video');
+                mainVideo.src = videoSrc;
+                videoPreview.style.display = 'block';
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            videoPreview.style.display = 'none';
+            mainVideo.src = '';
+        });
+
+        // 다크 모드 토글
         const darkModeToggle = document.getElementById('darkModeToggle');
         let darkModeEnabled = false;
 
