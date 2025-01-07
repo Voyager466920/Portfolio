@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.contact-section {
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+    background-color: transparent;
+    border-radius: 10px;
+    box-shadow: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.contact-section h2 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.contact-info {
+    display: grid;
+    gap: 20px;
+}
+
+.contact-item {
+    display: grid;
+    grid-template-columns: 40px auto;
+    gap: 15px;
+    text-align: left;
+    align-items: center;
+}
+
+
+.contact-item i {
+    font-size: 24px;
+    color: #007aff;
+}
+
+.contact-item h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.contact-item p {
+    font-size: 14px;
+    color: #333;
+    margin: 5px 0 0;
+}
+
+.contact-item a {
+    color: #007aff;
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
+/* 다크 모드 스타일 */
+body.dark-mode {
+    background-color: #1f1f1f;
+}
+
+body.dark-mode .contact-section {
+    background-color: transparent;
+    color: #fff;
+    box-shadow: none;
+}
+
+body.dark-mode .subtitle {
+    color: #aaa;
+}
+
+body.dark-mode .contact-item i {
+    color: #007aff;
+}
+
+body.dark-mode .contact-item p {
+    color: #ccc;
+}
+
+body.dark-mode .contact-item a {
+    color: #007aff;
+}

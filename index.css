@@ -1,3 +1,10 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    overflow: hidden;
+}
+
 .intro-section {
     display: flex;
     text-align: left;
@@ -28,12 +35,65 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/*about section */
+.about-section {
+    display: flex;
+    text-align: center;
+    max-width: 600px;
+    height: 100vh;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+    transition: opacity 0.5s, transform 0.5s;
+    position: relative;
+    z-index: 1;
+}
+
+.about-content {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.about-image img {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+.about-text {
+    max-width: 600px;
+}
+
+.about-section h2 {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 0%;
+}
+
+.about-section .subtitle {
+    font-size: 18px;
+    color: #666;
+    line-height: 0%;
+}
+
+.about-section p {
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: left;
+}
+
 /*skills section */
 .skills-section {
     display: flex;
     text-align: center;
     max-width: 600px;
-    height: auto;
+    height: 100vh;
     margin: auto;
     flex-direction: column;
     justify-content: center;
@@ -46,6 +106,13 @@
 .skills-section h2 {
     font-size: 40px;
     font-weight: bold;
+    text-align: center;
+    line-height: 0%;
+}
+.skills-section p {
+    font-size: 18px;
+    line-height: 10%;
+    font-family: 'Poppins', sans-serif;
 }
 
 .accordion {

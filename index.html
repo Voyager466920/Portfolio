@@ -19,14 +19,37 @@
         <i id="darkModeToggle" class="fas fa-moon"></i>
     </div>
 
-    <div class="intro-section"  id="introSection">
+    <!-- 섹션 -->
+    <div class="section intro-section" id="introSection">
         <h1>hello.<br>i'm<br>junha Park.</h1>
         <p>
-            I'm a developer working on Artificial Intelligence and iOS Apps. My passion is to build seamless experiences that blend technology, design, liberal arts and user-centric development.
+            I'm a developer working on Artificial Intelligence and iOS Apps. My passion is to build seamless experiences that blend technology, design, liberal arts and user-centric development.<br>Plus, this site isn’t a template — I built it entirely from scratch!
         </p>
     </div>
-    <div class="skills-section" id="skills-section">
+    <div class="section about-section" id="aboutSection">
+        <h2>About</h2>
+                <p class="subtitle">My Introduction</p>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="your-image-path.jpg" alt="Profile Picture">
+            </div>
+            <div class="about-text">
+                <p>
+                    With 4+ years of experience in AI, I design, develop, and deploy cutting-edge software and AI solutions, 
+                    specializing in MedTech and beyond. I've led cross-functional teams, translating business goals into 
+                    actionable Data & AI strategies that deliver results. Skilled in Python, C++, Java, and deep learning 
+                    frameworks, I build scalable, high-performance systems. If you're looking for someone to drive impactful 
+                    projects, let's connect!
+                </p>
+            </div>
+        </div>
+        
+    </div>
+    <div class="section skills-section" id="skillsSection">
         <h2>Skills</h2>
+        <p>
+            my technological & other skills
+        </p>
         <!-- Data Science & AI -->
         <div class="accordion">
             <div class="accordion-header" onclick="toggleAccordion(this)">
@@ -79,9 +102,34 @@
             </div>
         </div>
     </div>
-    
 
     <script>
+        const sections = document.querySelectorAll('.section');
+        let currentSectionIndex = 0;
+        let isScrolling = false;
+
+        window.addEventListener('wheel', (e) => {
+            if (isScrolling) return; 
+            isScrolling = true;
+
+            setTimeout(() => {
+                isScrolling = false;
+            }, 500);
+
+            e.preventDefault();
+            if (e.deltaY > 0) {
+                if (currentSectionIndex < sections.length - 1) {
+                    currentSectionIndex++;
+                }
+            } else {
+                if (currentSectionIndex > 0) {
+                    currentSectionIndex--;
+                }
+            }
+            sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth' });
+        });
+
+
         const darkModeToggle = document.getElementById('darkModeToggle');
         let darkModeEnabled = false;
 
@@ -114,7 +162,6 @@
             icon.classList.toggle('fa-chevron-down');
             icon.classList.toggle('fa-chevron-up');
         }
-
         window.addEventListener('scroll', () => {
             const introSection = document.getElementById('introSection');
             const skillsSection = document.getElementById('skillsSection');
@@ -130,6 +177,7 @@
                 skillsSection.classList.remove('visible');
             }
         });
+
     </script>
 </body>
 </html>

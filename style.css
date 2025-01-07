@@ -1,8 +1,7 @@
 /* 기본 스타일 설정 */
 body {
     margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: transparent;
     overflow-x: hidden;
     overflow-y: auto;

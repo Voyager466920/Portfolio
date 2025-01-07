@@ -1,3 +1,14 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
 /* 사이드바 스타일 */
 .sidebar {
     width: 25%;
@@ -20,10 +31,36 @@
     color: #333;
     transition: color 0.3s;
     font-family: 'Poppins', sans-serif;
+    font-weight: bold;
 }
 
 .sidebar li:hover {
     color: #007aff;
+}
+
+.center-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #333;
+    line-height: 1.5;
+    z-index: 1; 
+    font-family: 'Poppins', sans-serif;
+    font-weight: lighter;
+}
+
+.dark-mode .center-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #ffffff;
+    z-index: 1; 
+    line-height: 1.5;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* 비디오 미리보기 스타일 */
