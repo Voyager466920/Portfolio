@@ -4,18 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Portfolio</title>
+    <link rel="stylesheet" href="app_development.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .container {
-            display: flex;
-            width: 90%;
-            height: 80%;
-            background-color: transparent;
-            box-shadow: none;
-            margin-top: 60px;
-        }        
-    </style>
 </head>
 <body>
     <!-- 상단 메뉴 -->
@@ -31,10 +22,12 @@
     <div class="container" id="projects">
         <div class="sidebar">
             <ul>
-                <li data-video="project1.mp4">DM Resharing (2022)</li>
-                <li data-video="project2.mp4">Media Viewer (2022)</li>
-                <li data-video="project3.mp4">Command System (2022)</li>
-                <li data-video="project4.mp4">Send Interaction (2022)</li>
+                <li data-video="project1.mp4">Ending Credit</li>
+                <li data-video="project2.mp4">FEELM</li>
+                <li data-video="project3.mp4">PLANTABIT</li>
+                <li data-video="project4.mp4">SOGAK</li>
+                <li data-video="project5.mp4">Pequod</li>
+                <li data-video="project6.mp4">Wait, However</li>
             </ul>
         </div>
         <div class="main-content" id="about"></div>
@@ -48,23 +41,16 @@
         const videoPreview = document.getElementById('videoPreview');
         const mainVideo = document.getElementById('mainVideo');
         const sidebarItems = document.querySelectorAll('.sidebar li');
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const closeButton = document.getElementById('closeButton');
-        let darkModeEnabled = false;
-
-        // 화면 너비에 따라 모바일 여부 판단
         const isMobile = window.innerWidth <= 768;
 
         sidebarItems.forEach(item => {
             if (isMobile) {
-                // 모바일: 클릭 시 비디오 미리보기
                 item.addEventListener('click', () => {
                     const videoSrc = item.getAttribute('data-video');
                     mainVideo.src = videoSrc;
                     videoPreview.style.display = 'block';
                 });
             } else {
-                // 데스크톱: 마우스 hover 시 비디오 미리보기
                 item.addEventListener('mouseenter', () => {
                     const videoSrc = item.getAttribute('data-video');
                     mainVideo.src = videoSrc;
@@ -78,11 +64,8 @@
             }
         });
 
-        // 닫기 버튼 클릭 시 비디오 미리보기 닫기
-        closeButton.addEventListener('click', () => {
-            videoPreview.style.display = 'none';
-            mainVideo.src = '';
-        });
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
 
         if (localStorage.getItem('darkMode') === 'enabled') {
             darkModeEnabled = true;
