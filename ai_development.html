@@ -22,19 +22,19 @@
 
     <!-- 프로젝트 카드 섹션 -->
     <div class="project-grid">
-        <div class="project-card" onclick="navigateToDetail('project1.html')">
+        <div class="project-card" onclick="navigateToDetail('AI_Projects/project3.html')">
             <div class="project-image">
                 <img src="images/translate.jpg" alt="Project 1">
             </div>
         </div>
 
-        <div class="project-card" onclick="navigateToDetail('project2.html')">
+        <div class="project-card" onclick="navigateToDetail('AI_Projects/project2.html')">
             <div class="project-image">
                 <img src="images/sealant.jpg" alt="Project 2">
             </div>
         </div>
 
-        <div class="project-card" onclick="navigateToDetail('project3.html')">
+        <div class="project-card" onclick="navigateToDetail('AI_Projects/project1.html')">
             <div class="project-image">
                 <img src="images/gptfromscratch.jpg" alt="Project 3">
             </div>
@@ -68,10 +68,19 @@
             }
         });
 
-        // 프로젝트 카드 클릭 시 상세 페이지로 이동
         function navigateToDetail(url) {
             window.location.href = url;
         }
+        
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl);
+            });
+        });
     </script>
 </body>
 </html>

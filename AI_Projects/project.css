@@ -1,0 +1,189 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.6;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-top: 20%;
+    font-family: 'Söhne';
+}
+
+.author-info {
+    font-size: 0.9rem;
+    color: #777;
+    text-align: left;
+}
+
+.author-info .author {
+    font-weight: 700;
+}
+
+main {
+    font-size: 1rem;
+}
+
+.paragraph{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.paragraph h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.paragraph p {
+    margin-bottom: 20px;
+}
+
+.image-container {
+    text-align: center; /* 이미지 중앙 정렬 */
+    margin: 20px 0;
+}
+.image-container img {
+    max-width: 100%; /* 반응형 크기 조정 */
+    height: auto;
+    border-radius: 8px;
+}
+
+/* 상단 메뉴 스타일 */
+.top-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    z-index: 10;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.top-menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: color 0.3s;
+}
+
+.top-menu a:hover {
+    color: #007aff;
+}
+
+
+
+/* 다크모드 스타일 */
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-mode .top-menu {
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+
+.dark-mode a {
+    color: #ffffff;
+}
+
+#darkModeToggle {
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#darkModeToggle:hover {
+    color: #007aff;
+}
+
+.dark-mode #darkModeToggle {
+    color: #ffffff;
+}
+
+.dark-mode .sidebar li {
+    color: #ffffff;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 10px;
+        box-shadow: none;
+    }
+
+    .video-preview {
+        width: 90%;
+        height: auto;
+    }
+
+    .top-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        z-index: 10;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .top-menu a {
+        text-decoration: none;
+        color: #333;
+        font-size: 1rem;
+        padding: 10px 15px;
+        transition: color 0.3s;
+    }
+
+    .top-menu a:hover {
+        color: #007aff;
+    }
+
+    /* 다크 모드에서 상단 메뉴 링크 색상 */
+    .dark-mode .top-menu a {
+        color: #ffffff;
+    }
+    
+    .dark-mode .top-menu a:hover {
+        color: #007aff;
+    }
+}
+

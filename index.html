@@ -31,8 +31,13 @@
                 <p class="subtitle">My Introduction</p>
         <div class="about-content">
             <div class="about-image">
-                <img src="your-image-path.jpg" alt="Profile Picture">
-            </div>
+            <picture>
+                <!-- 모바일용 이미지 -->
+                <source srcset="images/profile_mobile.jpg" media="(max-width: 768px)">
+                <!-- 데스크톱 기본 이미지 -->
+                <img src="images/profile.jpg" alt="Profile Picture">
+            </picture>
+        </div>
             <div class="about-text">
                 <p>
                     With 4+ years of experience in AI, I design, develop, and deploy cutting-edge software and AI solutions, 
@@ -196,6 +201,16 @@
                 }
                 sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth' });
             }
+        });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); // 기본 동작 방지
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl); // 스택을 쌓지 않고 페이지 전환
+            });
         });
 
     </script>

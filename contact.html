@@ -69,6 +69,16 @@
                 localStorage.setItem('darkMode', 'disabled');
             }
         });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); // 기본 동작 방지
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl); // 스택을 쌓지 않고 페이지 전환
+            });
+        });
     </script>
 </body>
 </html>
