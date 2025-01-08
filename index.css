@@ -61,7 +61,6 @@ body {
 .about-image img {
     width: 300px;
     height: auto;
-    border-radius: 10px;
     box-shadow: none;
 }
 
@@ -260,8 +259,10 @@ body {
         line-height: 0%;
     }
 
-    .about-image {
-        margin-bottom: 20px;
+    .about-image img {
+        width: 80%;  
+        max-width: 300px;
+        height: auto; 
     }
 
     .about-text {
