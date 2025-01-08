@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medium Style Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="project.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="top-menu">
+        <a href="../index.html">Junha</a>
+        <a href="../ai_development.html">AI</a>
+        <a href="../app_development.html">App</a>
+        <a href="../contact.html">Contact</a>
+        <i id="darkModeToggle" class="fas fa-moon"></i>
+    </div>
+    <div class="container">
+        <header>
+            <h1 class="title">Sealant Problem with TILDE</h1>
+            <div class="author-info">
+                <span class="author">By Junha Park</span>
+                <span class="date">Published on Nov 9, 2023</span>
+            </div>
+        </header>
+        <main>
+            <div class="image-container">
+                <img src="../images/sealant.jpg" alt="sealant">
+            </div>
+            <section class="paragraph">
+                <h2>Overview</h2>
+                <p>
+                    Creating stuff using PyTorch is fun. Everybody who studies AI think that they themselves can build an astonishing new model that can change the world. Of course, I've also passed through the tunnel of arrogance. I am a student learning Artificial Intelligence and accidentally made ChatGPT from Scratch. The initial was my personal study making a Classifier model and I got some urge to make ChatGPT. And yeah. It worked.
+                </p>
+                <p>
+                    I've started with searching for recommendations. The best recommendation was the paper "Attention is all you need" and "GPT2". From "Attention is all you need", I've learned how to make decoder block. From "GPT2" paper, I've learn that architecture is pretty solid.
+                </p>
+            </section>
+        </main>
+    </div>
+    <script>
+        // 다크 모드 토글
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            darkModeEnabled = true;
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.remove('fa-moon');
+            darkModeToggle.classList.add('fa-lightbulb');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            darkModeEnabled = !darkModeEnabled;
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+            if (darkModeEnabled) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-lightbulb');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.classList.remove('fa-lightbulb');
+                darkModeToggle.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl);
+            });
+        });
+
+    </script>
+    
+</body>
+</html>
