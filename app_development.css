@@ -31,7 +31,7 @@ body {
     color: #333;
     transition: color 0.3s;
     font-family: 'Poppins', sans-serif;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .sidebar li:hover {
@@ -56,7 +56,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 24px;
+    font-size: 20px;
     color: #ffffff;
     z-index: 1; 
     line-height: 1.5;
@@ -86,7 +86,7 @@ body {
 }
 
 .close-button {
-    display: none; /* 데스크톱에서는 숨김 */
+    display: none; 
     position: absolute;
     top: 10px;
     right: 10px;
@@ -96,6 +96,10 @@ body {
     color: #fff;
     cursor: pointer;
     z-index: 3;
+}
+
+.mobile-project-list {
+    display: none; 
 }
 
 @media (max-width: 768px) {
@@ -116,9 +120,9 @@ body {
     .mobile-project-list li {
         margin: 10px 0;
         cursor: pointer;
-        font-size: 20px;
+        font-size: 1.7rem;
         line-height: 1.5;
-        color: #333;
+        color: #555;
         transition: color 0.3s;
         font-family: 'Poppins', sans-serif;
     }
@@ -128,12 +132,32 @@ body {
     }
 
     .close-button {
-        display: block; /* 모바일에서는 닫기 버튼 보이도록 설정 */
+        display: block;
     }
-}
 
-@media (min-width: 769px) {
-    .mobile-project-list {
-        display: none; /* 데스크톱에서는 모바일 리스트 숨김 */
+    #centerText {
+        display: none;
+    }
+
+    .video-preview {
+        width: 90vh;              /* 너비를 화면의 90%로 설정 */
+        max-width: 400px;        /* 최대 너비 제한 */
+        height: 90vh;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* 완벽한 중앙 정렬 */
+        background-color: #000;
+        display: none;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        border-radius: 20px;
+        z-index: 2;
+    }
+
+    .video-preview video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
     }
 }

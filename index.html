@@ -12,9 +12,9 @@
 <body>
     <!-- 상단 메뉴 -->
     <div class="top-menu">
-        <a href="index.html">Home</a>
-        <a href="ai_development.html">AI Work</a>
-        <a href="app_development.html">Apps Work</a>
+        <a href="index.html">Junha</a>
+        <a href="ai_development.html">AI</a>
+        <a href="app_development.html">App</a>
         <a href="contact.html">Contact</a>
         <i id="darkModeToggle" class="fas fa-moon"></i>
     </div>
@@ -175,6 +175,26 @@
                 introSection.style.opacity = 1;
                 introSection.style.transform = 'translateY(0)';
                 skillsSection.classList.remove('visible');
+            }
+        });
+        let startY = 0;
+        let endY = 0;
+
+        window.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+        });
+
+        window.addEventListener('touchend', (e) => {
+            endY = e.changedTouches[0].clientY;
+            const deltaY = startY - endY;
+
+            if (Math.abs(deltaY) > 50) { // 최소 스와이프 거리 설정
+                if (deltaY > 0 && currentSectionIndex < sections.length - 1) {
+                    currentSectionIndex++;
+                } else if (deltaY < 0 && currentSectionIndex > 0) {
+                    currentSectionIndex--;
+                }
+                sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth' });
             }
         });
 

@@ -1,3 +1,4 @@
+/* 기본 스타일 */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -42,7 +43,6 @@ body {
     text-align: left;
     align-items: center;
 }
-
 
 .contact-item i {
     font-size: 24px;
@@ -95,4 +95,27 @@ body.dark-mode .contact-item p {
 
 body.dark-mode .contact-item a {
     color: #007aff;
+}
+
+/* 모바일 화면에서 글자 크기 비례 조정 */
+@media (max-width: 768px) {
+    .contact-section h2 {
+        font-size: 24px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .contact-item i {
+        font-size: 20px;
+    }
+
+    .contact-item h3 {
+        font-size: 16px;
+    }
+
+    .contact-item p {
+        font-size: 12px;
+    }
 }
