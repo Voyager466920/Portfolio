@@ -6,21 +6,43 @@
     <title>Projects</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ai_development.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <!-- 상단 메뉴 -->
     <div class="top-menu">
         <a href="index.html">Home</a>
-        <a href="ai_development.html">AI</a>
-        <a href="app_development.html">Apps</a>
+        <a href="ai_development.html">AI Work</a>
+        <a href="app_development.html">App Work</a>
         <a href="contact.html">Contact</a>
         <i id="darkModeToggle" class="fas fa-moon"></i>
     </div>
-    <h1>Projects</h1>
-    <p>Here are some of the projects I have worked on.</p>
+    <h1>Artificial Intelligence<br>Projects<br>& Studies<br>2022-2025<br>↓</h1>
+
+    <!-- 프로젝트 카드 섹션 -->
+    <div class="project-grid">
+        <div class="project-card" onclick="navigateToDetail('project1.html')">
+            <div class="project-image">
+                <img src="images/gptfromscratch.jpg" alt="Project 1">
+            </div>
+        </div>
+
+        <div class="project-card" onclick="navigateToDetail('project2.html')">
+            <div class="project-image">
+                <img src="images/sealant.jpg" alt="Project 2">
+            </div>
+        </div>
+
+        <div class="project-card" onclick="navigateToDetail('project3.html')">
+            <div class="project-image">
+                <img src="images/gptfromscratch.jpg" alt="Project 3">
+            </div>
+        </div>
+    </div>
 
     <script>
+        // 다크 모드 토글
         const darkModeToggle = document.getElementById('darkModeToggle');
         let darkModeEnabled = false;
 
@@ -45,6 +67,11 @@
                 localStorage.setItem('darkMode', 'disabled');
             }
         });
+
+        // 프로젝트 카드 클릭 시 상세 페이지로 이동
+        function navigateToDetail(url) {
+            window.location.href = url;
+        }
     </script>
 </body>
 </html>
