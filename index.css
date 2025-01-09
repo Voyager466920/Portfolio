@@ -306,6 +306,11 @@ body {
         width: 70%;
     }
 
+    
+    .dark-mode .left-section h3{
+        color: #ccc;
+    }
+
     .tool {
         font-size: 2rem;
         display: flex;
