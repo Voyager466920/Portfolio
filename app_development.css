@@ -171,8 +171,8 @@ body {
     .video-preview {
         width: 80vw;
         height: 80vh;
-        max-width: 290px;
-        max-height: 700px;
+        max-width: 80vw;
+        max-height: 80vh;
         align-content: center;
         top: 50%;
         left: 50%;

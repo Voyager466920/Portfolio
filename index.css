@@ -221,6 +221,10 @@ body {
         font-size: 30px;
     }    
 
+    .skills-section .subtitle{
+        font-size: 1rem;
+    }    
+
     .about-section h2 {
         font-size: 2rem;
         font-weight: bold;
@@ -262,21 +266,55 @@ body {
     }
 
     .cards-container {
-        flex-direction: column; 
-        align-items: center; 
-        gap: 10px; 
-    }
-
-    .tools-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2열 그리드 유지 */
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
     }
 
     .card {
-        width: 95%; /* 카드 너비를 화면에 맞게 조정 */
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 95%;
+        height: auto;
+        padding: 10px 20px;
+    }
+
+    .card .left-section {
+        display: flex;
+        flex-direction: column; /* 아이콘과 텍스트를 나란히 배치 */
+        align-items: center;
+    }
+
+    .card .left-section .icon {
+        font-size: 1.5rem;
+    }
+
+    .card .left-section h3 {
+        font-size: 1rem;
+        color: #111;
+        margin: 0;
+    }
+
+    .card .right-section {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3px;
+        justify-content: center;
+        align-items: center;
+        width: 70%;
     }
 
     .tool {
-        font-size: 0.9rem; /* 모바일에서 텍스트 크기 약간 축소 */
+        font-size: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
-
+    .tool p{
+        font-size: 10px;
+    }
 }
