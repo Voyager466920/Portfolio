@@ -106,6 +106,22 @@ main {
     color: #007aff;
 }
 
+pre {
+    background-color: #f4f4f4; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    padding: 15px; 
+    overflow-x: auto; 
+    font-family: 'Courier New', Courier, monospace; 
+    font-size: 14px; 
+    line-height: 1.5; 
+    white-space: pre-wrap; 
+}
+
+code {
+    color: #333; /* 글자 색상 */
+}
+
 
 
 /* 다크모드 스타일 */
@@ -140,6 +156,17 @@ main {
 .dark-mode .sidebar li {
     color: #ffffff;
 }
+
+.dark-mode pre {
+    background-color: #1e1e1e; /* 다크모드 배경색 */
+    color: #dcdcdc; /* 글자 색상 */
+    border: 1px solid #444; /* 테두리 색상 */
+}
+
+.dark-mode code {
+    color: #dcdcdc; /* 코드 글자 색상 */
+}
+
 
 /* 반응형 스타일 */
 @media (max-width: 768px) {
@@ -185,6 +212,15 @@ main {
 
     .top-menu a:hover {
         color: #007aff;
+    }
+
+    pre {
+        font-size: 12px; /* 작은 화면에서는 글자 크기 조정 */
+        padding: 10px; /* 패딩 감소 */
+    }
+    
+    code {
+        word-wrap: break-word; /* 코드가 너무 길 경우 줄바꿈 */
     }
 
     /* 다크 모드에서 상단 메뉴 링크 색상 */
