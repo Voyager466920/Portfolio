@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Project 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/telescope.png" type="image/png">
+    <link rel="stylesheet" href="project.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="top-menu">
+        <a href="../index.html">Junha</a>
+        <a href="../ai_development.html">AI</a>
+        <a href="../app_development.html">App</a>
+        <a href="../contact.html">Contact</a>
+        <i id="darkModeToggle" class="fas fa-moon"></i>
+    </div>
+    <div class="container">
+        <header>
+            <h1 class="title">Pretrain BERT from Scratch</h1>
+            <div class="author-info">
+                <span class="author">By Junha Park</span>
+                <span class="date">Published on Jan 27, 2025</span>
+            </div>
+        </header>
+        <main>
+            <div class="image-container">
+                <img src="../blog_images/Bert.jpg" alt="sealant">
+            </div>
+            <section class="paragraph">
+                <h2>Overview</h2>
+                <p>
+                    I didn't think that I'll have a chance for pretraining BERT. BERT, a "Bidirectional Encoder Representations from Transformers" is 
+                    Transformers
+                </p>
+            </section>
+            <section class="paragraph">
+                <h2>Data Preprocess</h2>
+                <p>
+                    Every pretraining contains preprocessing. 
+                </p>
+            </section>
+            <section class="paragraph">
+                <h2>Result + Hurdles</h2>
+                <p>
+                    
+                </p>
+            </section>
+        </main>
+    </div>
+    <script>
+        // 다크 모드 토글
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            darkModeEnabled = true;
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.remove('fa-moon');
+            darkModeToggle.classList.add('fa-lightbulb');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            darkModeEnabled = !darkModeEnabled;
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+            if (darkModeEnabled) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-lightbulb');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.classList.remove('fa-lightbulb');
+                darkModeToggle.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl);
+            });
+        });
+
+    </script>
+    
+</body>
+</html>
