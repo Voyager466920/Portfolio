@@ -133,6 +133,10 @@ body {
         color: #007aff;
     }
 
+    .video-preview {
+        display: none !important;
+    }
+
     /* 다크 모드에서 모바일 프로젝트 리스트 글씨 색상 */
     .dark-mode .mobile-project-list li {
         color: #ffffff;
