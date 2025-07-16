@@ -98,12 +98,12 @@ main {
 /* mockup-frame를 비디오 위에 오버레이 */
 .image-container .mockup-frame {
   position: absolute;
-  top: 50%;                 /* 컨테이너 세로 중간 */
-  left: 50%;                /* 컨테이너 가로 중간 */
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 15vw;              /* 모형 폭 (동영상보다 살짝 크게) */
-  max-width: 15vw;         /* 필요시 조정 */
-  pointer-events: none;     /* 클릭이 뒤 비디오에 전달되도록 */
+  width: 15vw;
+  max-width: 15vw;
+  pointer-events: none;
   z-index: 2;
 }
 
@@ -217,10 +217,38 @@ code {
         box-shadow: none;
     }
 
-    .video-preview {
-        width: 90%;
+    .image-container {
+        width: 100%;
+        background-color: #f4f4f4;
+        padding: 5rem 0;
+        display: flex;
+        justify-content: center;
+        position: relative;       /* 자식 .mockup-frame 절대위치 기준 */
+        box-sizing: border-box;
+        margin: 2rem 0;
+        }
+
+        .image-container video {
+        width: 75vw;
+        max-width: 75vw;
         height: auto;
-    }
+        display: block;
+        border-radius: 8px;
+        position: relative;
+        z-index: 1;
+        }
+
+    
+        .image-container .mockup-frame {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 85vw;
+        max-width: 85vw;
+        pointer-events: none;
+        z-index: 2;
+        }
 
     .top-menu {
         position: fixed;
