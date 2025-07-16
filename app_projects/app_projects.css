@@ -68,10 +68,16 @@ main {
     margin-bottom: 20px;
 }
 
+.divider {
+  border: none;              
+  border-top: 1px solid #ccc;
+  margin: 3rem 0;
+}
+
 .image-container {
   width: 100%;
   background-color: #f4f4f4;
-  padding: 2rem 0;
+  padding: 5rem 0;
   display: flex;
   justify-content: center;
   position: relative;       /* 자식 .mockup-frame 절대위치 기준 */
@@ -80,8 +86,8 @@ main {
 }
 
 .image-container video {
-  width: 20vw;
-  max-width: 20vw;
+  width: 13vw;
+  max-width: 13vw;
   height: auto;
   display: block;
   border-radius: 8px;
@@ -95,8 +101,8 @@ main {
   top: 50%;                 /* 컨테이너 세로 중간 */
   left: 50%;                /* 컨테이너 가로 중간 */
   transform: translate(-50%, -50%);
-  width: 22.6vw;              /* 모형 폭 (동영상보다 살짝 크게) */
-  max-width: 22.6vw;         /* 필요시 조정 */
+  width: 15vw;              /* 모형 폭 (동영상보다 살짝 크게) */
+  max-width: 15vw;         /* 필요시 조정 */
   pointer-events: none;     /* 클릭이 뒤 비디오에 전달되도록 */
   z-index: 2;
 }
