@@ -192,6 +192,10 @@ code {
     color: #dcdcdc; /* 코드 글자 색상 */
 }
 
+.dark-mode .image-container {
+    background-color: #1e1e1e;
+}
+
 
 /* 반응형 스타일 */
 @media (max-width: 768px) {
@@ -255,6 +259,9 @@ code {
     
     .dark-mode .top-menu a:hover {
         color: #007aff;
+    }
+    .dark-mode .image-container {
+    background-color: #1e1e1e;
     }
 }
 
