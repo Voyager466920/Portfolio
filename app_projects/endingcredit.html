@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Project 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/telescope.png" type="image/png">
+    <link rel="stylesheet" href="app_projects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="top-menu">
+        <a href="../index.html">Junha</a>
+        <a href="../ai_development.html">AI</a>
+        <a href="../app_development.html">App</a>
+        <a href="../contact.html">Contact</a>
+        <i id="darkModeToggle" class="fas fa-moon"></i>
+    </div>
+    <div class="container">
+        <header>
+            <h1 class="title">EndingCredit</h1>
+            <p>
+                Take notes about the movie you just saw when the ending credit is rolling!
+            </p>
+        </header>
+        <main>
+            <div class="image-container">
+                <video autoplay muted loop playsinline>
+                <source src="../videos/endingcredit.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>
+                <img src="../images/mockup.png"
+                    alt="iPhone mockup"
+                    class="mockup-frame">
+            </div>
+            <section class="paragraph">
+                <h2>Overview</h2>
+                <p>
+                    Creating stuff using PyTorch is fun. Everybody who studies AI think that they themselves can build an astonishing new model that can change the world. Of course, I've also passed through the tunnel of arrogance. I am a student learning Artificial Intelligence and accidentally made ChatGPT from Scratch. The initial was my personal study making a Classifier model and I got some urge to make ChatGPT. And yeah. It worked.
+                </p>
+                <p>
+                    I've started with searching for recommendations. The best recommendation was the paper "Attention is all you need" and "GPT2". From "Attention is all you need", I've learned how to make decoder block. From "GPT2" paper, I've learn that architecture is pretty solid.
+                </p>
+            </section>
+
+
+            <section class="paragraph">
+                <h2>Tokenization</h2>
+                <p>
+                    Tokenization is crutial for LLM. LLM, a Large Language Model doesn’t actually read or understand the context of sentences. Humans read the line just by looking at the sentence level. Actually, human don’t look all the words inside the sentence. You assume what inner word will be. On the other hand, computers looks at the words. You can learn by Computer Vision sector for example making CNN or ViT. AI model breaks image into smaller patch of images and analyzes the RGB value. In the same way, sentence needs to be patched, we call it tokenization. I’ve used KR-Bert Tokenizer and Kkma to tokenize the korean sentence. Kkma is a tool that cuts the sentence into smaller morpheme. Korean morpheme is more complex than that of English or other words. Also, I’ve tested with just using KR-Bert Tokenizer and using both and got 1%~2% better quality.
+                </p>
+            </section>
+        </main>
+    </div>
+    <script>
+        // 다크 모드 토글
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            darkModeEnabled = true;
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.remove('fa-moon');
+            darkModeToggle.classList.add('fa-lightbulb');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            darkModeEnabled = !darkModeEnabled;
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+            if (darkModeEnabled) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-lightbulb');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.classList.remove('fa-lightbulb');
+                darkModeToggle.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl);
+            });
+        });
+
+    </script>
+    
+</body>
+</html>
