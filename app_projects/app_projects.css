@@ -31,6 +31,21 @@ header {
     font-family: 'Söhne';
 }
 
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.section-dates {
+    font-size: 0.95rem;
+    color: #666;
+    font-weight: 400;
+}
+
 .alert {
     font-size: 1.3rem;
     font-weight: 600;
@@ -86,8 +101,8 @@ main {
 }
 
 .image-container video {
-  width: 13vw;
-  max-width: 13vw;
+  width: 20vw;
+  max-width: 20vw;
   height: auto;
   display: block;
   border-radius: 8px;
@@ -101,8 +116,8 @@ main {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 15vw;
-  max-width: 15vw;
+  width: 23vw;
+  max-width: 23vw;
   pointer-events: none;
   z-index: 2;
 }
