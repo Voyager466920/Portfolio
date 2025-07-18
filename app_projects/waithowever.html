@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wait, However</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/telescope.png" type="image/png">
+    <link rel="stylesheet" href="app_projects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="top-menu">
+        <a href="../index.html">Junha</a>
+        <a href="../ai_development.html">AI</a>
+        <a href="../app_development.html">App</a>
+        <a href="../contact.html">Contact</a>
+        <i id="darkModeToggle" class="fas fa-moon"></i>
+    </div>
+    <div class="container">
+        <header>
+            <h1 class="title">Wait, However</h1>
+            <p>
+                I re-invent the Fact-Checker
+            </p>
+            
+        </header>
+        <hr class="divider" />
+
+        <main>
+            <section class="paragraph">
+                <div class="section-header">
+                    <h2>LLM based Fact-Checker</h2>
+                    <span class="section-dates">2025.02 – </span>
+                </div>
+                <p>
+                   Wait However is a new kind of fact-checking tool—one that doesn’t just confirm or deny what’s in an article, but actively identifies what’s missing.
+                </p>
+                <p>
+                    Built on large language models (LLMs), Wait However helps readers confront bias, recognize blind spots, and see the other side of sensitive or complex issues. 
+                    It highlights alternative viewpoints, uncovers underrepresented angles, and surfaces facts or counterarguments that the original article may have ignored.<br>
+                    The goal isn’t to tell users what to believe—it's to empower them to become more democratic, critical consumers of information.
+                </p>
+            </section>
+            
+            <div class="image-container">
+                <video autoplay muted loop playsinline>
+                <source src="../videos/pequod.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>
+                <img src="../images/mockup.png"
+                    alt="iPhone mockup"
+                    class="mockup-frame">
+            </div>
+            
+
+
+            <section class="paragraph">
+                <p>
+                    Using the app is simple: just paste the URL of any article you’re reading. 
+                    Behind the scenes, the AI analyzes the content, contextualizes it with broader knowledge, and returns thoughtful prompts, opposing perspectives, and relevant facts that may shift how you understand the topic.
+                </p>
+                <p>
+                    Wait However is more than a concept—it’s a recognized project that has received awards from competitions including KAIST and other national programs. 
+                    It's also a showcase of how AI can be used responsibly, not just for generation, but for deeper engagement and accountability in the information ecosystem.
+                </p>
+                <p>
+                    In addition to perspective checking, Wait, However also includes translationese detection and extractive summarization features. The translationese detector flags unnatural or machine-translated patterns—particularly those stemming from Chinese-to-Korean or English-to-Korean translations—so users can better judge the linguistic reliability of the content they read. 
+                    For summarization, I pretrained the KoELECTRA model, achieving an impressive 80% F1 score in extractive summarization tasks, allowing users to quickly grasp the core of lengthy articles without losing nuance.
+                </p>
+            </section>
+            <section class="paragraph">
+                <p>
+                    You can view the source code or learn more about the project on GitHub:  
+                    <a href="https://github.com/Voyager466920/Wait_However" target="_blank">
+                        github.com/Voyager466920/Wait_However
+                    </a>
+                </p>
+            </section>
+        </main>
+    </div>
+    <script>
+        // 다크 모드 토글
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            darkModeEnabled = true;
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.remove('fa-moon');
+            darkModeToggle.classList.add('fa-lightbulb');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            darkModeEnabled = !darkModeEnabled;
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+            if (darkModeEnabled) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-lightbulb');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.classList.remove('fa-lightbulb');
+                darkModeToggle.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl);
+            });
+        });
+
+    </script>
+    
+</body>
+</html>

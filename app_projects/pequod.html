@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pequod</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/telescope.png" type="image/png">
+    <link rel="stylesheet" href="app_projects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="top-menu">
+        <a href="../index.html">Junha</a>
+        <a href="../ai_development.html">AI</a>
+        <a href="../app_development.html">App</a>
+        <a href="../contact.html">Contact</a>
+        <i id="darkModeToggle" class="fas fa-moon"></i>
+    </div>
+    <div class="container">
+        <header>
+            <h1 class="title">Pequod</h1>
+            <p>
+                Why don't we keep our animals alive?
+            </p>
+            
+        </header>
+        <hr class="divider" />
+
+        <main>
+            <section class="paragraph">
+                <div class="section-header">
+                    <h2>Environmental Animal Saver</h2>
+                    <span class="section-dates">2024.06 – 2024.12</span>
+                </div>
+                <p>
+                   Inspired by the provocative, rebellious energy of Liquid Death, Pequod is not your typical sustainability app. 
+                   It doesn't politely ask you to be eco-friendly—it demands it. And if you don’t act, someone (or something) pays the price.
+                </p>
+                <p>
+                    In Pequod, users are assigned an animal—your digital companion, your responsibility. 
+                    To keep it alive, you must complete real-world, environmentally conscious tasks: things like reducing waste, biking instead of driving, or conserving water. But unlike PLANTABIT, which gently rewards users for small acts of kindness, Pequod punishes neglect. 
+                    If you fail to act, the animal suffers. This is eco-guilt gamified—dark, visceral, and urgent.
+                </p>
+            </section>
+            
+            <div class="image-container">
+                <video autoplay muted loop playsinline>
+                <source src="../videos/pequod.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>
+                <img src="../images/mockup.png"
+                    alt="iPhone mockup"
+                    class="mockup-frame">
+            </div>
+            
+
+
+            <section class="paragraph">
+                <p>
+                    Technically, Pequod is backed by a server architecture, enabling account-based progress, global leaderboards, and real-time status updates. 
+                    It diverges from the serverless nature of PLANTABIT, not just in infrastructure, but in philosophy—Pequod is social, aggressive, and consequence-driven.
+                </p>
+                <p>
+                    What truly sets Pequod apart is its integration of AI-powered computer vision. Users are required to prove their eco-actions by taking photos—of reusable shopping bags, planted trees, recycling, etc. 
+                    These images are then analyzed using a custom-trained image classifier. If your submission passes, you earn time for your animal to live on. If not… well, the clock keeps ticking.
+                </p>
+                <p>
+                    Pequod is about flipping the sustainability narrative. It doesn’t sugarcoat climate change. It doesn’t hand out confetti. It creates pressure, urgency, and emotional weight—because that’s what the crisis deserves.
+                    This isn't feel-good greenwashing. It’s digital survival.
+                </p>
+            </section>
+            <section class="paragraph">
+                <p>
+                    You can view the source code or learn more about the project on GitHub:  
+                    <a href="https://github.com/Voyager466920/Pequod" target="_blank">
+                        github.com/Voyager466920/Pequod
+                    </a>
+                </p>
+            </section>
+        </main>
+    </div>
+    <script>
+        // 다크 모드 토글
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            darkModeEnabled = true;
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.remove('fa-moon');
+            darkModeToggle.classList.add('fa-lightbulb');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            darkModeEnabled = !darkModeEnabled;
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+            if (darkModeEnabled) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-lightbulb');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.classList.remove('fa-lightbulb');
+                darkModeToggle.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl);
+            });
+        });
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOGAK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/telescope.png" type="image/png">
+    <link rel="stylesheet" href="app_projects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="top-menu">
+        <a href="../index.html">Junha</a>
+        <a href="../ai_development.html">AI</a>
+        <a href="../app_development.html">App</a>
+        <a href="../contact.html">Contact</a>
+        <i id="darkModeToggle" class="fas fa-moon"></i>
+    </div>
+    <div class="container">
+        <header>
+            <h1 class="title">SOGAK</h1>
+            <p>
+                Burn your negative feelings into the fire!
+            </p>
+            
+        </header>
+        <hr class="divider" />
+
+        <main>
+            <section class="paragraph">
+                <div class="section-header">
+                    <h2>Mood Tracker</h2>
+                    <span class="section-dates">2024.02 – 2025.05</span>
+                </div>
+                <p>
+                    SOGAK is an emotional tracker designed to help you process negative emotions—not just by logging them, but by letting them go.
+                    The concept is simple but symbolic: you write down what you’re feeling, then swipe into fire and burn it. 
+                    The screen flares, the words disappear, and in their place is a quiet sense of release. 
+                    Inspired by the metaphor of “burning away” what weighs us down, SOGAK encourages mindful reflection through intentional action.
+                </p>
+                <p>
+                    Unlike my previous projects, SOGAK is not serverless. For the first time, I introduced a backend to support features like cross-device syncing, secure backups, and personalized emotion tracking over time. 
+                    I used Cloudtype, a Korean cloud platform, as the infrastructure base, and built the backend with the Django framework—known for its clarity, scalability, and power.
+                </p>
+            </section>
+            
+            <div class="image-container">
+                <video autoplay muted loop playsinline>
+                <source src="../videos/sogak.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>
+                <img src="../images/mockup.png"
+                    alt="iPhone mockup"
+                    class="mockup-frame">
+            </div>
+            
+
+
+            <section class="paragraph">
+                <p>
+                    This shift was more than just technical—it marked a major turning point in my development journey. I moved beyond client-side development and became a full-stack developer, handling everything from the Flutter-based mobile UI to RESTful APIs and server deployment. 
+                    It was a challenge, but also an opportunity to design and build an app from end to end, with full control over the user experience and the data behind it.
+                </p>
+                <p>
+                    One of the most difficult parts of this transition was understanding and configuring the deployment stack, especially tools like nginx and uWSGI.
+                    While Django itself was approachable, setting up a stable and production-ready server environment felt like an entirely different skill set. Learning how to reverse proxy traffic through nginx, tuning uWSGI parameters for performance, and debugging issues between them was overwhelming at times. 
+                    Deployment wasn’t just about pushing code—it was about orchestrating many moving parts to serve real users reliably.
+                </p>
+                <p>
+                    This shift was more than just technical—it marked a major turning point in my development journey. I moved beyond client-side development and became a full-stack developer, handling everything from the Flutter-based mobile UI to RESTful APIs and server deployment. 
+                    It was a challenge, but also an opportunity to design and build an app from end to end, with full control over the user experience and the data behind it.
+                </p>
+            </section>
+            <section class="paragraph">
+                <p>
+                    You can view the source code or learn more about the project on GitHub:  
+                    <a href="https://github.com/Voyager466920/SOGAK" target="_blank">
+                        github.com/Voyager466920/SOGAK
+                    </a>
+                </p>
+            </section>
+        </main>
+    </div>
+    <script>
+        // 다크 모드 토글
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            darkModeEnabled = true;
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.remove('fa-moon');
+            darkModeToggle.classList.add('fa-lightbulb');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            darkModeEnabled = !darkModeEnabled;
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+            if (darkModeEnabled) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-lightbulb');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.classList.remove('fa-lightbulb');
+                darkModeToggle.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl);
+            });
+        });
+
+    </script>
+    
+</body>
+</html>
