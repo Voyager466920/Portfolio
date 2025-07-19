@@ -32,10 +32,8 @@
             <section class="paragraph">
                 <h2>Overview</h2>
                 <p>
-                    Creating stuff using PyTorch is fun. Everybody who studies AI think that they themselves can build an astonishing new model that can change the world. Of course, I've also passed through the tunnel of arrogance. I am a student learning Artificial Intelligence and accidentally made ChatGPT from Scratch. The initial was my personal study making a Classifier model and I got some urge to make ChatGPT. And yeah. It worked.
-                </p>
-                <p>
-                    I've started with searching for recommendations. The best recommendation was the paper "Attention is all you need" and "GPT2". From "Attention is all you need", I've learned how to make decoder block. From "GPT2" paper, I've learn that architecture is pretty solid.
+                    “If in doubt, code it out.” This phrase comes from my online teacher, Daniel Bourke, who taught me how to build AI models. He emphasizes the importance of visualization, because artificial intelligence is essentially a black box. You don’t really know what’s going on inside. It’s packed with math, weights and biases, gradient descent, loss functions, and more. These concepts can feel intimidating at first.
+                    But I believe the best way to learn something is to dive straight into building a system. Everyone learns differently, but for me, jumping into the deep end definitely worked. That’s why, when I got curious about GPT, I decided to try building one myself.
                 </p>
             </section>
 
@@ -45,7 +43,8 @@
                     <img src="../blog_images/chatGPT2.png" alt="Transformer Architecture">
                 </div>
                 <p>
-                    "BERT" is a stack of Encoder Layer and "GPT" is a stack of Decoder layer. I knew how to make Encoder layer using Multihead-SelfAttention Layer and MultiLayer Perceptron thanks to ViT. However, not about Decoder layer. When seeing that image from "Attention is all you need", got an instinct that I can make the decoder layer. One thing need to be added was "Masked Multihead-SelfAttention layer". Before, let’s talk about Tokenization and Preprocessing.
+                    As you can see in Figure A (from the original paper), BERT is built by stacking multiple encoders. That’s why BERT isn’t used for generating text. GPT, however, is built by stacking decoders — about 12 layers in the case of GPT-2 — so it can generate text. If a model uses both encoder and decoder, it’s called a T5 (Text-to-Text Transfer Transformer) model. Since we’re building a GPT-like model, we’ll focus on the decoder only.
+                    In Figure A, the decoder has multiple layers that follow a specific structure: Masked Multi-Head Attention → Add & Norm → Multi-Head Attention → Add & Norm → Residual Connection → FeedForward → Add & Norm. This process is repeated N times, and the final result is passed through a Linear layer and a Softmax function.
                 </p>
             </section>
 

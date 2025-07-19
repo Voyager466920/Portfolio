@@ -2,7 +2,7 @@
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: transparent;
+    background-color: #F5F5F7;
     overflow-x: hidden;
     overflow-y: auto;
     scroll-snap-type: y mandatory; /* 세로 방향 스크롤 스냅 */
@@ -17,6 +17,14 @@ body {
     padding: 20px;
     gap: 20px;
 }
+
+.highlight {
+    background-color: #ffe54c;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
 
 /* 상단 메뉴 스타일 */
 .top-menu {
@@ -61,6 +69,13 @@ body {
 
 .dark-mode a {
     color: #ffffff;
+}
+
+.dark-mode .highlight {
+    background-color: 	#6b7280;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 600;
 }
 
 #darkModeToggle {

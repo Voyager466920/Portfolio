@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: #ffffff;
+    background-color: #F5F5F7;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,14 +90,16 @@ main {
 }
 
 .image-container {
-  width: 100%;
-  background-color: #f4f4f4;
+  width: 150%;
+  background-color: #ffffff;
   padding: 5rem 0;
   display: flex;
   justify-content: center;
   position: relative;       /* 자식 .mockup-frame 절대위치 기준 */
   box-sizing: border-box;
   margin: 2rem 0;
+  border-radius: 2rem;
+  transform: translateX(-17%);
 }
 
 .image-container video {
@@ -241,11 +243,12 @@ code {
         position: relative;       /* 자식 .mockup-frame 절대위치 기준 */
         box-sizing: border-box;
         margin: 2rem 0;
+        transform: none;
         }
 
         .image-container video {
-        width: 75vw;
-        max-width: 75vw;
+        width: 70vw;
+        max-width: 70vw;
         height: auto;
         display: block;
         border-radius: 8px;
@@ -259,8 +262,8 @@ code {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 85vw;
-        max-width: 85vw;
+        width: 79vw;
+        max-width: 79vw;
         pointer-events: none;
         z-index: 2;
         }
