@@ -1,306 +1,279 @@
-/* 기본 설정 */
-html, body {
+/*==================================================
+  1. CSS 변수 (테마 관리)
+==================================================*/
+:root {
+  --color-bg: #F5F5F7;
+  --color-text: #333;
+  --color-text-muted: #777;
+  --color-primary: #d7263d;
+  --color-error-bg: #f3f3f3;
+  --color-error-border: #d7263d;
+  --color-error-text: #333;
+  --transition-fast: 0.3s;
+  --max-content-width: 1200px;
+}
+
+[data-theme="dark"] {
+  --color-bg: #1a1a1a;
+  --color-text: #eee;
+  --color-text-muted: #ccc;
+  --color-primary: #e74c3c;
+  --color-error-bg: #2a2a2a;
+  --color-error-border: #e74c3c;
+  --color-error-text: #eee;
+}
+
+/*==================================================
+  2. 기본 설정
+==================================================*/
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  overflow-x: hidden;
-  font-family: 'Poppins', sans-serif;
-  background-color: #F5F5F7;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
-.scroll-container {
-  height: 100%;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Hero Section */
+/*==================================================
+  3. Hero Section
+==================================================*/
 .hero {
-  height: calc(100vh - 50px);
+  height: 80vh;
   margin-top: 100px;
-  background: #F5F5F7;
+  background: var(--color-bg);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
   text-align: center;
-  scroll-snap-align: start;
 }
 
 .hero .bigtitle {
-  font-size: 80px;
-  font-weight: bold;
-  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
   line-height: 1.2;
-  text-align: center;
-}
-
-.hero .error-message {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.1rem;
-  background-color: #f3f3f3;
-  color: #333;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
-  border-left: 6px solid #d7263d;
+  margin: 0;
 }
 
 .hero .subtext {
   margin-top: 1rem;
   font-size: 1rem;
-  color: #777;
+  color: var(--color-text-muted);
 }
 
 .scroll-indicator {
   margin-top: 3rem;
   font-size: 2rem;
-  animation: bounce 2s infinite;
-  color: #d7263d;
+  color: var(--color-primary);
   cursor: pointer;
+  animation: bounce 2s infinite;
 }
 
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
+  50%       { transform: translateY(10px); }
 }
 
-/* 프로젝트 페이지 */
-.project-page {
-  min-height: 170vh;
-  scroll-snap-align: start;
-  padding: 8rem 2rem;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-}
-
-.project-content {
-  margin-bottom: 5rem;
-}
-
-
-.project-content .tag {
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: -3rem;
-}
-
-.project-page .section-title {
-  font-family: 'Inter';
-  font-size: 4rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.project-page .lead {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-}
-
-.project-page .description {
+/*==================================================
+  4. 공통 에러 메시지 박스
+==================================================*/
+.error-message {
+  font-family: 'JetBrains Mono', monospace;
   font-size: 1.1rem;
-  max-width: 700px;
-  margin: 0 auto 3rem;
-  line-height: 1.6;
-  color: #aaa;
-}
-
-.project-img {
-  display: flex;
-  justify-content: center;
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.05);
+  border-left: 6px solid var(--color-error-border);
   width: 100%;
-  margin-top: 2rem;
-}
-
-.project-img img {
-  max-width: 100%;
-  height: auto;
+  margin: 0;
   display: block;
 }
 
-
-.split-section {
-  background-color: #000;
-  color: #fff;
-  min-height: 100vh;
-  padding: 10vh 5vw;
-  scroll-snap-align: start;
-  display: flex;
-  align-items: center;
+/*==================================================
+  5. Stickers (스티커) Section
+==================================================*/
+.sticker {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 5;
+  /* 회전은 HTML 인라인 스타일에서 처리 */
 }
 
-.split-content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 4rem;
-  max-width: 1200px;
+/*==================================================
+  6. Projects Section
+==================================================*/
+.projects {
+  max-width: var(--max-content-width);
   margin: 0 auto;
-  width: 100%;
-}
-
-.text-side {
-  flex: 1;
-  min-width: 280px;
-  text-align: left;
-}
-
-.split-content .text-side {
-  text-align: left;
-  width: 30%;
-  max-width: 500px;
-}
-
-.text-side .tag {
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  opacity: 0.6;
-  margin-bottom: 0.3rem;
-}
-
-.text-side .section-title {
-  font-size: 3rem;
-  font-weight: 700;
-  margin: 0 0 1rem;
-}
-
-.text-side .subtitle {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-}
-
-.text-side .description {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: #bbb;
-}
-
-.link-buttons {
+  padding: 3.5rem 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  align-items: flex-start;
-  padding: 2rem;
+  gap: 15rem;
 }
 
-.link-buttons .link-btn {
-  width: 200px;
-  justify-content: center;
-  text-align: center;
+.project {
+  transition: transform var(--transition-fast);
 }
 
-.link-btn {
+/* project-info, title, description, tags 기본 스타일 */
+.project-info h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+}
+
+.project-description {
+  color: #6b6b6b;
+  margin: 0.5rem 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 70%;
+  width: 100%;
+  text-align: inherit;
+}
+
+.tags {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0.8rem 1.2rem;
-  border-radius: 10px;
-  transition: background 0.3s;
+}
+
+.tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #ccc;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+.tag:hover {
+  background: #111;
   color: #fff;
+  border-color: #111;
 }
 
-.link-btn.github {
-  background-color: #333;
-}
+/*==================================================
+  7. 데스크탑 레이아웃 (≥769px)
+==================================================*/
+@media (min-width: 769px) {
+  .project {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+  }
+  .project:nth-of-type(even) {
+    grid-template-columns: 20% 80%;
+  }
 
-.link-btn.github:hover {
-  background-color: #555;
-}
+  /* 에러 메시지 위치 */
+  .project:nth-of-type(odd)  .error-message { grid-column: 1; }
+  .project:nth-of-type(even) .error-message { grid-column: 2; }
 
-.link-btn.hf {
-  background-color: #ffcd00;
-  color: #000;
-}
+  /* info 영역 배치 & 정렬 */
+  .project-info {
+    grid-row: 2;
+    padding-top: 0.5rem;
+  }
+  .project:nth-of-type(odd)  .project-info { 
+    grid-column: 1;
+    text-align: left;
+  }
+  .project:nth-of-type(even) .project-info {
+    grid-column: 2;
+    text-align: right;
+  }
+  .project:nth-of-type(even) .tags {
+    justify-content: flex-end;
+  }
 
-.link-btn.hf:hover {
-  background-color: #f6b800;
-}
-
-.hf-logo {
-  width: 20px;
-  height: 20px;
-}
-
-
-
-
-/* 다크 모드 */
-.dark-mode {
-  background-color: #121212;
-  color: #ffffff;
+  /* description도 좌/우 정렬 */
+  .project:nth-of-type(odd) .project-description {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  .project:nth-of-type(even) .project-description {
+    margin-left: auto;
+    margin-right: 0;
+  }
 }
 
 .dark-mode .hero {
-  background-color: #121212;
+  height: 80vh;
+  margin-top: 100px;
+  background: #121212;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
 }
 
-.dark-mode .hero .bigtitle {
-  color: #ffffff;
-}
-
-.dark-mode .hero .error-message {
-  background-color: #2b2b2b;
-  color: #f5f5f5;
-  border-left-color: #ff6b6b;
-}
-
-.dark-mode .hero .subtext {
-  color: #bbbbbb;
-}
-
-.dark-mode .scroll-indicator {
-  color: #ff6b6b;
-}
-
-.dark-mode .project-page {
-  background-color: #121212;
-}
-
-.dark-mode .project-page img {
-  box-shadow: 0 10px 30px rgba(255,255,255,0.1);
-}
-
-/* 모바일 대응 */
+/*==================================================
+  8. 모바일 레이아웃 (≤768px)
+==================================================*/
 @media (max-width: 768px) {
-  .hero .bigtitle {
-    font-size: 2.5rem;
+  .projects {
+    padding: 2rem 1rem;
   }
-
-  .hero .error-message {
-    font-size: 0.9rem;
-    padding: 1rem;
-  }
-
-  .project-page img {
-    max-width: 90vw;
-    max-height: 70vh;
-  }
-
-  .link-buttons {
-    padding-top: 0;
-    margin-top: -2rem;
-    align-items: center;
-  }
-
-  .split-content {
+  .project {
+    display: flex;
     flex-direction: column;
+    gap: 1rem;
+  }
+  .project .error-message {
+    width: calc(100% - 2rem);
+    margin: 0 auto;
+    text-align: center;
+  }
+  .project-info {
+    padding: 0 1rem;
+    text-align: center;
+  }
+  .tags {
+    justify-content: center;
   }
 
-  .text-side {
-    width: 100%;
-    text-align: center;
+  /* 모바일 전용 스티커 위치 & 크기 조정 */
+  .sticker {
+    width: 120px !important;
+    height: 120px !important;
+  }
+  .sticker[src$="sticker.png"] {
+    top: 12rem !important;
+    left: 70vw !important;
+    transform: translateX(-50%) rotate(15deg) !important;
+  }
+  .sticker[src$="memory_sticker.png"] {
+    top: 90rem !important;
+    right: 10rem !important;
+    transform: rotate(2deg) !important;
+  }
+  .sticker[src$="accident.png"] {
+    top: 165rem !important;
+    left: 15vw !important;
+    transform: rotate(-5deg) !important;
+  }
+
+  .project-description {
+    max-width: 100% !important;
+    width: 100% !important;
   }
 }

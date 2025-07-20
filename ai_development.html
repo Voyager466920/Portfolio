@@ -23,123 +23,151 @@
     <i id="darkModeToggle" class="fas fa-moon"></i>
   </div>
 
-  <!-- Hero Section -->
+  <!-- Hero Section (수정 금지) -->
   <section class="hero">
-    <div class="error-message">
-      RuntimeError: CUDA out of memory. Tried to allocate 31.54 GB(GPU 0; 6.00 GiB total capacity; 5.95 GiB already allocated).
-    </div>
     <div class="bigtitle">Pushing the Limits.</div>
     <div class="subtext">Artificial Intelligence Projects</div>
     <div class="scroll-indicator" onclick="scrollToProjects()">↓</div>
   </section>
 
-  <!-- 프로젝트 섹션 -->
-<div id="projects" class="project-section pageview">
-  <section class="project-page dark">
+<a 
+  href="https://medium.com/@voyager466920/achievement-unlocked-gpu-killer-69fc48fa7ac8" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  class="sticker-link">
+  <img src="images/sticker.png" alt="" class="sticker"
+       style="top: 35rem; left: 60vw;">
+</a>
 
-    <div class="project-content">
-      <div class="tag">Language Model</div>
-      <h2 class="section-title">KoRaptor</h2>
-      <p class="subtitle">150M size SLM built with single GPU</p>
-      <p class="description">
-        Pushing the limits to the extreme.
-        I only used a single Nvidia RTX 3090 GPU to pretrain a 150M Korean Language Model — fully from scratch.
-        Built a tokenizer with SentencePiece, using LatentMoE architecture, gathering datasets and finetuned.
-        Open-source on Huggingface, Github.
+<a 
+  href="https://medium.com/@voyager466920/fail-log-flutter-llama-cpp-on-ios-82b06c442cba" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  class="sticker-link">
+  <img src="images/memory_sticker.png" alt="" class="sticker"
+       style="width: 220px; height: 220px; top: 100rem; left: 20vw; transform: rotate(-20deg);">
+</a>
+
+<a 
+  href="https://medium.com/@voyager466920/help-i-accidently-built-gpt-from-scratch-part-1-416e5ccd1ebb" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  class="sticker-link">
+  <img src="images/accident.png" alt="" class="sticker"
+       style="width: 220px; height: 220px; top: 135rem; right: 20vw; transform: rotate(5deg);">
+</a>
+
+
+  <!-- Projects Section 추가 -->
+  <section class="projects">
+    <!-- 프로젝트 #1 -->
+    <a href="AI_Projects/koraptor.html" class="project">
+    <div class="error-message">
+        ValueError: The checkpoint you are trying to load has model type raptor but Transformers does not recognize this architecture. This could be because of an issue with the checkpoint, or because your version of Transformers is out of date.
+
+    </div>
+    <div class="project-info">
+      <h3>KoRaptor 150M</h3>
+      <p class="project-description">
+        I only used a single Nvidia RTX 3090 GPU to pretrain a 150M Korean Language Model – fully from scratch. Built a tokenizer with SentencePiece, using LatentMoE architecture, gathering datasets and finetuned. Open-source on Huggingface, Github.
       </p>
-      <picture class="project-img">
-        <source srcset="images/KoRaptor_mobile.png" media="(max-width: 768px)" />
-        <img src="images/KoRaptor.png" alt="KoRaptor Visualization" />
-      </picture>
-    </div>
-    <div class="split-content">
-      <div class="text-side">
-        <p class="subtitle">My longest and the most struggled project ever.</p>
-        <p class="description">
-          Computer was dead because of this project. I pushed too much the limit on this project.
-          1 epoch took about 36 hours, too less datasets to train, computer temperature rising.
-          Issue with fine-tuning, I thought uploading to the HuggingFace will solve it but, there was a problem with transformers.
-          LatentMoE architecture does not fit with huggingface-hub tools. It was me who was pushed to the limits.
-        </p>
+      <div class="tags">
+        <span class="tag">Small Language Model</span>
+        <span class="tag">Computer dead</span>
+        <span class="tag">Pretrain</span>
       </div>
-      <div class="image-side">
-  <div class="link-buttons">
-    <a href="https://github.com/Voyager466920/BFG_2B" target="_blank" class="link-btn github">
-      <i class="fab fa-github"></i> GitHub
-    </a>
-    <a href="https://huggingface.co/Voyager466920/KoRaptor" target="_blank" class="link-btn hf">
-      <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" class="hf-logo" />
-      Hugging Face
-    </a>
-  </div>
-</div>
     </div>
+  </a>
 
+    <a href="bt.html" class="project">
+    <div class="error-message">
+      Exception Type:        EXC_BAD_ACCESS (SIGSEGV)<br>
+      Exception Subtype:     KERN_INVALID_ADDRESS at 0x0000000000000063<br>
+      Thread 1 Crashed:<br>
+      0   libllama.dylib                  0x0000000103e1b234 llama_model_load_from_file_impl + 0<br>
+      1   libllama.dylib                  0x0000000103e1b5ab llama_model_load_from_file + 43<br>
+      2   Runner                          0x0000000100b2f1d4 main + 36<br>
+      3   dyld                            0x0000000100c12f15 start + 1<br>
+
+    </div>
+    <div class="project-info">
+      <h3>Wait, However</h3>
+      <p class="project-description">
+        Just tried to mount Llama3-2B model on iOS phone. Got bunch of errors about dynamic libraries, Metal(Apple GPU) and Memory allocation problems. Millions of failures, which taught me valuable things. + Text Classification model & Extraction Summarization
+      </p>
+      <div class="tags">
+        <span class="tag">GGUF on iOS</span>
+        <span class="tag">Memory Error</span>
+        <span class="tag">Llama cpp</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="AI_Projects/koraptor.html" class="project">
+    <div class="error-message">
+      RuntimeError: Given groups=1, weight of size [64, 3, 7, 7], expected input[1, 24, 24] to have 3 channels, but got 1 channels instead.
+    </div>
+    <div class="project-info">
+      <h3>Sealant Problem</h3>
+      <p class="project-description">
+        Normal and Defect sealant classification problem. Accuracy skyrocketed to 98% using Vision Transformers, but TinyVGG also. There was a problems with training procedure, which as a result achieved 60% accuracy.
+      </p>
+      <div class="tags">
+        <span class="tag">Shape mismatch</span>
+        <span class="tag">ViT will work</span>
+        <span class="tag">Progressing</span>
+      </div>
+    </div>
+  </a>
+
+    <a href="bt.html" class="project">
+    <div class="error-message">
+      RuntimeError: CUDA out of memory. Tried to allocate 200.00 MiB (GPU 0; 15.78 GiB total capacity; 14.56 GiB already allocated; 38.44 MiB free; 14.80 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation. See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+    </div>
+    <div class="project-info">
+      <h3>GPT from Scratch</h3>
+      <p class="project-description">
+        Help! I accidentally built GPT from scratch! First paper read, second AI model I built. (The first AI model was ViT) Learning most of the things building from scratch.
+      </p>
+      <div class="tags">
+        <span class="tag">Accidentally</span>
+        <span class="tag">Built</span>
+        <span class="tag">GPT</span>
+      </div>
+    </div>
+  </a>
   </section>
-</div>
 
-
-
-
-  <div class="project-page" onclick="navigateToDetail('AI_Projects/project3.html')">
-    <div class="project-content">
-      <h2>Translation Engine</h2>
-      <p>Neural Machine Translation from scratch, supporting 15+ languages.</p>
-    </div>
-  </div>
-
-  <div class="project-page" onclick="navigateToDetail('AI_Projects/project2.html')">
-    <div class="project-content">
-      <h2>Autonomous Sealant Robot</h2>
-      <p>AI-powered real-time image segmentation for surface sealing tasks.</p>
-    </div>
-  </div>
-
-  <div class="project-page" onclick="navigateToDetail('AI_Projects/project1.html')">
-    <div class="project-content">
-      <h2>GPT From Scratch</h2>
-      <p>Full transformer model built from zero using NumPy and PyTorch.</p>
-    </div>
-  </div>
-</div>
-
-
-
-  <!-- Script -->
   <script>
-    // 다크 모드 토글
+    function scrollToProjects() {
+      document.querySelector('.projects').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+  <script>
     const darkModeToggle = document.getElementById('darkModeToggle');
     let darkModeEnabled = false;
 
+    // 로컬 스토리지에 저장된 설정 복원
     if (localStorage.getItem('darkMode') === 'enabled') {
       darkModeEnabled = true;
       document.body.classList.add('dark-mode');
-      darkModeToggle.classList.replace('fa-moon', 'fa-lightbulb');
+      darkModeToggle.classList.remove('fa-moon');
+      darkModeToggle.classList.add('fa-lightbulb');
     }
 
     darkModeToggle.addEventListener('click', () => {
       darkModeEnabled = !darkModeEnabled;
       document.body.classList.toggle('dark-mode', darkModeEnabled);
-      localStorage.setItem('darkMode', darkModeEnabled ? 'enabled' : 'disabled');
-      darkModeToggle.classList.toggle('fa-moon');
-      darkModeToggle.classList.toggle('fa-lightbulb');
-    });
 
-    function navigateToDetail(url) {
-      window.location.href = url;
-    }
-
-    function scrollToProjects() {
-      document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    const navLinks = document.querySelectorAll('.top-menu a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', (event) => {
-        event.preventDefault();
-        const targetUrl = link.getAttribute('href');
-        location.replace(targetUrl);
-      });
+      if (darkModeEnabled) {
+        darkModeToggle.classList.remove('fa-moon');
+        darkModeToggle.classList.add('fa-lightbulb');
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        darkModeToggle.classList.remove('fa-lightbulb');
+        darkModeToggle.classList.add('fa-moon');
+        localStorage.setItem('darkMode', 'disabled');
+      }
     });
   </script>
 </body>

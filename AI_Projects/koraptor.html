@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KoRaptor — Language Model</title>
+  <link rel="stylesheet" href="ai_development.css" />
+</head>
+<body>
+  <!-- 공통 헤더/네비게이션 포함 가능 -->
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#timeline">Timeline</a>
+      <!-- 기타 메뉴 -->
+    </nav>
+  </header>
+
+  <!-- KoRaptor 프로젝트 섹션 -->
+  <section class="project-page dark">
+    <div class="project-content">
+      <div class="tag">Language Model</div>
+      <h2 class="section-title">KoRaptor</h2>
+      <p class="subtitle">150M size SLM built with single GPU</p>
+      <p class="description">
+        Pushing the limits to the extreme.
+        I only used a single Nvidia RTX 3090 GPU to pretrain a 150M Korean Language Model — fully from scratch.
+        Built a tokenizer with SentencePiece, using LatentMoE architecture, gathering datasets and finetuned.
+        Open-source on Huggingface, Github.
+      </p>
+      <picture class="project-img">
+        <source srcset="images/KoRaptor_mobile.png" media="(max-width: 768px)" />
+        <img src="images/KoRaptor.png" alt="KoRaptor Visualization" />
+      </picture>
+    </div>
+    <div class="split-content">
+      <div class="text-side">
+        <p class="subtitle">My longest and the most struggled project ever.</p>
+        <p class="description">
+          Computer was dead because of this project. I pushed too much the limit on this project.
+          1 epoch took about 36 hours, too less datasets to train, computer temperature rising.
+          Issue with fine-tuning, I thought uploading to the HuggingFace will solve it but, there was a problem with transformers.
+          LatentMoE architecture does not fit with huggingface-hub tools. It was me who was pushed to the limits.
+        </p>
+      </div>
+      <div class="image-side">
+        <div class="link-buttons">
+          <a href="https://github.com/Voyager466920/BFG_2B" target="_blank" class="link-btn github">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a href="https://huggingface.co/Voyager466920/KoRaptor" target="_blank" class="link-btn hf">
+            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg"
+                 alt="Hugging Face" class="hf-logo" />
+            Hugging Face
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 공통 푸터 -->
+  <footer>
+    <p>© 2025 Your Name</p>
+  </footer>
+</body>
+</html>
