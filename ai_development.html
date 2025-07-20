@@ -1,94 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="images/telescope.png" type="image/png">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="ai_development.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Projects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="images/telescope.png" type="image/png"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="ai_development.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
 </head>
+
 <body>
-    <!-- 상단 메뉴 -->
-    <div class="top-menu">
-        <a href="index.html" id="home">Junha</a>
-        <a href="ai_development.html" id="AI">AI</a>
-        <a href="app_development.html" id="App">App</a>
-        <a href="contact.html" id="contact">Contact</a>
-        <i id="darkModeToggle" class="fas fa-moon"></i>
+  <!-- 상단 메뉴 -->
+  <div class="top-menu">
+    <a href="index.html" id="home">Junha</a>
+    <a href="ai_development.html" id="AI">AI</a>
+    <a href="app_development.html" id="App">App</a>
+    <a href="contact.html" id="contact">Contact</a>
+    <i id="darkModeToggle" class="fas fa-moon"></i>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="error-message">
+      RuntimeError: CUDA out of memory. Tried to allocate 31.54 GB(GPU 0; 6.00 GiB total capacity; 5.95 GiB already allocated).
     </div>
-    <h1>Artificial Intelligence<br>Projects<br>& Studies<br>2022-2025<br>↓</h1>
+    <div class="bigtitle">Pushing the Limits.</div>
+    <div class="subtext">Artificial Intelligence Projects</div>
+    <div class="scroll-indicator" onclick="scrollToProjects()">↓</div>
+  </section>
 
-    <!-- 프로젝트 카드 섹션 -->
-    <div class="project-grid">
-        <div class="project-card" onclick="navigateToDetail('AI_Projects/project4.html')">
-            <div class="project-image">
-                <img src="images/raptor.png" alt="Project 4">
-            </div>
-        </div>
+  <!-- 프로젝트 섹션 -->
+<div id="projects" class="project-section pageview">
+  <section class="project-page dark">
 
-        <div class="project-card" onclick="navigateToDetail('AI_Projects/project3.html')">
-            <div class="project-image">
-                <img src="images/translate.jpg" alt="Project 3">
-            </div>
-        </div>
-
-        <div class="project-card" onclick="navigateToDetail('AI_Projects/project2.html')">
-            <div class="project-image">
-                <img src="images/sealant.jpg" alt="Project 2">
-            </div>
-        </div>
-
-        <div class="project-card" onclick="navigateToDetail('AI_Projects/project1.html')">
-            <div class="project-image">
-                <img src="images/gptfromscratch.jpg" alt="Project 1">
-            </div>
-        </div>
-        
+    <div class="project-content">
+      <div class="tag">Language Model</div>
+      <h2 class="section-title">KoRaptor</h2>
+      <p class="subtitle">150M size SLM built with single GPU</p>
+      <p class="description">
+        Pushing the limits to the extreme.
+        I only used a single Nvidia RTX 3090 GPU to pretrain a 150M Korean Language Model — fully from scratch.
+        Built a tokenizer with SentencePiece, using LatentMoE architecture, gathering datasets and finetuned.
+        Open-source on Huggingface, Github.
+      </p>
+      <picture class="project-img">
+        <source srcset="images/KoRaptor_mobile.png" media="(max-width: 768px)" />
+        <img src="images/KoRaptor.png" alt="KoRaptor Visualization" />
+      </picture>
+    </div>
+    <div class="split-content">
+      <div class="text-side">
+        <p class="subtitle">My longest and the most struggled project ever.</p>
+        <p class="description">
+          Computer was dead because of this project. I pushed too much the limit on this project.
+          1 epoch took about 36 hours, too less datasets to train, computer temperature rising.
+          Issue with fine-tuning, I thought uploading to the HuggingFace will solve it but, there was a problem with transformers.
+          LatentMoE architecture does not fit with huggingface-hub tools. It was me who was pushed to the limits.
+        </p>
+      </div>
+      <div class="image-side">
+  <div class="link-buttons">
+    <a href="https://github.com/Voyager466920/BFG_2B" target="_blank" class="link-btn github">
+      <i class="fab fa-github"></i> GitHub
+    </a>
+    <a href="https://huggingface.co/Voyager466920/KoRaptor" target="_blank" class="link-btn hf">
+      <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" class="hf-logo" />
+      Hugging Face
+    </a>
+  </div>
+</div>
     </div>
 
-    <script>
-        // 다크 모드 토글
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        let darkModeEnabled = false;
+  </section>
+</div>
 
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            darkModeEnabled = true;
-            document.body.classList.add('dark-mode');
-            darkModeToggle.classList.remove('fa-moon');
-            darkModeToggle.classList.add('fa-lightbulb');
-        }
 
-        darkModeToggle.addEventListener('click', () => {
-            darkModeEnabled = !darkModeEnabled;
-            document.body.classList.toggle('dark-mode', darkModeEnabled);
 
-            if (darkModeEnabled) {
-                darkModeToggle.classList.remove('fa-moon');
-                darkModeToggle.classList.add('fa-lightbulb');
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                darkModeToggle.classList.remove('fa-lightbulb');
-                darkModeToggle.classList.add('fa-moon');
-                localStorage.setItem('darkMode', 'disabled');
-            }
-        });
 
-        function navigateToDetail(url) {
-            window.location.href = url;
-        }
-        
-        const navLinks = document.querySelectorAll('.top-menu a');
+  <div class="project-page" onclick="navigateToDetail('AI_Projects/project3.html')">
+    <div class="project-content">
+      <h2>Translation Engine</h2>
+      <p>Neural Machine Translation from scratch, supporting 15+ languages.</p>
+    </div>
+  </div>
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault(); 
-                const targetUrl = link.getAttribute('href');
-                location.replace(targetUrl);
-            });
-        });
-    </script>
+  <div class="project-page" onclick="navigateToDetail('AI_Projects/project2.html')">
+    <div class="project-content">
+      <h2>Autonomous Sealant Robot</h2>
+      <p>AI-powered real-time image segmentation for surface sealing tasks.</p>
+    </div>
+  </div>
+
+  <div class="project-page" onclick="navigateToDetail('AI_Projects/project1.html')">
+    <div class="project-content">
+      <h2>GPT From Scratch</h2>
+      <p>Full transformer model built from zero using NumPy and PyTorch.</p>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- Script -->
+  <script>
+    // 다크 모드 토글
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    let darkModeEnabled = false;
+
+    if (localStorage.getItem('darkMode') === 'enabled') {
+      darkModeEnabled = true;
+      document.body.classList.add('dark-mode');
+      darkModeToggle.classList.replace('fa-moon', 'fa-lightbulb');
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+      darkModeEnabled = !darkModeEnabled;
+      document.body.classList.toggle('dark-mode', darkModeEnabled);
+      localStorage.setItem('darkMode', darkModeEnabled ? 'enabled' : 'disabled');
+      darkModeToggle.classList.toggle('fa-moon');
+      darkModeToggle.classList.toggle('fa-lightbulb');
+    });
+
+    function navigateToDetail(url) {
+      window.location.href = url;
+    }
+
+    function scrollToProjects() {
+      document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const navLinks = document.querySelectorAll('.top-menu a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const targetUrl = link.getAttribute('href');
+        location.replace(targetUrl);
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,57 +1,306 @@
-body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow-x: hidden;
-    background-color: #F5F5F7;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+/* 기본 설정 */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
+  background-color: #F5F5F7;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+.scroll-container {
+  height: 100%;
+}
+
+/* Hero Section */
+.hero {
+  height: calc(100vh - 50px);
+  margin-top: 100px;
+  background: #F5F5F7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  scroll-snap-align: start;
+}
+
+.hero .bigtitle {
+  font-size: 80px;
+  font-weight: bold;
+  margin: 0;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.hero .error-message {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  background-color: #f3f3f3;
+  color: #333;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  border-left: 6px solid #d7263d;
+}
+
+.hero .subtext {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #777;
+}
+
+.scroll-indicator {
+  margin-top: 3rem;
+  font-size: 2rem;
+  animation: bounce 2s infinite;
+  color: #d7263d;
+  cursor: pointer;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* 프로젝트 페이지 */
+.project-page {
+  min-height: 170vh;
+  scroll-snap-align: start;
+  padding: 8rem 2rem;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+}
+
+.project-content {
+  margin-bottom: 5rem;
 }
 
 
-h1 {
-    text-align: left;
-    margin-top: 30%;
-    padding-left: 10%;
-    font-size: 2.2vw;
-    font-weight: lighter;
+.project-content .tag {
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: -3rem;
 }
 
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(300px, 1fr));
+.project-page .section-title {
+  font-family: 'Inter';
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
-.project-card {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* 정사각형 비율 유지 */
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+.project-page .lead {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
 }
 
-.project-card:hover {
-    transform: scale(1.05);
+.project-page .description {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
+  color: #aaa;
 }
 
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+.project-img {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2rem;
 }
 
-/* 모바일 화면에서 한 줄에 하나씩 표시 */
+.project-img img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+.split-section {
+  background-color: #000;
+  color: #fff;
+  min-height: 100vh;
+  padding: 10vh 5vw;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+}
+
+.split-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.text-side {
+  flex: 1;
+  min-width: 280px;
+  text-align: left;
+}
+
+.split-content .text-side {
+  text-align: left;
+  width: 30%;
+  max-width: 500px;
+}
+
+.text-side .tag {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 0.3rem;
+}
+
+.text-side .section-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.text-side .subtitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.text-side .description {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #bbb;
+}
+
+.link-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.link-buttons .link-btn {
+  width: 200px;
+  justify-content: center;
+  text-align: center;
+}
+
+.link-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  transition: background 0.3s;
+  color: #fff;
+}
+
+.link-btn.github {
+  background-color: #333;
+}
+
+.link-btn.github:hover {
+  background-color: #555;
+}
+
+.link-btn.hf {
+  background-color: #ffcd00;
+  color: #000;
+}
+
+.link-btn.hf:hover {
+  background-color: #f6b800;
+}
+
+.hf-logo {
+  width: 20px;
+  height: 20px;
+}
+
+
+
+
+/* 다크 모드 */
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .hero {
+  background-color: #121212;
+}
+
+.dark-mode .hero .bigtitle {
+  color: #ffffff;
+}
+
+.dark-mode .hero .error-message {
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+  border-left-color: #ff6b6b;
+}
+
+.dark-mode .hero .subtext {
+  color: #bbbbbb;
+}
+
+.dark-mode .scroll-indicator {
+  color: #ff6b6b;
+}
+
+.dark-mode .project-page {
+  background-color: #121212;
+}
+
+.dark-mode .project-page img {
+  box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+}
+
+/* 모바일 대응 */
 @media (max-width: 768px) {
-    .project-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    h1 {
-        margin-top: 80%;
-        font-size: 2rem; 
-    }
-}
+  .hero .bigtitle {
+    font-size: 2.5rem;
+  }
 
+  .hero .error-message {
+    font-size: 0.9rem;
+    padding: 1rem;
+  }
+
+  .project-page img {
+    max-width: 90vw;
+    max-height: 70vh;
+  }
+
+  .link-buttons {
+    padding-top: 0;
+    margin-top: -2rem;
+    align-items: center;
+  }
+
+  .split-content {
+    flex-direction: column;
+  }
+
+  .text-side {
+    width: 100%;
+    text-align: center;
+  }
+}
