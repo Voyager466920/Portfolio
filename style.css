@@ -73,6 +73,7 @@ body {
 
 .dark-mode .highlight {
     background-color: 	#6b7280;
+    color: white;
     padding: 2px 4px;
     border-radius: 4px;
     font-weight: 600;
