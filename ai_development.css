@@ -111,6 +111,7 @@ a {
   /* 회전은 HTML 인라인 스타일에서 처리 */
 }
 
+
 /*==================================================
   6. Projects Section
 ==================================================*/
@@ -174,12 +175,11 @@ a {
 @media (min-width: 769px) {
   .project {
     display: grid;
-    grid-template-columns: 80% 20%;
-    grid-template-rows: auto auto;
-    gap: 1rem;
+    grid-template-columns: minmax(300px, 4fr) minmax(150px, 1fr);
+    padding: 3.5rem 2rem;
   }
   .project:nth-of-type(even) {
-    grid-template-columns: 20% 80%;
+    grid-template-columns: minmax(150px, 1fr) minmax(300px, 4fr);
   }
 
   /* 에러 메시지 위치 */
@@ -253,22 +253,22 @@ a {
 
   /* 모바일 전용 스티커 위치 & 크기 조정 */
   .sticker {
-    width: 120px !important;
-    height: 120px !important;
+    width: 190px !important;
+    height: 190px !important;
   }
   .sticker[src$="sticker.png"] {
-    top: 12rem !important;
-    left: 70vw !important;
+    top: 10% !important;
+    left: 70% !important;
     transform: translateX(-50%) rotate(15deg) !important;
   }
   .sticker[src$="memory_sticker.png"] {
-    top: 90rem !important;
-    right: 10rem !important;
+    top: 145% !important;
+    right: 20% !important;
     transform: rotate(2deg) !important;
   }
   .sticker[src$="accident.png"] {
-    top: 165rem !important;
-    left: 15vw !important;
+    top: 225% !important;
+    left: 15% !important;
     transform: rotate(-5deg) !important;
   }
 
