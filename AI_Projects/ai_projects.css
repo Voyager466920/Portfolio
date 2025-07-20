@@ -1,0 +1,181 @@
+/* --- 공통 리셋 & 기본 --- */
+* {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  background: #fafafa;
+  color: #333;
+  padding-top: 50px;
+}
+
+.top-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    z-index: 10;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.top-menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: color 0.3s;
+}
+
+.top-menu a:hover {
+    color: #007aff;
+}
+
+
+/* --- 프로젝트 섹션 --- */
+.project-page {
+  max-width: 1024px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  margin-top: 2rem;
+}
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.tag {
+  background: #eee;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.project-title {
+  font-size: 3rem;
+  margin-bottom: 0.25rem;
+  margin-top: 2rem;
+}
+.subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+.description {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+.description mark {
+  background: #fff59d;
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.15rem;
+}
+
+/* --- 이미지 --- */
+.project-img {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+.project-img img {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+.sticker {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 5;
+}
+
+
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-mode .top-menu {
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+
+.dark-mode a {
+    color: #ffffff;
+}
+
+#darkModeToggle {
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#darkModeToggle:hover {
+    color: #007aff;
+}
+
+.dark-mode #darkModeToggle {
+    color: #ffffff;
+}
+
+.dark-mode .sidebar li {
+    color: #ffffff;
+}
+
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .top-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        z-index: 10;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .top-menu a {
+        text-decoration: none;
+        color: #333;
+        font-size: 1rem;
+        padding: 10px 15px;
+        transition: color 0.3s;
+    }
+
+    .top-menu a:hover {
+        color: #007aff;
+    }
+
+    .dark-mode .top-menu a {
+        color: #ffffff;
+    }
+    
+    .dark-mode .top-menu a:hover {
+        color: #007aff;
+    }
+    .dark-mode .image-container {
+    background-color: #1e1e1e;
+    }
+}
+
+
+
+/* --- 반응형 --- */
+@media (max-width: 768px) {
+
+}

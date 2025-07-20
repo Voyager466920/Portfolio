@@ -1,66 +1,98 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KoRaptor — Language Model</title>
-  <link rel="stylesheet" href="ai_development.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoRaptor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/telescope.png" type="image/png">
+    <link rel="stylesheet" href="ai_projects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <!-- 공통 헤더/네비게이션 포함 가능 -->
-  <header>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="index.html#timeline">Timeline</a>
-      <!-- 기타 메뉴 -->
-    </nav>
-  </header>
-
-  <!-- KoRaptor 프로젝트 섹션 -->
-  <section class="project-page dark">
+    <div class="top-menu">
+        <a href="../index.html">Junha</a>
+        <a href="../ai_development.html">AI</a>
+        <a href="../app_development.html">App</a>
+        <a href="../contact.html">Contact</a>
+        <i id="darkModeToggle" class="fas fa-moon"></i>
+    </div>
+  <section class="project-page">
+    <a 
+      href="https://medium.com/@voyager466920/achievement-unlocked-gpu-killer-69fc48fa7ac8" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      class="sticker-link">
+      <img src="/images/sticker/github.png" alt="" class="sticker"
+          style="top: 57%; left: 60%;">
+    </a>
+    
     <div class="project-content">
-      <div class="tag">Language Model</div>
-      <h2 class="section-title">KoRaptor</h2>
+      <h1 class="project-title">KoRaptor</h1>
       <p class="subtitle">150M size SLM built with single GPU</p>
+
       <p class="description">
-        Pushing the limits to the extreme.
-        I only used a single Nvidia RTX 3090 GPU to pretrain a 150M Korean Language Model — fully from scratch.
+        I only used a <mark>single Nvidia RTX 3090 GPU</mark> to pretrain a <mark>150M Korean Language Model</mark> — fully from scratch.
         Built a tokenizer with SentencePiece, using LatentMoE architecture, gathering datasets and finetuned.
-        Open-source on Huggingface, Github.
+        Open‑source on <a href="https://github.com/Voyager466920/KoRaptor" target="_blank">GitHub</a> and
+        <a href="https://huggingface.co/Voyager466920/KoRaptor" target="_blank">Hugging Face</a>.
       </p>
+
       <picture class="project-img">
         <source srcset="images/KoRaptor_mobile.png" media="(max-width: 768px)" />
         <img src="images/KoRaptor.png" alt="KoRaptor Visualization" />
       </picture>
     </div>
-    <div class="split-content">
-      <div class="text-side">
-        <p class="subtitle">My longest and the most struggled project ever.</p>
-        <p class="description">
-          Computer was dead because of this project. I pushed too much the limit on this project.
-          1 epoch took about 36 hours, too less datasets to train, computer temperature rising.
-          Issue with fine-tuning, I thought uploading to the HuggingFace will solve it but, there was a problem with transformers.
-          LatentMoE architecture does not fit with huggingface-hub tools. It was me who was pushed to the limits.
-        </p>
-      </div>
-      <div class="image-side">
-        <div class="link-buttons">
-          <a href="https://github.com/Voyager466920/BFG_2B" target="_blank" class="link-btn github">
-            <i class="fab fa-github"></i> GitHub
-          </a>
-          <a href="https://huggingface.co/Voyager466920/KoRaptor" target="_blank" class="link-btn hf">
-            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg"
-                 alt="Hugging Face" class="hf-logo" />
-            Hugging Face
-          </a>
-        </div>
-      </div>
+
+    <div class="project-content">
+      <p class="description">
+        Computer was dead because of this project. I pushed too much the limit on this project.
+        1 epoch took about 36 hours, too less datasets to train, computer temperature rising.
+        Issue with fine‑tuning, I thought uploading to the HuggingFace will solve it but,
+        there was a problem with transformers. LatentMoE architecture does not fit with
+        huggingface‑hub tools. It was me who was pushed to the limits.
+      </p>
     </div>
   </section>
 
-  <!-- 공통 푸터 -->
-  <footer>
-    <p>© 2025 Your Name</p>
-  </footer>
+
+  <script>
+        // 다크 모드 토글
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            darkModeEnabled = true;
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.remove('fa-moon');
+            darkModeToggle.classList.add('fa-lightbulb');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            darkModeEnabled = !darkModeEnabled;
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+            if (darkModeEnabled) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-lightbulb');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.classList.remove('fa-lightbulb');
+                darkModeToggle.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl);
+            });
+        });
+
+    </script>
 </body>
 </html>
