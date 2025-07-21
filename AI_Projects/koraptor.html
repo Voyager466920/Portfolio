@@ -19,12 +19,12 @@
     </div>
   <section class="project-page">
     <a 
-      href="https://medium.com/@voyager466920/achievement-unlocked-gpu-killer-69fc48fa7ac8" 
+      href="https://github.com/Voyager466920/BFG_2B" 
       target="_blank" 
       rel="noopener noreferrer"
       class="sticker-link">
       <img src="/images/sticker/github.png" alt="" class="sticker"
-          style="top: 57%; left: 60%;">
+          style="top: 8%; right: 20%;">
     </a>
     
     <div class="project-content">
@@ -51,19 +51,48 @@
           but transformers didn’t support LatentMoE properly</li>
           <li>Compatibility issues with huggingface-hub tools made it even harder</li>
         </ul>
-        In the end, it wasn’t just the machine that broke —I was the one who got pushed to the limits.
+        In the end, it wasn’t just the machine that broke —I was the one who got pushed to the limits.<br><br>
+
+        I first followed Deepseek's module and added MoE architecture. Back then, there was no R2 which Deepseek applied the MoE architecture.
+        It is built from scratch and you can find the architecture from my Github.
+        I first pretrained with Korean Wiki and AI hub dataset which is consisted of mainly news.
+        I used SentencePiece to make a tokenizer but, one thought pass through my mind.
+        Korean is super easy to learn but has a massive learning curve. This is because unlike English, Korean has diverse morpheme.
+        So, I decided to make a tokenizer out of morpheme, using Mecab and SentencePiece.
+        Advantage of using morpheme as a tokenizer is first, the model can truely catch the pattern of the grammar of language and can increase the size of the datasets.
       </p>
 
-      
+      <picture class="project-img">
+        <img src="/AI_Projects/KoRaptor_Images/ppl_graph.png" alt="Inference Result" />
+      </picture>
+    </div>
+
+    <div class="project-content">
+      <p class="description">
+        I stopped at 5th epoch for pretraining for two reasons. First, validation perplexity started increasing after the 4th epoch, peaking by the 6th.
+        Since perplexity is the exponential of the loss, this indicated that the loss was also increasing. 
+        Second, each epoch required around 36 hours to complete.
+        Given that the 4th epoch showed the best validation perplexity, I decided to proceed with fine-tuning this model as a chatbot.<br><br>
+        (Although I mentioned it breifly, this stage involved a lot of trial and error. Initially, I attempted to train a 1B model first, 
+        but it couldn't run on my GPU efficiently. So changed to 72M, read Chinchilla Scaling Law paper, found the optimal model size that can be pretrained. This took about a month.)
+
+      </p>
+    </div>
 
       <picture class="project-img">
         <source srcset="/AI_Projects/KoRaptor_Images/inference_mobile.png" media="(max-width: 768px)" />
         <img src="/AI_Projects/KoRaptor_Images/inference.png" alt="Inference Result" />
       </picture>
     </div>
+    
 
     <div class="project-content">
-      
+      <p class="description">
+        As you can see from the image, the Next Token Prediction is actually not bad.
+        For those who don't understand korean, my prompt was "The president has".
+        Raptor model predicted the next sentence as "promised that 'Through this ceremeony, we will do our best to protect precious lives living in our community.'".
+        You can tell that the model understood how korean works. 
+      </p>
     </div>
   </section>
 
