@@ -32,26 +32,38 @@
       <p class="subtitle">150M size SLM built with single GPU</p>
 
       <p class="description">
-        I only used a <mark>single Nvidia RTX 3090 GPU</mark> to pretrain a <mark>150M Korean Language Model</mark> — fully from scratch.
+        I only used a single Nvidia RTX 3090 GPU to pretrain a 150M Korean Language Model — fully from scratch.
         Built a tokenizer with SentencePiece, using LatentMoE architecture, gathering datasets and finetuned.
-        Open‑source on <a href="https://github.com/Voyager466920/KoRaptor" target="_blank">GitHub</a> and
-        <a href="https://huggingface.co/Voyager466920/KoRaptor" target="_blank">Hugging Face</a>.
+        Open-source on GitHub and Hugging Face.
+      </p>
+      <p class="description">
+        There were still many failures throughout this project. To begin with, the computer died. 
+        I pushed it far beyond its limit. The main issue was with the power supply. 
+        Ironically, I had even written code to pause every 200 steps just to cool things down, but it worsen the problem.
+        So, technically I did stress test on my computer. 
+        But the problem didn't stop at hardware. There were plenty of software issues, too.
+        Let me list them out. 
+        <ul class="indented-list">
+          <li>Each epoch took about 36 hours.</li>
+          <li>The dataset was too small to train effectively</li>
+          <li>The system temperature kept rising despite cooldown intervals</li>
+          <li>Fine-tuning failed — I thought uploading to Hugging Face would help,
+          but transformers didn’t support LatentMoE properly</li>
+          <li>Compatibility issues with huggingface-hub tools made it even harder</li>
+        </ul>
+        In the end, it wasn’t just the machine that broke —I was the one who got pushed to the limits.
       </p>
 
+      
+
       <picture class="project-img">
-        <source srcset="images/KoRaptor_mobile.png" media="(max-width: 768px)" />
-        <img src="images/KoRaptor.png" alt="KoRaptor Visualization" />
+        <source srcset="/AI_Projects/KoRaptor_Images/inference_mobile.png" media="(max-width: 768px)" />
+        <img src="/AI_Projects/KoRaptor_Images/inference.png" alt="Inference Result" />
       </picture>
     </div>
 
     <div class="project-content">
-      <p class="description">
-        Computer was dead because of this project. I pushed too much the limit on this project.
-        1 epoch took about 36 hours, too less datasets to train, computer temperature rising.
-        Issue with fine‑tuning, I thought uploading to the HuggingFace will solve it but,
-        there was a problem with transformers. LatentMoE architecture does not fit with
-        huggingface‑hub tools. It was me who was pushed to the limits.
-      </p>
+      
     </div>
   </section>
 
