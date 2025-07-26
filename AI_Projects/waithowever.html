@@ -29,70 +29,94 @@
     
     <div class="project-content">
       <h1 class="project-title">Wait, However</h1>
-      <p class="subtitle">Mounting LLM on iOS app.</p>
+      <p class="subtitle">Mounting LLM on iOS app and more.</p>
 
       <p class="description">
-        I only used a single Nvidia RTX 3090 GPU to pretrain a 150M Korean Language Model — fully from scratch.
-        Built a tokenizer with SentencePiece, using LatentMoE architecture, gathering datasets and finetuned.
-        Open-source on GitHub and Hugging Face.
+        "Wait, However" is a new kind of fact-checking app that works like a filter.
+        Before you read an article, you can just share the URL to the app — that’s it.
+        Using the power of LLMs, Wait, However shows you what you might’ve missed: key points, opposing perspectives, and more.
+        We also added features like translation detection and summary extraction.
+        This is a story about all the failures we ran into while building Wait, However.
+      </p>
+
+      <p class="sectorTitle">
+        Translation Detection
       </p>
       <p class="description">
-        There were still many failures throughout this project. To begin with, the computer died. 
-        I pushed it far beyond its limit. The main issue was with the power supply. 
-        Ironically, I had even written code to pause every 200 steps just to cool things down, but it worsen the problem.
-        So, technically I did stress test on my computer. 
-        But the problem didn't stop at hardware. There were plenty of software issues, too.
-        Let me list them out. 
-        <ul class="indented-list">
-          <li>Each epoch took about 36 hours.</li>
-          <li>The dataset was too small to train effectively</li>
-          <li>The system temperature kept rising despite cooldown intervals</li>
-          <li>Fine-tuning failed — I thought uploading to Hugging Face would help,
-          but transformers didn’t support LatentMoE properly</li>
-          <li>Compatibility issues with huggingface-hub tools made it even harder</li>
-        </ul>
-        In the end, it wasn’t just the machine that broke —I was the one who got pushed to the limits.<br><br>
-
-        I first followed Deepseek's module and added MoE architecture. Back then, there was no R2 which Deepseek applied the MoE architecture.
-        It is built from scratch and you can find the architecture from my Github.
-        I first pretrained with Korean Wiki and AI hub dataset which is consisted of mainly news.
-        I used SentencePiece to make a tokenizer but, one thought pass through my mind.
-        Korean is super easy to learn but has a massive learning curve. This is because unlike English, Korean has diverse morpheme.
-        So, I decided to make a tokenizer out of morpheme, using Mecab and SentencePiece.
-        Advantage of using morpheme as a tokenizer is first, the model can truely catch the pattern of the grammar of language and can increase the size of the datasets.
-      </p>
-
-      <picture class="project-img">
-        <img src="../AI_Projects/KoRaptor_Images/ppl_graph.png" alt="Inference Result" />
+        In 2024, the Korean National Security Agency reported that Chinese news companies were intentionally creating fake news outlets using news wireframe networks to manipulate public opinion.
+        It's getting hard to tell the difference between real Korean news websites and fake Chinese ones.
+        As you can see below, left is the real korean news website and the right is fake chinese website.
+        So, I decided to make an AI model that can tell apart translated Korean from natural Korean.
+        <picture class="project-img">
+        <img src="../AI_Projects/WaitHowever_Images/Newswire.png" alt="Fake and real news" />
       </picture>
-    </div>
+        
+        To solve this, I decided to build my own model called TextViT.
+        Since it shares some similarities with the Vision Transformer, I modified the ViT architecture by using token embeddings instead of patch embeddings.
+        At first, I was thrilled — I thought I had come up with a completely new type of model.
+        But soon I realized… it’s basically the same as BERT. (Yeah, that was humbling.)
+        I crawled all the fake Chinese news websites (about 20 of them), and used Korean news articles from AI Hub as the true label dataset.
+        As a baseline, I also tested an LSTM model.
+        But surprisingly, TextViT turned out to be not only heavier and slower, but also performed worse than a simple 2-layer LSTM.
+        In the end, I went with the LSTM model for classification — it achieved an F1 score of 93%, while TextViT only managed 92%.
+      </p>
+      
+      <p class="sectorTitle">
+        Extraction Summary
+      </p>
+
+      <div class="image-row">
+        <picture>
+          <img src="../AI_Projects/WaitHowever_Images/Extraction_Original.png" alt="Inference Result 1" />
+        </picture>
+        <picture>
+          <img src="../AI_Projects/WaitHowever_Images/Extraction_Result.png" alt="Inference Result 2" />
+        </picture>
+      </div>
 
     <div class="project-content">
       <p class="description">
-        I stopped at 5th epoch for pretraining for two reasons. First, validation perplexity started increasing after the 4th epoch, peaking by the 6th.
-        Since perplexity is the exponential of the loss, this indicated that the loss was also increasing. 
-        Second, each epoch required around 36 hours to complete.
-        Given that the 4th epoch showed the best validation perplexity, I decided to proceed with fine-tuning this model as a chatbot.<br><br>
-        (Although I mentioned it breifly, this stage involved a lot of trial and error. Initially, I attempted to train a 1B model first, 
-        but it couldn't run on my GPU efficiently. So changed to 72M, read Chinchilla Scaling Law paper, found the optimal model size that can be pretrained. This took about a month.)
+        There are two types of summaries: generative summaries and extractive summaries.
+        Generative summaries use generative AI to create a new summary — it’s a well-known feature in tools like ChatGPT and Claude.
+        On the other hand, extractive summaries are simpler and more intuitive — they just pull out the key sentences from the article.
 
+        I decided to go with extractive summarization for two reasons.
+        First, I wanted to run the model on a Flutter app, which meant I couldn’t use a heavy generative model.
+        Second, generative models can be influenced by AI bias — in the broader sense of the term — which I wanted to avoid.
+
+        So, I trained a model using KoElectra and pre-trained it on AI-Hub’s Korean extractive summarization dataset.
+        It reached about 81% accuracy, meaning it does a pretty good job at picking out the important sentences.
       </p>
     </div>
 
       <picture class="project-img">
-        <source srcset="../AI_Projects/KoRaptor_Images/inference_mobile.png" media="(max-width: 768px)" />
-        <img src="../AI_Projects/KoRaptor_Images/inference.png" alt="Inference Result" />
+        <img src="../AI_Projects/WaitHowever_Images/Roccurve.png" alt="Fake and real news" />
       </picture>
     </div>
     
 
+    <p class="sectorTitle">
+        Mounting LLM and AI models on Flutter
+      </p>
     <div class="project-content">
       <p class="description">
-        As you can see from the image, the Next Token Prediction is actually not bad.
-        For those who don't understand korean, my prompt was "The president has".
-        Raptor model predicted the next sentence as "promised that 'Through this ceremeony, we will do our best to protect precious lives living in our community.'".
-        You can tell that the model understood how korean works. 
+        This is where the real problems started.
+        After successfully pretraining the AI models, I needed to mount them on a Flutter app for on-device inference.
+        There are a few packages that can help with this, like ONNX Runtime, TensorFlow Lite, and Flutter Gemma. <br>
+        First, for models like LSTM and KoElectra, I tried using ONNX Runtime.
+        That meant I had to convert the model files from .pt or .pth to .onnx.
+        But here's the catch: ONNX didn’t support inference on the app — it just didn’t work as expected. <br>
+        Second, for LLMs, I used llama.cpp, which is known for its easy CPU inference support.
+        I had to convert the model to a .gguf file, and luckily, llama.cpp provides these directly.
+        But again, issues started piling up — problems related to Apple's Metal (GPU stuff), dynamic libraries, and so on.
+        I managed to get through most of them by carefully following various guides.
+        But the biggest hurdle? Memory allocation errors.
+        No matter what I did, the model would just crash on some devices.
+        The full, detailed story — including the technical headaches — is in my Medium posts below: <br>
       </p>
+      <a href="https://medium.com/@voyager466920/fail-log-flutter-llama-cpp-on-ios-82b06c442cba" target="_blank">[Fail Log] Flutter llama.cpp on iOS (Part 1)</a><br>
+      <a href="https://medium.com/@voyager466920/fail-log-flutter-llama-cpp-on-ios-part-2-1ca6405c8d13" target="_blank">[Fail Log] Flutter llama.cpp on iOS (Part 2)</a>
+      
     </div>
   </section>
 
