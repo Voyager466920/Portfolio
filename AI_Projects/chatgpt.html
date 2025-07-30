@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HiabGPT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/telescope.png" type="image/png">
+    <link rel="stylesheet" href="ai_projects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="top-menu">
+        <a href="../index.html">Junha</a>
+        <a href="../ai_development.html">AI</a>
+        <a href="../app_development.html">App</a>
+        <a href="../contact.html">Contact</a>
+        <i id="darkModeToggle" class="fas fa-moon"></i>
+    </div>
+  <section class="project-page">
+    <a 
+      href="https://github.com/Voyager466920/GPT_from_Scratch" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      class="sticker-link">
+      <img src="../images/sticker/github.png" alt="" class="sticker"
+          style="top: 8%; right: 20%;">
+    </a>
+    
+    <div class="project-content">
+      <h1 class="project-title">HiabGPT</h1>
+      <p class="subtitle">Help I accidentally built GPT from scratch!</p>
+
+      <p class="description">
+        “If in doubt, code it out.” This phrase comes from my online teacher, Daniel Bourke, who taught me how to build AI models. He emphasizes the importance of visualization, because artificial intelligence is essentially a black box. You don’t really know what’s going on inside. It’s packed with math, weights and biases, gradient descent, loss functions, and more. These concepts can feel intimidating at first.
+        But I believe the best way to learn something is to dive straight into building a system. Everyone learns differently, but for me, jumping into the deep end definitely worked. That’s why, when I got curious about GPT, I decided to try building one myself.
+      </p>
+
+      <p class="sectorTitle">
+        Transformer Architecture
+      </p>
+      <p class="description">
+        The paper “Attention Is All You Need”, which quite literally transformed how AI works, introduced the attention mechanism. This mechanism involves computing Query, Key, and Value vectors between all tokens.
+        Basically, the Transformer is made up of two parts: the encoder and the decoder. The encoder turns input words into an array of numbers, making them easier to work with mathematically. The decoder, on the other hand, turns those numbers back into words. Because of this, encoders are better at understanding meaning, while decoders are better at generating text.
+        <picture class="project-img">
+        <img src="../AI_Projects/GPT_images/architecture.jpeg" alt="Fake and real news" />
+      </picture>
+        As you can see in top figure (from the original paper), BERT is built by stacking multiple encoders. That’s why BERT isn’t used for generating text. GPT, however, is built by stacking decoders — about 12 layers in the case of GPT-2 — so it can generate text. If a model uses both encoder and decoder, it’s called a T5 (Text-to-Text Transfer Transformer) model. Since we’re building a GPT-like model, we’ll focus on the decoder only.
+        In Figure A, the decoder has multiple layers that follow a specific structure: Masked Multi-Head Attention → Add & Norm → Multi-Head Attention → Add & Norm → Residual Connection → FeedForward → Add & Norm. This process is repeated N times, and the final result is passed through a Linear layer and a Softmax function.
+        You can find the detailed steps to build GPT from scratch is on my Medium. I'll tell you about my failure here.
+      </p>
+      <a href="https://voyager466920.medium.com/help-i-accidently-built-gpt-from-scratch-part-1-416e5ccd1ebb" target="_blank">Help! I accidently built GPT from scratch Part.1</a><br>
+      <a href="https://voyager466920.medium.com/help-i-accidently-built-gpt-from-scratch-part-2-fbeb5b3fc3a5" target="_blank">Help! I accidently built GPT from scratch Part.2</a><br><br>
+      
+      <p class="sectorTitle">
+        Extraction Summary & Issues
+      </p>
+
+    <div class="project-content">
+      <p class="description">
+        I used the prompt of "오늘 날씨가 " and waited for the next token prediction. The output was like the following: <br>
+        "오늘 날씨가 가격 가격 가격 가격 가격미미미" <br>
+        Yes, this is weird. The model has memorized token sequences without understanding the semantics — just as early GPTs did before scaling. You need to train about 10 times more datasets for the size of parameters to make a model understand the semantics.
+      </p>
+    </div>
+
+      <picture class="project-img">
+        <img src="../AI_Projects/GPT_images/catastrophic forgetting.png" alt="Fake and real news" />
+      </picture>
+    </div>
+    
+    <div class="project-content">
+      <p class="description">
+        As we’ve discussed, building or training a model with PyTorch is relatively straightforward. However, creating a fully functional large language model (LLM) that understands semantics and generates coherent, meaningful sentences is far more complex.
+        Let’s consider a scenario where GPU resources are limited. Due to VRAM constraints, you’re only able to train on a smaller dataset like WikiText-103 (103M tokens). You might start by training on WikiText-103 (103M) and then move on to a larger dataset such as BookCorpus (1B). However, this approach introduces two key challenges.
+        The first issue is the tokenizer. Since the datasets differ, you need to reset or retrain your tokenizer. While this is manageable, the second issue is more serious: Catastrophic Forgetting.<br>
+      </p>
+
+       <p class="sectorTitle">
+        What is Catastrophic Forgetting?
+      </p>
+
+    <div class="project-content">
+      <p class="description">
+        Catastrophic Forgetting occurs when a model forgets previously learned information as it learns new data. This is a significant issue in sequential or continual learning scenarios. During the training on the second dataset, the model’s weights adjust to fit the new data, often at the expense of the knowledge gained from the first dataset. In practice, this means the model “forgets” what it learned from WikiText-103 once it starts training on BookCorpus.
+      To prevent this, it’s generally necessary to interleave or mix multiple datasets during training rather than training on them sequentially. Additionally, due to scaling laws, training larger models requires a significantly larger amount of data. For example, training a 10B parameter model typically requires around 100B tokens.
+
+      </p>
+    </div>
+    
+      
+    </div>
+  </section>
+
+
+  <script>
+        // 다크 모드 토글
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            darkModeEnabled = true;
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.remove('fa-moon');
+            darkModeToggle.classList.add('fa-lightbulb');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            darkModeEnabled = !darkModeEnabled;
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+            if (darkModeEnabled) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-lightbulb');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.classList.remove('fa-lightbulb');
+                darkModeToggle.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                const targetUrl = link.getAttribute('href');
+                location.replace(targetUrl);
+            });
+        });
+
+    </script>
+</body>
+</html>
