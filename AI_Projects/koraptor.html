@@ -19,11 +19,11 @@
     </div>
   <section class="project-page">
     <a 
-      href="https://github.com/Voyager466920/BFG_2B" 
+      href="https://huggingface.co/Voyager466920/KoRaptor" 
       target="_blank" 
       rel="noopener noreferrer"
       class="sticker-link">
-      <img src="../images/sticker/github.png" alt="" class="sticker"
+      <img src="../images/sticker/huggingface.png" alt="" class="sticker"
           style="top: 8%; right: 20%;">
     </a>
     
@@ -36,64 +36,98 @@
         Built a tokenizer with SentencePiece, using LatentMoE architecture, gathering datasets and finetuned.
         Open-source on GitHub and Hugging Face.
       </p>
+
+      <p class="sectorTitle">
+        GPU Killer & Failures.
+      </p>
       <p class="description">
-        There were still many failures throughout this project. To begin with, the computer died. 
+        There were many failures throughout this project. To begin with, the computer died. 
         I pushed it far beyond its limit. The main issue was with the power supply. 
         Ironically, I had even written code to pause every 200 steps just to cool things down, but it worsen the problem.
-        So, technically I did stress test on my computer. 
-        But the problem didn't stop at hardware. There were plenty of software issues, too.
+        I technically did "stress test" on my computer. 
+        But the problem didn't stop there. There were plenty of software issues, too.
         Let me list them out. 
         <ul class="indented-list">
           <li>Each epoch took about 36 hours.</li>
           <li>The dataset was too small to train effectively</li>
           <li>The system temperature kept rising despite cooldown intervals</li>
-          <li>Fine-tuning failed — I thought uploading to Hugging Face would help,
+          <li>Compatibility issues with huggingface-hub tools — I thought uploading to Hugging Face would help,
           but transformers didn’t support LatentMoE properly</li>
-          <li>Compatibility issues with huggingface-hub tools made it even harder</li>
         </ul>
-        In the end, it wasn’t just the machine that broke —I was the one who got pushed to the limits.<br><br>
+        In the end, I was the one who got pushed to the limits.<br><br>
 
-        I first followed Deepseek's module and added MoE architecture. Back then, there was no R2 which Deepseek applied the MoE architecture.
-        It is built from scratch and you can find the architecture from my Github.
-        I first pretrained with Korean Wiki and AI hub dataset which is consisted of mainly news.
+        <p class="sectorTitle">
+        Architecture
+      </p>
+        I followed Deepseek's module and added MoE(Mixture of Experts) architecture from scratch. 
+        (Back then, there was no R2 model which Deepseek applied the MoE.)
+        I first pretrained with Korean Wiki and AI hub dataset which is mainly consisted of news articles.
         I used SentencePiece to make a tokenizer but, one thought pass through my mind.
-        Korean is super easy to learn but has a massive learning curve. This is because unlike English, Korean has diverse morpheme.
+        Korean is super easy to learn but has a massive learning curve. 
+        This is because unlike English, Korean has diverse morpheme.
         So, I decided to make a tokenizer out of morpheme, using Mecab and SentencePiece.
-        Advantage of using morpheme as a tokenizer is first, the model can truely catch the pattern of the grammar of language and can increase the size of the datasets.
+        Advantage of using morpheme as a tokenizer is first, the model can truely catch the pattern of the grammar of language and can increase the size of the datasets. <br><br>
       </p>
 
-      <picture class="project-img">
-        <img src="../AI_Projects/KoRaptor_Images/ppl_graph.png" alt="Inference Result" />
-      </picture>
-    </div>
+      <p class="sectorTitle">
+        Pretrain Results
+      </p>
 
+      <div class="image-row">
+        <picture>
+          <img src="../AI_Projects/KoRaptor_Images/ppl_graph.png" alt="Inference Result 1" />
+        </picture>
+        <picture>
+          <img src="../AI_Projects/KoRaptor_Images/inference.png" alt="Inference Result 2" />
+        </picture>
+      </div>
+
+    </div>
     <div class="project-content">
       <p class="description">
-        I stopped at 5th epoch for pretraining for two reasons. First, validation perplexity started increasing after the 4th epoch, peaking by the 6th.
-        Since perplexity is the exponential of the loss, this indicated that the loss was also increasing. 
+        I stopped at 5th epoch for pretraining for two reasons. <br>
+        First, validation perplexity started increasing after the 4th epoch, peaking by the 6th.
+        Since perplexity is the exponential of the loss, this indicated that the loss was also increasing. <br>
         Second, each epoch required around 36 hours to complete.
-        Given that the 4th epoch showed the best validation perplexity, I decided to proceed with fine-tuning this model as a chatbot.<br><br>
+        Given that the 4th epoch showed the best validation perplexity, I decided to fine-tune this model as a chatbot.<br>
         (Although I mentioned it breifly, this stage involved a lot of trial and error. Initially, I attempted to train a 1B model first, 
         but it couldn't run on my GPU efficiently. So changed to 72M, read Chinchilla Scaling Law paper, found the optimal model size that can be pretrained. This took about a month.)
 
       </p>
     </div>
-
-      <picture class="project-img">
-        <source srcset="../AI_Projects/KoRaptor_Images/inference_mobile.png" media="(max-width: 768px)" />
-        <img src="../AI_Projects/KoRaptor_Images/inference.png" alt="Inference Result" />
-      </picture>
-    </div>
     
 
     <div class="project-content">
       <p class="description">
-        As you can see from the image, the Next Token Prediction is actually not bad.
+        As you can see from the image, the Next Token Prediction is actually not bad. (input: "대통령은", output: "이번 행사를 통해 우리 지역의 소중한 생명을 보호하기 위해 모든 것을 다하겠다"고 약속했다.")
         For those who don't understand korean, my prompt was "The president has".
         Raptor model predicted the next sentence as "promised that 'Through this ceremeony, we will do our best to protect precious lives living in our community.'".
         You can tell that the model understood how korean works. 
       </p>
     </div>
+
+    <p class="sectorTitle">
+        Fine-tune Results
+      </p>
+    <div class="project-content">
+      <p class="description">
+        I fine-tuned with Korean multi-turn dataset from AI Hub. First, I preprocessed to make a row of prompt and answer set.
+        I forgot to mask out the prompt which is the user input, the first fine-tuned model kept whining.
+        So, I masked the user prompt and re-trained, finally made the chatbot to answer like chatbot.
+        But, due to the lack of finetuning dataset and small parameter, it lacks performance. I will improve this model and build English version Raptor, too.
+      </p>
+    </div>
+
+    <div class="video-container">
+  <iframe
+    src="https://www.youtube.com/embed/USPKsNLCRqE"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
+
   </section>
 
 
