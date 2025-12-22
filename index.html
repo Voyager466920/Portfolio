@@ -18,6 +18,7 @@
         <a href="index.html">Junha</a>
         <a href="ai_development.html">AI</a>
         <a href="app_development.html">App</a>
+        <a href="files/CV.pdf" target="_blank" rel="noopener noreferrer">CV</a>
         <a href="contact.html">Contact</a>
         <i id="darkModeToggle" class="fas fa-moon"></i>
     </div>
@@ -231,12 +232,15 @@
         const navLinks = document.querySelectorAll('.top-menu a');
 
         navLinks.forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault(); // 기본 동작 방지
-                const targetUrl = link.getAttribute('href');
-                location.replace(targetUrl); // 스택을 쌓지 않고 페이지 전환
-            });
+        link.addEventListener('click', (event) => {
+            if (link.getAttribute('target') === '_blank') return;
+
+            event.preventDefault();
+            const targetUrl = link.getAttribute('href');
+            window.location.assign(targetUrl);
         });
+        });
+
 
     </script>
 </body>
