@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sealant Problem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/telescope.png" type="image/png">
+    <link rel="stylesheet" href="ai_projects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="top-menu">
+        <a href="../index.html">Junha</a>
+        <a href="../ai_development.html">AI</a>
+        <a href="../app_development.html">App</a>
+        <a href="../files/CV.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+        <a href="../contact.html">Contact</a>
+        <i id="darkModeToggle" class="fas fa-moon"></i>
+    </div>
+  <section class="project-page">
+    
+    <div class="project-content">
+      <h1 class="project-title">MMMMoE</h1>
+      <p class="subtitle">MultiModal Meta-data Mixture of Experts</p>
+
+      <p class="description">
+        *Disclaimer : This paper is not currently published. Due to the privacy measures, I won't provide the detailed results. <br><br>
+        I enjoy building my own model from scratch. Of course, I use bunch of PyTorch moudles and get help from ChatGPT or Gemini, I feel happy when I have full control.
+        When I first encountered the RTIOD(Robust Thermal-Image Object Detection) challenge, I thought it would be easy. How could it be difficult for object detection?
+        We can use YOLO, if the accuracy is too low, we can use Faster-RCNN or other 2-stage detectors. 
+      </p>
+
+      <p class="sectorTitle">
+        Problem Identification
+      </p>
+      <picture class="project-img">
+        <img src="../AI_Projects/RTIOD_Images/task.png" alt="Fake and real news" />
+      </picture>
+      <p class="description">
+        The task is more challenging than it may initially appear. Our objective is to classify four object categories—people, motorcycles, bicycles, and cars—from thermal images. 
+        Since thermal imagery is highly sensitive to environmental conditions, the challenge dataset provides daily metadata to account for these variations. 
+        In total, twelve types of metadata are available, including temperature, humidity, and solar radiation.<br>
+        All images are captured from a fixed viewpoint using a 120-frame thermal camera. Due to the nature of thermal sensors, the images are grayscale, lacking color information. 
+        As a result, conventional visual cues such as color and texture are not directly applicable. The model must therefore rely on structural and thermal patterns to distinguish 
+        between object classes, which significantly increases the difficulty of the task.
+         <br><br>
+
+        Initially, we assumed that single-stage detectors such as YOLO or RT-DETR would be sufficient for this task. 
+        Given the apparent simplicity of the dataset, employing a two-stage detector seemed unnecessarily complex. 
+        We also expected that the use of metadata would not be required, as incorporating metadata would transform the problem into a multimodal learning task.<br>
+
+        However, after several attempts, it became clear that the problem was more challenging than I thought. 
+        In particular, the dataset suffers from severe class imbalance: bicycles and motorcycles are significantly underrepresented, accounting for approximately 0.02% of the entire dataset. 
+        In contrast, people and cars appear frequently and occupy relatively large regions in the images. 
+        Moreover, bicycles and motorcycles are difficult to distinguish even for human observers in thermal imagery, further complicating the classification task.
+        
+      <p class="sectorTitle">
+        MMMMoE
+      </p>
+      <picture class="project-img">
+        <img src="../AI_Projects/RTIOD_Images/MMMMoE_Architecture" alt="" />
+      </picture>
+      <p class="description">
+       As shown in the figure above, I integrate a metadata-conditioned Mixture-of-Experts (MoE) block between the CNN backbone and the Feature Pyramid Network. 
+       The backbone extracts hierarchical visual features from grayscale thermal images captured under varying environmental conditions. 
+       Given the sensitivity of thermal imagery to such conditions, the MoE block leverages metadata to guide expert selection through a routing mechanism.<br><br>
+
+      The router assigns features to a subset of experts, enabling specialized feature transformations tailored to different environmental contexts. 
+      The outputs of the experts are then fused and forwarded to the FPN, which aggregates information across multiple scales. 
+      The resulting feature maps are used by the RPN and RoI heads for object proposal generation and final detection.     
+        </p>
+      </p>
+      
+      <p class="sectorTitle">
+        Results
+      </p>
+
+    <div class="project-content">
+      <p class="description">
+        As a baseline, we evaluated a YOLOv8m model provided by the challenge organizers. 
+        The baseline achieved a weighted mAP@0.5 of 0.429 on the seasonal consistency test set, with an overall mAP@0.5 of 0.48 and mAP@[0.5:0.95] of 0.285. 
+        While the baseline demonstrates stable performance across months, its overall detection accuracy remains limited, particularly under challenging seasonal variations. <br><br>
+
+        My model was evaluated using a class-wise mAP@0.5 metric. The model achieved an overall mAP@0.5 of 0.5313, with class-specific performance of 0.6866, 0.3342, 0.1707, and 0.8626 for Class 1 through Class 4, respectively. 
+        Although direct comparison with the YOLO baseline is not entirely straightforward due to differences in evaluation protocols and aggregation methods, MMMMoE shows competitive—and in some cases superior—performance at the class level.
+        <br><br>
+        Although the proposed model introduces a novel metadata-conditioned MoE architecture, it was not selected for final use. Other participants’ models demonstrated better performance under the official evaluation criteria, and thus were preferred for submission. 
+        This choice was driven by empirical results rather than architectural considerations.
+
+      </p>
+    </div>    
+  </section>
+
+
+  <script>
+        // 다크 모드 토글
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            darkModeEnabled = true;
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.remove('fa-moon');
+            darkModeToggle.classList.add('fa-lightbulb');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            darkModeEnabled = !darkModeEnabled;
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+            if (darkModeEnabled) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-lightbulb');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.classList.remove('fa-lightbulb');
+                darkModeToggle.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        const navLinks = document.querySelectorAll('.top-menu a');
+
+        navLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            if (link.getAttribute('target') === '_blank') return;
+
+            event.preventDefault();
+            const targetUrl = link.getAttribute('href');
+            window.location.assign(targetUrl);
+        });
+        });
+
+    </script>
+</body>
+</html>
