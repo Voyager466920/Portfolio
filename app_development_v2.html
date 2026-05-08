@@ -14,7 +14,7 @@
     <!-- 상단 메뉴 -->
     <div class="top-menu">
         <a href="index.html">Joonha</a>
-        <a href="ai_development.html">AI</a>
+        <a href="ai_development_v2.html">AI</a>
         <a href="app_development_v2.html">App</a>
         <a href="files/CV.pdf" target="_blank" rel="noopener noreferrer">CV</a>
         <i id="darkModeToggle" class="fas fa-moon"></i>
@@ -121,6 +121,13 @@
                 }
                 phoneStage.classList.add('article-open');
                 articlePanel.setAttribute('aria-hidden', 'false');
+
+                // 좁은 화면(패널이 폰 아래로 떨어진 경우): 글 패널이 보이도록 자동 스크롤
+                if (window.matchMedia('(max-width: 1100px)').matches) {
+                    setTimeout(() => {
+                        articlePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 500);
+                }
             } else {
                 phoneStage.classList.remove('article-open');
                 articlePanel.setAttribute('aria-hidden', 'true');
@@ -154,7 +161,7 @@
         const darkModeToggle = document.getElementById('darkModeToggle');
         let darkModeEnabled = false;
 
-        if (localStorage.getItem('darkMode') === 'enabled') {
+        if (localStorage.getItem('darkMode') !== 'disabled') {
             darkModeEnabled = true;
             document.body.classList.add('dark-mode');
             darkModeToggle.classList.remove('fa-moon');

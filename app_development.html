@@ -16,7 +16,7 @@
     <!-- 상단 메뉴 -->
     <div class="top-menu">
         <a href="index.html">Joonha</a>
-        <a href="ai_development.html">AI</a>
+        <a href="ai_development_v2.html">AI</a>
         <a href="app_development.html">App</a>
         <a href="files/CV.pdf" target="_blank" rel="noopener noreferrer">CV</a>
         <i id="darkModeToggle" class="fas fa-moon"></i>
@@ -97,7 +97,7 @@
         const darkModeToggle = document.getElementById('darkModeToggle');
         let darkModeEnabled = false;
 
-        if (localStorage.getItem('darkMode') === 'enabled') {
+        if (localStorage.getItem('darkMode') !== 'disabled') {
             darkModeEnabled = true;
             document.body.classList.add('dark-mode');
             darkModeToggle.classList.remove('fa-moon');

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Projects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="images/telescope.png" type="image/png"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="ai_development_v2.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+
+<body class="ai-v2-body">
+  <!-- 상단 메뉴 -->
+  <div class="top-menu">
+    <a href="index.html" id="home">Joonha</a>
+    <a href="ai_development_v2.html" id="AI">AI</a>
+    <a href="app_development_v2.html" id="App">App</a>
+    <a href="files/CV.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+    <i id="darkModeToggle" class="fas fa-moon"></i>
+  </div>
+
+  <!-- CRT 모니터가 화면 전체를 덮음 -->
+  <div class="crt-monitor">
+    <div class="crt-screen">
+      <!-- Hero (CRT 화면 상단) -->
+      <section class="hero">
+        <div class="bigtitle">Pushing the Limits.</div>
+        <div class="subtext"><span class="highlight">Artificial Intelligence</span> Projects</div>
+      </section>
+
+      <!-- Terminal + Article Panel -->
+      <section class="terminal-stage" id="terminalStage">
+        <div class="terminal-row">
+      <div class="terminal" id="terminal">
+        <div class="terminal-bar">
+          <div class="dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="title">joonha@cuda — torch — 80×24</div>
+        </div>
+
+        <div class="terminal-body" id="terminalBody">
+          <div class="line"><span class="prompt-user">(torch)</span> <span class="prompt-host">joonha@A100</span><span class="prompt-path">:~/ai_projects</span><span class="prompt-sym">$</span> <span class="cmd">./list_models.py</span></div>
+          <div class="line muted">loading checkpoint registry... <span class="ok">done</span></div>
+          <div class="line muted">found <span class="num">5</span> models:</div>
+          <div class="line spacer"></div>
+
+          <button class="model-row" data-id="1" data-url="AI_Projects/RTIOD.html">
+            <span class="idx">[1]</span>
+            <span class="name">MMMMoE</span>
+            <span class="meta">
+              <span class="meta-tag tag-vision">Vision-MoE</span>
+              <span class="meta-tag tag-paper">WACV</span>
+              <span class="meta-tag tag-domain">thermal</span>
+            </span>
+          </button>
+          <button class="model-row" data-id="2" data-url="AI_Projects/koraptor.html">
+            <span class="idx">[2]</span>
+            <span class="name">KoRaptor-150M</span>
+            <span class="meta">
+              <span class="meta-tag tag-llm">Korean LM</span>
+              <span class="meta-tag tag-params">150M</span>
+              <span class="meta-tag tag-gpu">1× RTX 3090</span>
+            </span>
+          </button>
+          <button class="model-row" data-id="3" data-url="AI_Projects/waithowever.html">
+            <span class="idx">[3]</span>
+            <span class="name">Wait-However</span>
+            <span class="meta">
+              <span class="meta-tag tag-llm">LLM</span>
+              <span class="meta-tag tag-domain">on iOS</span>
+              <span class="meta-tag tag-paper">fact-checker</span>
+            </span>
+          </button>
+          <button class="model-row" data-id="4" data-url="AI_Projects/sealant.html">
+            <span class="idx">[4]</span>
+            <span class="name">Sealant-ViT</span>
+            <span class="meta">
+              <span class="meta-tag tag-vision">ViT / TinyVGG</span>
+              <span class="meta-tag tag-domain">defect cls</span>
+            </span>
+          </button>
+          <button class="model-row" data-id="5" data-url="AI_Projects/chatgpt.html">
+            <span class="idx">[5]</span>
+            <span class="name">GPT-from-Scratch</span>
+            <span class="meta">
+              <span class="meta-tag tag-llm">GPT</span>
+              <span class="meta-tag tag-paper">pretrain</span>
+              <span class="meta-tag tag-domain">accidental</span>
+            </span>
+          </button>
+
+          <div class="line spacer"></div>
+          <div class="line prompt-line" id="promptLine"><span class="prompt-arrow">➤</span> <span class="prompt-text">select model to inspect [1-5]:</span> <span class="cursor" id="cursor"></span></div>
+        </div>
+
+        <div class="terminal-status">
+          <span class="status-item"><span class="status-dot"></span>cuda:0</span>
+          <span class="status-item">4× A100</span>
+          <span class="status-item">torch 2.4</span>
+          <span class="status-item ticker" id="ticker">loss: 0.123 ↓</span>
+        </div>
+      </div>
+
+      <aside class="article-panel" id="articlePanel" aria-hidden="true">
+        <button class="article-close" id="articleClose" aria-label="Close article">&times;</button>
+        <iframe class="article-frame" id="articleFrame" title="Project article"></iframe>
+      </aside>
+        </div>
+      </section>
+    </div><!-- /crt-screen -->
+    <span class="crt-brand">JOONHA-CRT · MODEL 2026</span>
+    <span class="crt-led" aria-hidden="true"></span>
+  </div><!-- /crt-monitor -->
+
+  <script>
+    function scrollToTerminal() {
+      document.getElementById('terminalStage').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 프로젝트별 에러 데이터
+    const projects = {
+      '1': {
+        cmd: 'torch.load("mmmmoe.pt")',
+        error: [
+          'MetadataIntegrityError: MoE routing metrics unreliable',
+          '  Reason: Logging/pipeline mismatch → cannot diagnose expert specialization',
+          '  Outcome: Vision-MoE underperforms baseline; root cause unknown'
+        ]
+      },
+      '2': {
+        cmd: 'AutoModel.from_pretrained("koraptor-150m")',
+        error: [
+          'ValueError: The checkpoint you are trying to load has model type "raptor"',
+          '  but Transformers does not recognize this architecture.'
+        ]
+      },
+      '3': {
+        cmd: 'flutter run --release',
+        error: [
+          'Exception Type:    EXC_BAD_ACCESS (SIGSEGV)',
+          'Exception Subtype: KERN_INVALID_ADDRESS at 0x0000000000000063',
+          'Thread 1 Crashed:',
+          '  0   libllama.dylib  llama_model_load_from_file_impl + 0',
+          '  1   libllama.dylib  llama_model_load_from_file + 43',
+          '  2   Runner          main + 36'
+        ]
+      },
+      '4': {
+        cmd: 'python train_sealant.py --epochs 50',
+        error: [
+          'RuntimeError: Given groups=1, weight of size [64, 3, 7, 7],',
+          '  expected input[1, 24, 24] to have 3 channels, but got 1 channels instead.'
+        ]
+      },
+      '5': {
+        cmd: 'python train_gpt.py --batch-size 32',
+        error: [
+          'RuntimeError: CUDA out of memory.',
+          '  Tried to allocate 200.00 MiB (GPU 0; 15.78 GiB total capacity;',
+          '  14.56 GiB already allocated; 38.44 MiB free).'
+        ]
+      }
+    };
+
+    const terminalBody = document.getElementById('terminalBody');
+    const promptLine = document.getElementById('promptLine');
+    const articleFrame = document.getElementById('articleFrame');
+    const articlePanel = document.getElementById('articlePanel');
+    const articleClose = document.getElementById('articleClose');
+    const terminalStage = document.getElementById('terminalStage');
+    // 초기 모델 리스트 (try-another 시 복제용으로 보관)
+    const initialRows = Array.from(document.querySelectorAll('.model-row'));
+
+    // iframe 안의 외부 요소(상단 메뉴 등) 숨김
+    articleFrame.addEventListener('load', () => {
+      try {
+        const doc = articleFrame.contentDocument;
+        if (!doc) return;
+        const style = doc.createElement('style');
+        style.textContent = `
+          .top-menu { display: none !important; }
+          body { padding-top: 0 !important; margin-top: 0 !important; }
+        `;
+        doc.head.appendChild(style);
+      } catch (e) { /* cross-origin: 무시 */ }
+    });
+
+    let selecting = false;
+
+    function appendLine(html, classes = '') {
+      const div = document.createElement('div');
+      div.className = 'line append ' + classes;
+      div.innerHTML = html;
+      terminalBody.appendChild(div);
+      // 새로 추가된 줄로 자동 스크롤
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+      return div;
+    }
+
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+
+    function animateProgress(line, durationMs = 1400, segments = 22) {
+      return new Promise(resolve => {
+        const start = performance.now();
+        function tick(now) {
+          const elapsed = now - start;
+          const pct = Math.min(1, elapsed / durationMs);
+          const filled = Math.round(pct * segments);
+          const empty = segments - filled;
+          const percent = Math.round(pct * 100);
+          const bar = '█'.repeat(filled) + '░'.repeat(empty);
+          line.innerHTML = `loading model... <span class="bar">[${bar}]</span> <span class="pct">${percent.toString().padStart(3, ' ')}%</span>`;
+          if (pct < 1) {
+            requestAnimationFrame(tick);
+          } else {
+            resolve();
+          }
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+
+    async function pickModel(id) {
+      if (selecting) return;
+      const proj = projects[id];
+      if (!proj) return;
+      selecting = true;
+
+      // 모든 cursor 제거 (이전 prompt 깜빡임 정지)
+      document.querySelectorAll('.cursor').forEach(c => c.remove());
+
+      // 가장 최근 prompt에 선택된 번호 표시
+      const allPrompts = document.querySelectorAll('.prompt-line');
+      const lastPrompt = allPrompts[allPrompts.length - 1] || promptLine;
+      const sel = document.createElement('span');
+      sel.className = 'sel-num';
+      sel.textContent = ' ' + id;
+      lastPrompt.appendChild(sel);
+
+      // 1) 명령어 라인
+      await wait(200);
+      appendLine(`<span class="prompt-user">(torch)</span> <span class="prompt-host">joonha@A100</span><span class="prompt-path">:~/ai_projects</span><span class="prompt-sym">$</span> <span class="cmd">${proj.cmd}</span>`);
+
+      // 2) 프로그레스 바 — 0% → 100%
+      await wait(180);
+      const progLine = appendLine('loading model... <span class="bar">[░░░░░░░░░░░░░░░░░░░░░░]</span> <span class="pct">  0%</span>', 'progress');
+      await animateProgress(progLine, 1400);
+      progLine.innerHTML = 'loading model... <span class="ok">done</span>';
+
+      // 3) 글 패널 열기
+      const url = document.querySelector(`.model-row[data-id="${id}"]`)?.getAttribute('data-url');
+      if (url) {
+        if (articleFrame.getAttribute('src') !== url) {
+          articleFrame.setAttribute('src', url);
+        }
+        terminalStage.classList.add('article-open');
+        articlePanel.setAttribute('aria-hidden', 'false');
+
+        // 좁은 화면(패널이 터미널 아래로 떨어진 경우): 글 패널이 보이도록 자동 스크롤
+        if (window.matchMedia('(max-width: 1300px)').matches) {
+          setTimeout(() => {
+            articlePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 600);
+        }
+      }
+
+      // 4) 가중치 초기화 + 에러 폭발
+      await wait(220);
+      appendLine('initializing weights...', 'muted');
+      await wait(220);
+      proj.error.forEach((msg, i) => {
+        const html = i === 0
+          ? `<span class="err-tag">✗</span> ${escapeHtml(msg)}`
+          : escapeHtml(msg);
+        appendLine(html, 'err');
+      });
+
+      // 5) 다음 선택을 위해 모델 리스트 다시 출력 + 새 프롬프트
+      await wait(220);
+      appendLine('', 'spacer');
+      appendLine('available models:', 'muted');
+      initialRows.forEach((row, i) => {
+        const clone = row.cloneNode(true);
+        clone.classList.add('append');
+        clone.style.animationDelay = (i * 40) + 'ms';
+        terminalBody.appendChild(clone);
+      });
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+
+      await wait(180);
+      appendLine('', 'spacer');
+      appendLine(`<span class="prompt-arrow">➤</span> <span class="prompt-text">try another? [1-5]:</span> <span class="cursor"></span>`, 'prompt-line again');
+
+      selecting = false;
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // 이벤트 위임 — 초기 + 복제된 모델 행 모두 처리
+    terminalBody.addEventListener('click', (e) => {
+      const row = e.target.closest('.model-row');
+      if (row) pickModel(row.getAttribute('data-id'));
+    });
+
+    // 키보드 1-5로 선택
+    document.addEventListener('keydown', (e) => {
+      if (['1','2','3','4','5'].includes(e.key)) {
+        pickModel(e.key);
+      }
+    });
+
+    articleClose.addEventListener('click', () => {
+      terminalStage.classList.remove('article-open');
+      articlePanel.setAttribute('aria-hidden', 'true');
+      setTimeout(() => articleFrame.removeAttribute('src'), 400);
+    });
+
+    // 상태바의 loss 티커 — 살짝 살아있는 느낌
+    const ticker = document.getElementById('ticker');
+    let lossVal = 0.123;
+    setInterval(() => {
+      lossVal = Math.max(0.01, lossVal + (Math.random() - 0.6) * 0.02);
+      const arrow = Math.random() > 0.5 ? '↓' : '↑';
+      ticker.textContent = `loss: ${lossVal.toFixed(3)} ${arrow}`;
+    }, 1800);
+  </script>
+
+  <script>
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    let darkModeEnabled = false;
+
+    if (localStorage.getItem('darkMode') !== 'disabled') {
+      darkModeEnabled = true;
+      document.body.classList.add('dark-mode');
+      darkModeToggle.classList.remove('fa-moon');
+      darkModeToggle.classList.add('fa-lightbulb');
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+      darkModeEnabled = !darkModeEnabled;
+      document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+      if (darkModeEnabled) {
+        darkModeToggle.classList.remove('fa-moon');
+        darkModeToggle.classList.add('fa-lightbulb');
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        darkModeToggle.classList.remove('fa-lightbulb');
+        darkModeToggle.classList.add('fa-moon');
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    });
+
+    // 상단 메뉴 네비게이션
+    const navLinks = document.querySelectorAll('.top-menu a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', event => {
+        if (link.getAttribute('target') === '_blank') return;
+        event.preventDefault();
+        const targetUrl = link.getAttribute('href');
+        location.assign(targetUrl);
+      });
+    });
+  </script>
+</body>
+</html>

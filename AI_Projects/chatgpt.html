@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HiabGPT</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="../images/spaceship.svg" type="image/svg+xml">
+    <link rel="icon" href="../images/telescope.png" type="image/png">
     <link rel="stylesheet" href="ai_projects.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="top-menu">
         <a href="../index.html">Junha</a>
-        <a href="../ai_development.html">AI</a>
+        <a href="../ai_development_v2.html">AI</a>
         <a href="../app_development_v2.html">App</a>
         <a href="../files/CV.pdf" target="_blank" rel="noopener noreferrer">CV</a>
         <i id="darkModeToggle" class="fas fa-moon"></i>
@@ -98,7 +98,7 @@
         const darkModeToggle = document.getElementById('darkModeToggle');
         let darkModeEnabled = false;
 
-        if (localStorage.getItem('darkMode') === 'enabled') {
+        if (localStorage.getItem('darkMode') !== 'disabled') {
             darkModeEnabled = true;
             document.body.classList.add('dark-mode');
             darkModeToggle.classList.remove('fa-moon');

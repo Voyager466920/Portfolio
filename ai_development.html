@@ -169,7 +169,7 @@
     let darkModeEnabled = false;
 
     // 로컬 스토리지에 저장된 설정 복원
-    if (localStorage.getItem('darkMode') === 'enabled') {
+    if (localStorage.getItem('darkMode') !== 'disabled') {
       darkModeEnabled = true;
       document.body.classList.add('dark-mode');
       darkModeToggle.classList.remove('fa-moon');
