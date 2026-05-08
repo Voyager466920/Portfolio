@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/spaceship.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app_development_v2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 상단 메뉴 -->
+    <div class="top-menu">
+        <a href="index.html">Joonha</a>
+        <a href="ai_development.html">AI</a>
+        <a href="app_development_v2.html">App</a>
+        <a href="files/CV.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+        <i id="darkModeToggle" class="fas fa-moon"></i>
+    </div>
+
+    <div class="phone-stage" id="phoneStage">
+        <div class="phone-caption">Click an app to see it in action.</div>
+
+        <div class="stage-row">
+        <div class="phone" id="phone">
+            <div class="phone-island"></div>
+            <div class="phone-screen">
+                <!-- 홈 화면 -->
+                <div class="home-screen" id="homeScreen">
+                    <div class="status-bar">
+                        <span class="status-time">9:41</span>
+                        <span class="status-icons">
+                            <i class="fas fa-signal"></i>
+                            <i class="fas fa-wifi"></i>
+                            <i class="fas fa-battery-three-quarters"></i>
+                        </span>
+                    </div>
+
+                    <div class="app-grid">
+                        <button class="app-icon" data-video="videos/endingcredit.mp4" data-url="app_projects/endingcredit.html" data-name="Ending Credit">
+                            <img class="icon-symbol" src="images/app_icons/endingcredit.png" alt="Ending Credit">
+                            <span class="icon-label">Ending Credit</span>
+                        </button>
+                        <button class="app-icon" data-video="videos/feelm.mp4" data-url="app_projects/feelm.html" data-name="FEELM">
+                            <img class="icon-symbol" src="images/app_icons/feelm.png" alt="FEELM">
+                            <span class="icon-label">FEELM</span>
+                        </button>
+                        <button class="app-icon" data-video="videos/plantabit.mp4" data-url="app_projects/plantabit.html" data-name="PLANTABIT">
+                            <img class="icon-symbol" src="images/app_icons/plantabit.png" alt="PLANTABIT">
+                            <span class="icon-label">PLANTABIT</span>
+                        </button>
+                        <button class="app-icon" data-video="videos/sogak.mp4" data-url="app_projects/sogak.html" data-name="SOGAK">
+                            <img class="icon-symbol" src="images/app_icons/sogak.png" alt="SOGAK">
+                            <span class="icon-label">SOGAK</span>
+                        </button>
+                        <button class="app-icon" data-video="videos/pequod.mp4" data-url="app_projects/pequod.html" data-name="Pequod">
+                            <img class="icon-symbol" src="images/app_icons/pequod.png" alt="Pequod">
+                            <span class="icon-label">Pequod</span>
+                        </button>
+                        <button class="app-icon" data-video="videos/wait_however.mp4" data-url="app_projects/waithowever.html" data-name="Wait, However">
+                            <img class="icon-symbol" src="images/app_icons/waithowever.png" alt="Wait, However">
+                            <span class="icon-label">Wait, However</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 앱 실행 화면 (영상) -->
+                <div class="app-view" id="appView">
+                    <video id="appVideo" muted loop playsinline webkit-playsinline></video>
+                </div>
+            </div>
+
+            <div class="phone-home-indicator" id="homeIndicator" title="Back to home"></div>
+        </div>
+
+        <aside class="article-panel" id="articlePanel" aria-hidden="true">
+            <button class="article-close" id="articleClose" aria-label="Close article">&times;</button>
+            <iframe class="article-frame" id="articleFrame" title="Project article"></iframe>
+        </aside>
+        </div>
+    </div>
+
+    <script>
+        const homeScreen = document.getElementById('homeScreen');
+        const appView = document.getElementById('appView');
+        const appVideo = document.getElementById('appVideo');
+        const homeIndicator = document.getElementById('homeIndicator');
+        const phone = document.getElementById('phone');
+        const appIcons = document.querySelectorAll('.app-icon');
+        const phoneStage = document.getElementById('phoneStage');
+        const articlePanel = document.getElementById('articlePanel');
+        const articleFrame = document.getElementById('articleFrame');
+        const articleClose = document.getElementById('articleClose');
+
+        // iframe 안의 페이지에서 상단 메뉴 등 외부 요소를 숨겨 임베드처럼 보이게
+        articleFrame.addEventListener('load', () => {
+            try {
+                const doc = articleFrame.contentDocument;
+                if (!doc) return;
+                const style = doc.createElement('style');
+                style.textContent = `
+                    .top-menu { display: none !important; }
+                    body { padding-top: 0 !important; margin-top: 0 !important; }
+                `;
+                doc.head.appendChild(style);
+            } catch (e) {
+                /* cross-origin — 무시 */
+            }
+        });
+
+        function openApp(videoSrc, projectUrl) {
+            appVideo.src = videoSrc;
+            phone.classList.add('app-open');
+            appVideo.play().catch(() => {});
+
+            if (projectUrl) {
+                if (articleFrame.getAttribute('src') !== projectUrl) {
+                    articleFrame.setAttribute('src', projectUrl);
+                }
+                phoneStage.classList.add('article-open');
+                articlePanel.setAttribute('aria-hidden', 'false');
+            } else {
+                phoneStage.classList.remove('article-open');
+                articlePanel.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        function closeApp() {
+            phone.classList.remove('app-open');
+            phoneStage.classList.remove('article-open');
+            articlePanel.setAttribute('aria-hidden', 'true');
+            setTimeout(() => {
+                appVideo.pause();
+                appVideo.removeAttribute('src');
+                appVideo.load();
+                articleFrame.removeAttribute('src');
+            }, 400);
+        }
+
+        appIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const src = icon.getAttribute('data-video');
+                const url = icon.getAttribute('data-url');
+                openApp(src, url);
+            });
+        });
+
+        homeIndicator.addEventListener('click', closeApp);
+        articleClose.addEventListener('click', closeApp);
+
+        // 다크 모드 토글
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = false;
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            darkModeEnabled = true;
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.remove('fa-moon');
+            darkModeToggle.classList.add('fa-lightbulb');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            darkModeEnabled = !darkModeEnabled;
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+
+            if (darkModeEnabled) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-lightbulb');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.classList.remove('fa-lightbulb');
+                darkModeToggle.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // 상단 메뉴 네비게이션
+        const navLinks = document.querySelectorAll('.top-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                if (link.getAttribute('target') === '_blank') return;
+                event.preventDefault();
+                const targetUrl = link.getAttribute('href');
+                location.assign(targetUrl);
+            });
+        });
+    </script>
+</body>
+</html>
