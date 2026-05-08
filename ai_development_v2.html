@@ -112,6 +112,10 @@
         <button class="article-close" id="articleClose" aria-label="Close article">&times;</button>
         <iframe class="article-frame" id="articleFrame" title="Project article"></iframe>
       </aside>
+      <button class="article-close-mobile" id="articleCloseMobile" aria-label="Close article">
+        <i class="fas fa-xmark"></i>
+        <span>Close article</span>
+      </button>
         </div>
       </section>
     </div><!-- /crt-screen -->
@@ -178,7 +182,29 @@
     // 초기 모델 리스트 (try-another 시 복제용으로 보관)
     const initialRows = Array.from(document.querySelectorAll('.model-row'));
 
-    // iframe 안의 외부 요소(상단 메뉴 등) 숨김
+    // iframe 안의 외부 요소 숨김 + 화면 폭에 따라 스크롤 모드 분기
+    function fitArticleFrameHeight() {
+      try {
+        const doc = articleFrame.contentDocument;
+        if (!doc) return;
+        const isMobile = window.matchMedia('(max-width: 1300px)').matches;
+        if (isMobile) {
+          // 모바일: iframe 내부 스크롤 잠그고 콘텐츠 전체 높이로 펼침
+          if (doc.body) doc.body.style.overflow = 'hidden';
+          const h = Math.max(
+            doc.documentElement.scrollHeight,
+            doc.body ? doc.body.scrollHeight : 0
+          );
+          articleFrame.style.height = h + 'px';
+        } else {
+          // 데스크톱: iframe 내부 자체 스크롤 가능, 패널 크기 안에서 작동
+          if (doc.body) doc.body.style.overflow = '';
+          articleFrame.style.height = '';
+        }
+      } catch (e) { /* cross-origin: 무시 */ }
+    }
+
+    let articleResizeObs = null;
     articleFrame.addEventListener('load', () => {
       try {
         const doc = articleFrame.contentDocument;
@@ -189,8 +215,26 @@
           body { padding-top: 0 !important; margin-top: 0 !important; }
         `;
         doc.head.appendChild(style);
+
+        // 이미지/폰트 늦은 로드로 인한 높이 변화 추적
+        if (articleResizeObs) articleResizeObs.disconnect();
+        if (typeof ResizeObserver !== 'undefined') {
+          articleResizeObs = new ResizeObserver(() => fitArticleFrameHeight());
+          articleResizeObs.observe(doc.documentElement);
+          if (doc.body) articleResizeObs.observe(doc.body);
+        }
+        doc.querySelectorAll('img').forEach(img => {
+          if (!img.complete) img.addEventListener('load', fitArticleFrameHeight, { once: true });
+        });
       } catch (e) { /* cross-origin: 무시 */ }
+
+      fitArticleFrameHeight();
+      setTimeout(fitArticleFrameHeight, 250);
+      setTimeout(fitArticleFrameHeight, 800);
+      setTimeout(fitArticleFrameHeight, 2000);
     });
+
+    window.addEventListener('resize', fitArticleFrameHeight);
 
     let selecting = false;
 
@@ -318,11 +362,14 @@
       }
     });
 
-    articleClose.addEventListener('click', () => {
+    function closeArticle() {
       terminalStage.classList.remove('article-open');
       articlePanel.setAttribute('aria-hidden', 'true');
       setTimeout(() => articleFrame.removeAttribute('src'), 400);
-    });
+    }
+
+    articleClose.addEventListener('click', closeArticle);
+    document.getElementById('articleCloseMobile')?.addEventListener('click', closeArticle);
 
     // 상태바의 loss 티커 — 살짝 살아있는 느낌
     const ticker = document.getElementById('ticker');

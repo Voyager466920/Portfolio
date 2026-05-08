@@ -827,6 +827,11 @@ a {
 .article-close:hover { background: rgba(0, 0, 0, 0.8); }
 .article-close:active { transform: scale(0.92); }
 
+/* 모바일 닫기 버튼 — 데스크톱에선 숨김 */
+.article-close-mobile {
+  display: none;
+}
+
 .dark-mode .article-panel {
   background: #1c1c1e;
 }
@@ -858,6 +863,72 @@ a {
     inset: auto;
     width: auto;
     min-height: calc(100vh - 50px - 90px);
+    /* 콘텐츠(글) 길이만큼 자라야 하므로 모바일에선 overflow 풀음 */
+    overflow: visible;
+  }
+
+  /* 모바일에선 비네팅이 길어진 페이지에 거슬릴 수 있으니 비활성화 */
+  .crt-screen::after {
+    display: none;
+  }
+
+  /* 모바일 floating 닫기 버튼 — Pip-Boy phosphor 그린 CRT 톤 */
+  .article-close-mobile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 13px 26px;
+    background: rgba(0, 26, 0, 0.88);
+    color: #4eff4e;
+    border: 1px solid rgba(78, 255, 78, 0.55);
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    z-index: 300;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.5),
+      0 0 18px rgba(78, 255, 78, 0.25);
+    text-shadow:
+      0 0 6px rgba(78, 255, 78, 0.7),
+      0 0 14px rgba(78, 255, 78, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.18s ease, background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .article-close-mobile i {
+    font-size: 0.9rem;
+  }
+
+  .article-close-mobile:hover {
+    background: rgba(0, 50, 0, 0.92);
+    border-color: rgba(78, 255, 78, 0.85);
+    color: #87ff87;
+  }
+
+  .article-close-mobile:active {
+    transform: translateX(-50%) translateY(1px);
+  }
+
+  /* 글 패널이 열려 있을 때만 표시 */
+  .terminal-stage.article-open .article-close-mobile {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* 데스크톱 작은 × 버튼은 모바일에서 숨김 */
+  .article-close {
+    display: none;
   }
 
   .terminal-row {
@@ -875,16 +946,19 @@ a {
     height: 0;
     margin-left: 0;
     transform: translateY(-20px);
-    transition: height 0.45s cubic-bezier(0.65, 0, 0.35, 1),
-                margin-top 0.45s cubic-bezier(0.65, 0, 0.35, 1),
-                opacity 0.35s ease 0.1s,
-                transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+    transition: opacity 0.3s ease;
+  }
+
+  .article-frame {
+    height: auto;
+    min-height: 200px;
   }
 
   .terminal-stage.article-open .article-panel {
     width: 100%;
     max-width: 720px;
-    height: 70vh;
+    /* 콘텐츠 전체 높이만큼 — JS가 iframe 높이를 scrollHeight로 설정 */
+    height: auto;
     margin-left: 0;
     margin-top: 24px;
     transform: translateY(0);
@@ -976,9 +1050,6 @@ a {
     margin-left: 0;
   }
 
-  .terminal-stage.article-open .article-panel {
-    height: 75vh;
-  }
 }
 
 /* 매우 좁은 화면에서 prompt 줄바꿈 강제 */
