@@ -367,11 +367,13 @@ body {
     box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4);
 }
 
-/* Projects 하단 CTA — AI 탭으로 이동 */
+/* Intro 아래 CTA — AI / App 두 탭으로 이동 */
 .projects-cta {
     display: flex;
-    justify-content: center;
-    margin-top: 28px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
 }
 
 .cta-link {
@@ -380,19 +382,11 @@ body {
     gap: 10px;
     padding: 12px 22px;
     border-radius: 999px;
-    border: 1px solid rgba(78, 255, 78, 0.45);
-    background: rgba(78, 255, 78, 0.06);
-    color: #2da72d;
     font-size: 0.95rem;
     font-weight: 600;
     text-decoration: none;
+    border: 1px solid transparent;
     transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.18s ease;
-}
-
-.cta-link:hover {
-    background: rgba(78, 255, 78, 0.12);
-    border-color: rgba(78, 255, 78, 0.7);
-    color: #1a7f37;
 }
 
 .cta-link:hover .cta-arrow {
@@ -408,7 +402,34 @@ body {
     font-size: 0.85rem;
 }
 
-.dark-mode .cta-link {
+/* AI: phosphor 그린 (CRT 컨셉 연결) */
+.cta-ai {
+    border-color: rgba(78, 255, 78, 0.45);
+    background: rgba(78, 255, 78, 0.06);
+    color: #2da72d;
+}
+
+.cta-ai:hover {
+    background: rgba(78, 255, 78, 0.12);
+    border-color: rgba(78, 255, 78, 0.7);
+    color: #1a7f37;
+}
+
+/* App: 블루 (iOS 톤) */
+.cta-app {
+    border-color: rgba(0, 122, 255, 0.45);
+    background: rgba(0, 122, 255, 0.06);
+    color: #007aff;
+}
+
+.cta-app:hover {
+    background: rgba(0, 122, 255, 0.12);
+    border-color: rgba(0, 122, 255, 0.7);
+    color: #0056b3;
+}
+
+/* 다크모드: 톤 살짝 강하게 + glow */
+.dark-mode .cta-ai {
     color: #4eff4e;
     background: rgba(78, 255, 78, 0.08);
     border-color: rgba(78, 255, 78, 0.4);
@@ -417,10 +438,25 @@ body {
         0 0 14px rgba(78, 255, 78, 0.2);
 }
 
-.dark-mode .cta-link:hover {
+.dark-mode .cta-ai:hover {
     background: rgba(78, 255, 78, 0.16);
     border-color: rgba(78, 255, 78, 0.7);
     color: #87ff87;
+}
+
+.dark-mode .cta-app {
+    color: #5ba8ff;
+    background: rgba(91, 168, 255, 0.08);
+    border-color: rgba(91, 168, 255, 0.4);
+    text-shadow:
+        0 0 6px rgba(91, 168, 255, 0.4),
+        0 0 14px rgba(91, 168, 255, 0.18);
+}
+
+.dark-mode .cta-app:hover {
+    background: rgba(91, 168, 255, 0.16);
+    border-color: rgba(91, 168, 255, 0.7);
+    color: #8ec3ff;
 }
 
 .dark-mode .project-block {
