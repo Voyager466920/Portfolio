@@ -207,6 +207,164 @@ body {
     color: #ccc;
 }
 
+/* projects section */
+.projects-section {
+    display: flex;
+    text-align: center;
+    max-width: 1000px;
+    height: 100vh;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s, transform 0.5s;
+    position: relative;
+    z-index: 1;
+    padding: 0 20px;
+}
+
+.projects-section h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 0%;
+    margin: 20px 10px;
+}
+
+.projects-section .subtitle {
+    font-size: 1.3rem;
+    color: #666;
+    line-height: 0%;
+    margin-bottom: 4%;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 24px;
+    width: 100%;
+}
+
+.project-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 24px 16px 20px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .project-block:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .project-block:hover .folder-front {
+        transform: rotateX(-42deg);
+    }
+
+    .project-block:hover .folder-paper {
+        transform: translateX(-50%) translateY(-8px);
+    }
+}
+
+.project-block h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 8px 0 0;
+    color: #111;
+}
+
+.project-block p {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* CSS folder */
+.folder {
+    position: relative;
+    width: 84px;
+    height: 64px;
+    margin-top: 4px;
+    perspective: 700px;
+}
+
+.folder-tab {
+    position: absolute;
+    top: 0;
+    left: 6px;
+    width: 34px;
+    height: 10px;
+    background: #4a90c8;
+    border-radius: 4px 6px 0 0;
+}
+
+.folder-back {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    background: #5ba8d8;
+    border-radius: 3px 8px 6px 6px;
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.08);
+}
+
+.folder-paper {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    width: 78%;
+    height: 44px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease;
+}
+
+.folder-front {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(180deg, #7cc1ec 0%, #5ba8d8 100%);
+    border-radius: 4px 6px 6px 6px;
+    transform-origin: bottom;
+    transform: rotateX(0deg);
+    transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+    backface-visibility: hidden;
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+.dark-mode .project-block {
+    background: #222;
+}
+
+.dark-mode .project-block h3 {
+    color: #eee;
+}
+
+.dark-mode .project-block p {
+    color: #aaa;
+}
+
+.dark-mode .folder-paper {
+    background: #ddd;
+}
+
 .contact-section {
     text-align: center;
     padding: 20px;
@@ -224,15 +382,18 @@ body {
 }
 
 .contact-section h2 {
-    font-size: 32px;
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 0%;
+    margin: 20px 10px;
 }
 
 .contact-section .subtitle {
-    font-size: 16px;
+    font-size: 1.3rem;
     color: #666;
-    margin-bottom: 30px;
+    line-height: 0%;
+    margin-bottom: 5%;
 }
 
 .contact-info {
@@ -413,12 +574,63 @@ body {
         font-size: 10px;
     }
 
+    .projects-section h2 {
+        font-size: 2rem;
+    }
+
+    .projects-section .subtitle {
+        font-size: 1rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, auto);
+        gap: 12px;
+        width: 92%;
+    }
+
+    .project-block {
+        padding: 14px 10px 12px;
+        border-radius: 12px;
+        gap: 4px;
+    }
+
+    .project-block h3 {
+        font-size: 0.9rem;
+    }
+
+    .project-block p {
+        font-size: 0.7rem;
+    }
+
+    .folder {
+        width: 64px;
+        height: 50px;
+    }
+
+    .folder-tab {
+        width: 26px;
+        height: 8px;
+    }
+
+    .folder-back {
+        height: 44px;
+    }
+
+    .folder-paper {
+        height: 34px;
+    }
+
+    .folder-front {
+        height: 40px;
+    }
+
     .contact-section h2 {
-        font-size: 24px;
+        font-size: 2rem;
     }
 
     .contact-section .subtitle {
-        font-size: 14px;
+        font-size: 1rem;
     }
 
     .contact-item i {
