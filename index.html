@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joonha</title>
+    <title>Joonha Park</title>
     <link rel="icon" href="images/favicon.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style_v3.css?v=8">
-    <link rel="stylesheet" href="index_v3.css?v=8">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@0,500;0,600;1,600&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style_v3.css?v=9">
+    <link rel="stylesheet" href="home.css?v=17">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
-
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
 </head>
-<body>
+<body class="home-body">
     <!-- 상단 메뉴 -->
     <div class="top-menu">
         <a href="index.html">Joonha</a>
@@ -22,254 +28,341 @@
         <i id="darkModeToggle" class="fas fa-moon"></i>
     </div>
 
-    <!-- 섹션 -->
-    <div class="section intro-section" id="introSection">
-        <h1>Hello.<br> I'm<br>Joonha Park.</h1>
-        <p>
-            I'm a reasearcher and engineer working on <span class="highlight"> On-Device Artificial Intelligence</span>. My passion is to build seamless experiences that blend technology, design, liberal arts and human-centered development.
-        </p>
-        <div class="projects-cta">
-            <a href="ai_development_v3.html" class="cta-link cta-ai">
-                <i class="fas fa-terminal"></i>
-                <span>See all AI projects</span>
-                <i class="fas fa-arrow-right cta-arrow"></i>
-            </a>
-            <a href="app_development_v2.html" class="cta-link cta-app">
-                <i class="fas fa-terminal"></i>
-                <span>See all App projects</span>
-                <i class="fas fa-arrow-right cta-arrow"></i>
-            </a>
+    <!-- ===== HERO (orbital) ===== -->
+    <section class="home-section home-hero" id="hero">
+        <div class="hero-title">
+            <h1 class="hero-name">JOONHA&nbsp;PARK</h1>
+            <div class="hero-sub">On-Device AI Researcher &amp; Engineer</div>
         </div>
-    </div>
-    <div class="section about-section" id="aboutSection">
-        <h2>About</h2>
-        <p class="subtitle">Introduction</p>
-        <div class="about-content">
-            <div class="about-image">
-            <picture>
-                <!-- 모바일용 이미지 -->
-                <source srcset="images/profile_mobile.jpg" media="(max-width: 768px)">
-                <!-- 데스크톱 기본 이미지 -->
-                <img src="images/profile.jpg" alt="Profile Picture">
-            </picture>
+        <canvas id="orbCanvas"></canvas>
+        <div class="hero-ui">
+            <div class="hero-side">
+                <div class="k">ORBITAL VIEWPORT</div>
+                <div class="v">ON-DEVICE AI</div>
+                <div class="tiny">▸ hover the satellites</div>
+            </div>
+            <div class="scroll-cue2">Scroll to continue ↓</div>
         </div>
-            <div class="about-text">
+        <div class="sat-tip" id="satTip"></div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="home-section home-about" id="about">
+        <span class="sec-eyebrow">/ ABOUT</span>
+        <h2>About me.</h2>
+        <div class="about-grid">
+            <div class="sticker-board">
+                <figure class="polaroid">
+                    <img src="images/profile.jpg" alt="Joonha Park">
+                    <figcaption>overthinking a model :)</figcaption>
+                </figure>
+                <button class="sticker sticker--img" data-label="The Boys"><img src="images/sticker/homelander.png" alt=""></button>
+                <button class="sticker sticker--img" data-label="Fight Club"><img src="images/sticker/fightclub.png" alt=""></button>
+                <button class="sticker sticker--img" data-label="Linkin Park"><img src="images/sticker/hybridtheory.jpg" alt=""></button>
+                <button class="sticker sticker--img" data-label="PlayStation"><img src="images/sticker/playstation.png" alt=""></button>
+                <button class="sticker sticker--img" data-label="Space exploration"><img src="images/sticker/artemis.png" alt=""></button>
+                <button class="sticker sticker--img" data-label="Apollo Program"><img src="images/sticker/apollo.png" alt=""></button>
+                <button class="sticker sticker--img" data-label="Batman"><img src="images/sticker/batman.png" alt=""></button>
+                <button class="sticker sticker--img" data-label="Watchmen"><img src="images/sticker/watchmen.png" alt=""></button>
+                <button class="sticker sticker--img" data-label="Resident Evil"><img src="images/sticker/residentevil.png" alt=""></button>
+                <button class="sticker sticker--img" data-label="Pulp Fiction"><img src="images/sticker/pulpfiction.png" alt=""></button>
+                <p class="board-hint">drag the stickers ✥</p>
+            </div>
+
+            <div class="about-bio">
                 <p>
-                    With over <span class="highlight">5 years of experience in Flutter</span> development and <span class="highlight">2+ years in AI</span>, I specialize in developing, designing, and deploying cutting-edge applications and AI models.
-                    Skilled in Dart, Python, Java, C, and deep learning frameworks, especially PyTorch.
-                    Driven by a passion to change the world, I believe the key lies in blending technology with liberal arts.
-                    Guided by the mottos <span class="highlight">"Simplicity is the ultimate sophistication"</span> and <span class="highlight">"Compact, Fast, Beautiful"</span>, I build systems that are both elegant and efficient.<br>
-                    Lastly, I am a self-taught, passionate learner, thinker, and doer!
+                    I'm a self-taught AI researcher and engineer focused on
+                    <span class="hl">on-device intelligence</span> — building models small and fast
+                    enough to run where the data lives, right on the device in your hand.
+                    <span class="hl">5+ years in Flutter</span> and <span class="hl">2+ years in AI</span>
+                    (PyTorch), fluent across Dart, Python, Java and C.
+                </p>
+                <p>
+                    I believe the best technology blends engineering with the liberal arts —
+                    a model should be as <span class="hl">elegant</span> as it is efficient.
+                    Guided by <span class="hl">“Simplicity is the ultimate sophistication”</span> and
+                    <span class="hl">“Compact, Fast, Beautiful.”</span>
+                </p>
+                <p>
+                    Off the clock I'm chasing the retro-future — the space race, ’80s sci-fi,
+                    analog everything, and a good story. A few of the things that keep me curious →
                 </p>
             </div>
         </div>
-        
-    </div>
-    <div class="section projects-section" id="projectsSection">
-        <h2>Projects</h2>
-        <p class="subtitle">Selected works</p>
-        <div class="projects-grid">
-            <a href="AI_Projects/RTIOD.html" class="project-block">
-                <div class="folder" aria-hidden="true">
-                    <div class="folder-tab"></div>
-                    <div class="folder-back"></div>
-                    <div class="folder-paper"></div>
-                    <div class="folder-front"></div>
-                </div>
-                <h3>MMMMoE</h3>
-                <p>Robust Thermal Image Object Detection — accepted at WACV.</p>
-            </a>
-            <a href="AI_Projects/koraptor.html" class="project-block">
-                <div class="folder" aria-hidden="true">
-                    <div class="folder-tab"></div>
-                    <div class="folder-back"></div>
-                    <div class="folder-paper"></div>
-                    <div class="folder-front"></div>
-                </div>
-                <h3>KoRaptor 150M</h3>
-                <p>Korean LM pretrained from scratch on a single RTX 3090.</p>
-            </a>
-            <a href="AI_Projects/waithowever.html" class="project-block">
-                <div class="folder" aria-hidden="true">
-                    <div class="folder-tab"></div>
-                    <div class="folder-back"></div>
-                    <div class="folder-paper"></div>
-                    <div class="folder-front"></div>
-                </div>
-                <h3>Wait, However</h3>
-                <p>Mounting Llama3-2B on iOS — millions of failures, valuable lessons.</p>
-            </a>
-            <a href="AI_Projects/sealant.html" class="project-block">
-                <div class="folder" aria-hidden="true">
-                    <div class="folder-tab"></div>
-                    <div class="folder-back"></div>
-                    <div class="folder-paper"></div>
-                    <div class="folder-front"></div>
-                </div>
-                <h3>Sealant Problem</h3>
-                <p>Defect classification with ViT and TinyVGG — up to 98% accuracy.</p>
-            </a>
-            <a href="AI_Projects/chatgpt.html" class="project-block">
-                <div class="folder" aria-hidden="true">
-                    <div class="folder-tab"></div>
-                    <div class="folder-back"></div>
-                    <div class="folder-paper"></div>
-                    <div class="folder-front"></div>
-                </div>
-                <h3>GPT from Scratch</h3>
-                <p>Accidentally built GPT from scratch — second model after ViT.</p>
-            </a>
-            <a href="app_projects/endingcredit.html" class="project-block">
-                <div class="folder" aria-hidden="true">
-                    <div class="folder-tab"></div>
-                    <div class="folder-back"></div>
-                    <div class="folder-paper"></div>
-                    <div class="folder-front"></div>
-                </div>
-                <h3>Ending Credit</h3>
-                <p>Flutter app project — featured in App portfolio.</p>
-            </a>
-        </div>
-    </div>
-    <div class="section contact-section" id="contactSection">
-        <h2>Contact</h2>
-        <p class="subtitle">Get in touch with me</p>
-        <div class="contact-info">
-            <div class="contact-item">
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="home-section home-contact" id="contact">
+        <span class="sec-eyebrow">/ CONTACT</span>
+        <h2>Say hello.</h2>
+        <div class="contact-list">
+            <a class="contact-card" href="mailto:developerha0013@gmail.com">
                 <i class="fas fa-envelope"></i>
-                <div>
-                    <h3>Email</h3>
-                    <p>developerha0013@gmail.com</p>
-                </div>
-            </div>
-            <div class="contact-item">
+                <div><div class="k">EMAIL</div><div class="v">developerha0013@gmail.com</div></div>
+            </a>
+            <a class="contact-card" href="https://github.com/Voyager466920" target="_blank" rel="noopener noreferrer">
                 <i class="fab fa-github"></i>
-                <div>
-                    <h3>Github</h3>
-                    <p><a href="https://github.com/Voyager466920">Voyager466920's Github</a></p>
-                </div>
-            </div>
-            <div class="contact-item">
+                <div><div class="k">GITHUB</div><div class="v">Voyager466920</div></div>
+            </a>
+            <a class="contact-card" href="https://medium.com/@voyager466920" target="_blank" rel="noopener noreferrer">
                 <i class="fab fa-medium"></i>
-                <div>
-                    <h3>Medium</h3>
-                    <p><a href="https://medium.com/@voyager466920">Voyager466920's Medium</a></p>
-                </div>
-            </div>
-            <div class="contact-item">
+                <div><div class="k">MEDIUM</div><div class="v">@voyager466920</div></div>
+            </a>
+            <a class="contact-card" href="https://www.youtube.com/@VoyagerLabs_park" target="_blank" rel="noopener noreferrer">
                 <i class="fab fa-youtube"></i>
-                <div>
-                    <h3>Medium</h3>
-                    <p><a href="https://www.youtube.com/@VoyagerLabs_park">Voyager Lab Youtube</a></p>
-                </div>
-            </div>
+                <div><div class="k">YOUTUBE</div><div class="v">Voyager Labs</div></div>
+            </a>
         </div>
-    </div>
-    <script>
-        const sections = document.querySelectorAll('.section');
-        let currentSectionIndex = 0;
-        let isScrolling = false;
+        <div class="contact-foot">© Joonha Park · Voyager Labs — compact, fast, beautiful.</div>
+    </section>
 
-        window.addEventListener('wheel', (e) => {
-            if (isScrolling) return; 
-            isScrolling = true;
+    <!-- 궤도 히어로 (파티클 구 + 위성) -->
+    <script type="module">
+      import * as THREE from 'three';
 
-            setTimeout(() => {
-                isScrolling = false;
-            }, 500);
+      const canvas = document.getElementById('orbCanvas');
+      const hero = document.getElementById('hero');
+      const tip = document.getElementById('satTip');
 
-            e.preventDefault();
-            if (e.deltaY > 0) {
-                if (currentSectionIndex < sections.length - 1) {
-                    currentSectionIndex++;
-                }
-            } else {
-                if (currentSectionIndex > 0) {
-                    currentSectionIndex--;
-                }
-            }
-            sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth' });
-        });
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      camera.position.set(0, 0, 4.8);
 
+      // 드래그로 회전시킬 전체 그룹
+      const world = new THREE.Group();
+      world.rotation.x = 0.18;
+      scene.add(world);
 
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        let darkModeEnabled = false;
+      /* ---- 파티클 구 (행성) ---- */
+      const N = 2600, R = 1.2;
+      const pos = new Float32Array(N * 3);
+      for (let i = 0; i < N; i++) {
+        const y = 1 - (i / (N - 1)) * 2;
+        const r = Math.sqrt(Math.max(0, 1 - y * y));
+        const th = i * 2.399963;             // 황금각
+        pos[i * 3] = Math.cos(th) * r * R;
+        pos[i * 3 + 1] = y * R;
+        pos[i * 3 + 2] = Math.sin(th) * r * R;
+      }
+      const pgeo = new THREE.BufferGeometry();
+      pgeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const sphere = new THREE.Points(pgeo, new THREE.PointsMaterial({
+        color: 0x38e5cf, size: 0.02, transparent: true, opacity: 0.9,
+        sizeAttenuation: true, depthWrite: false, blending: THREE.AdditiveBlending
+      }));
+      world.add(sphere);
+      const glow = new THREE.Mesh(
+        new THREE.SphereGeometry(R * 0.985, 32, 24),
+        new THREE.MeshBasicMaterial({ color: 0x0b3630, transparent: true, opacity: 0.35 })
+      );
+      world.add(glow);
 
-        if (localStorage.getItem('darkMode') !== 'disabled') {
-            darkModeEnabled = true;
-            document.body.classList.add('dark-mode');
-            darkModeToggle.classList.remove('fa-moon');
-            darkModeToggle.classList.add('fa-lightbulb');
+      /* ---- 위성 + 궤도 ---- */
+      const SATS = [
+        { label: 'on-device', color: 0xff5a4d, orbit: 1.65, tilt: [0.55, 0.2], speed: 0.60, phase: 0.0, url: null },
+        { label: 'AI  ↗',     color: 0x38e5cf, orbit: 2.05, tilt: [-0.4, 0.7], speed: 0.40, phase: 2.1, url: 'ai_development_v3.html' },
+        { label: 'App  ↗',    color: 0x9ad0ff, orbit: 1.85, tilt: [0.85, -0.3], speed: 0.50, phase: 4.0, url: 'app_development_v2.html' },
+        { label: 'PyTorch',   color: 0xffb056, orbit: 2.30, tilt: [0.2, 0.95], speed: 0.32, phase: 1.2, url: null },
+      ];
+      const satMeshes = [];
+      SATS.forEach(s => {
+        s.q = new THREE.Quaternion().setFromEuler(new THREE.Euler(s.tilt[0], s.tilt[1], 0));
+        s.angle = s.phase;
+        s.curSpeed = s.speed;
+        // 궤도 링
+        const rp = [];
+        for (let a = 0; a <= 96; a++) { const t = a / 96 * Math.PI * 2; rp.push(new THREE.Vector3(Math.cos(t) * s.orbit, 0, Math.sin(t) * s.orbit)); }
+        const ring = new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints(rp),
+          new THREE.LineBasicMaterial({ color: 0x2c524c, transparent: true, opacity: 0.55 })
+        );
+        ring.quaternion.copy(s.q);
+        world.add(ring);
+        // 위성 (호버 쉽게: 살짝 큰 dot)
+        const m = new THREE.Mesh(
+          new THREE.SphereGeometry(0.09, 16, 16),
+          new THREE.MeshBasicMaterial({ color: s.color })
+        );
+        m.userData = s;
+        world.add(m);
+        s.mesh = m;
+        satMeshes.push(m);
+      });
+
+      /* ---- 포인터: 드래그 회전 + 호버 ---- */
+      const raycaster = new THREE.Raycaster();
+      const pointer = new THREE.Vector2(-2, -2);
+      let hovered = null, dragging = false, lastX = 0, lastY = 0, moved = 0, velY = 0, velX = 0;
+
+      canvas.addEventListener('pointerdown', (e) => {
+        dragging = true; lastX = e.clientX; lastY = e.clientY; moved = 0; velX = 0; velY = 0;
+        try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+      });
+      canvas.addEventListener('pointermove', (e) => {
+        const r = canvas.getBoundingClientRect();
+        pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+        pointer.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+        if (dragging) {
+          const dx = e.clientX - lastX, dy = e.clientY - lastY;
+          lastX = e.clientX; lastY = e.clientY; moved += Math.abs(dx) + Math.abs(dy);
+          velY = dx * 0.006; velX = dy * 0.006;
+          world.rotation.y += velY; world.rotation.x += velX;
+          world.rotation.x = Math.max(-1.1, Math.min(1.1, world.rotation.x));
+        }
+      });
+      function endDrag(e) {
+        if (dragging && moved < 6 && hovered && hovered.userData.url) location.assign(hovered.userData.url);
+        dragging = false;
+        try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+      }
+      canvas.addEventListener('pointerup', endDrag);
+      canvas.addEventListener('pointercancel', endDrag);
+      canvas.addEventListener('pointerleave', (e) => { pointer.set(-2, -2); if (dragging) endDrag(e); });
+
+      /* ---- 리사이즈 ---- */
+      function resize() {
+        const w = hero.clientWidth, h = hero.clientHeight;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      /* ---- 루프 ---- */
+      const wp = new THREE.Vector3();
+      let prev = performance.now();
+      function tick(now) {
+        const dt = Math.min(0.05, (now - prev) / 1000); prev = now;
+        sphere.rotation.y += 0.05 * dt;      // 행성 자전
+        glow.rotation.y = sphere.rotation.y;
+
+        // 관성 + 은은한 아이들 스핀 (드래그 안 할 때)
+        if (!dragging) {
+          world.rotation.y += velY + 0.0012;
+          world.rotation.x += velX;
+          world.rotation.x = Math.max(-1.1, Math.min(1.1, world.rotation.x));
+          velY *= 0.94; velX *= 0.94;
         }
 
+        // 호버 판정 (직전 프레임 위치 기준)
+        raycaster.setFromCamera(pointer, camera);
+        const hits = raycaster.intersectObjects(satMeshes, false);
+        hovered = hits.length ? hits[0].object : null;
+
+        // 위성 이동 — 호버 시 감속
+        SATS.forEach(s => {
+          const target = (s.mesh === hovered) ? s.speed * 0.12 : s.speed;
+          s.curSpeed += (target - s.curSpeed) * 0.12;
+          s.angle += s.curSpeed * dt;
+          wp.set(Math.cos(s.angle) * s.orbit, 0, Math.sin(s.angle) * s.orbit).applyQuaternion(s.q);
+          s.mesh.position.copy(wp);
+          s.mesh.scale.setScalar(s.mesh === hovered ? 1.6 : 1);
+        });
+
+        // 툴팁
+        if (hovered) {
+          hovered.getWorldPosition(wp).project(camera);
+          tip.style.left = (wp.x * 0.5 + 0.5) * hero.clientWidth + 'px';
+          tip.style.top = (-wp.y * 0.5 + 0.5) * hero.clientHeight + 'px';
+          tip.textContent = hovered.userData.label;
+          tip.classList.add('on');
+          canvas.style.cursor = dragging ? 'grabbing' : (hovered.userData.url ? 'pointer' : 'default');
+        } else {
+          tip.classList.remove('on');
+          canvas.style.cursor = dragging ? 'grabbing' : 'grab';
+        }
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    </script>
+
+    <script>
+        // 다크모드 토글 (홈은 항상 다크지만 설정은 유지)
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkModeEnabled = localStorage.getItem('darkMode') !== 'disabled';
+        function applyToggleIcon() {
+            darkModeToggle.classList.toggle('fa-moon', !darkModeEnabled);
+            darkModeToggle.classList.toggle('fa-lightbulb', darkModeEnabled);
+        }
+        applyToggleIcon();
         darkModeToggle.addEventListener('click', () => {
             darkModeEnabled = !darkModeEnabled;
-            document.body.classList.toggle('dark-mode', darkModeEnabled);
+            localStorage.setItem('darkMode', darkModeEnabled ? 'enabled' : 'disabled');
+            applyToggleIcon();
+        });
 
-            if (darkModeEnabled) {
-                darkModeToggle.classList.remove('fa-moon');
-                darkModeToggle.classList.add('fa-lightbulb');
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                darkModeToggle.classList.remove('fa-lightbulb');
-                darkModeToggle.classList.add('fa-moon');
-                localStorage.setItem('darkMode', 'disabled');
+        // 상단 메뉴 네비게이션
+        document.querySelectorAll('.top-menu a').forEach(link => {
+            link.addEventListener('click', (event) => {
+                if (link.getAttribute('target') === '_blank') return;
+                event.preventDefault();
+                location.assign(link.getAttribute('href'));
+            });
+        });
+
+        // ===== 스티커 보드: 초기 흩뿌리기 + 드래그 (스티커 + 사진) =====
+        (function () {
+            const board = document.querySelector('.sticker-board');
+            if (!board) return;
+            const stickers = Array.from(board.querySelectorAll('.sticker'));
+            const polaroid = board.querySelector('.polaroid');
+            const SW = 62;
+
+            function scatter() {
+                const bw = board.clientWidth, bh = board.clientHeight;
+                const placed = [];
+                stickers.forEach(s => {
+                    const w = s.offsetWidth || 110, h = s.offsetHeight || 110;
+                    // 여러 번 무작위로 던져보고 기존 스티커에서 가장 멀리 떨어진 자리 선택 → 자연스러운 흩뿌림
+                    let best = { x: 0, y: 0, cx: 0, cy: 0 }, bestD = -1;
+                    for (let t = 0; t < 40; t++) {
+                        const x = 8 + Math.random() * Math.max(1, bw - w - 16);
+                        const y = 8 + Math.random() * Math.max(1, bh - h - 16);
+                        const cx = x + w / 2, cy = y + h / 2;
+                        if (placed.length === 0) { best = { x, y, cx, cy }; break; }
+                        let md = 1e9;
+                        for (const p of placed) md = Math.min(md, Math.hypot(cx - p.cx, cy - p.cy));
+                        if (md > bestD) { bestD = md; best = { x, y, cx, cy }; }
+                    }
+                    placed.push({ cx: best.cx, cy: best.cy });
+                    s.style.left = best.x + 'px';
+                    s.style.top = best.y + 'px';
+                    s.style.transform = 'rotate(' + (Math.random() * 26 - 13).toFixed(1) + 'deg)';
+                });
             }
-        });
+            scatter();
 
-        function toggleAccordion(element) {
-            const content = element.nextElementSibling;
-            content.classList.toggle('open');
-            const icon = element.querySelector('i');
-            icon.classList.toggle('fa-chevron-down');
-            icon.classList.toggle('fa-chevron-up');
-        }
-        window.addEventListener('scroll', () => {
-            const introSection = document.getElementById('introSection');
-            const scrollPosition = window.scrollY;
-
-            if (scrollPosition > 100) {
-                introSection.style.opacity = 0;
-                introSection.style.transform = 'translateY(-50px)';
-            } else {
-                introSection.style.opacity = 1;
-                introSection.style.transform = 'translateY(0)';
+            let z = 10, drag = null, ox = 0, oy = 0;
+            function makeDraggable(el, bumpZ) {
+                el.addEventListener('pointerdown', (e) => {
+                    drag = el; el.classList.add('dragging');
+                    if (bumpZ) el.style.zIndex = ++z;   // 사진은 z 안 올림 → 항상 맨 아래
+                    const r = el.getBoundingClientRect();
+                    ox = e.clientX - r.left; oy = e.clientY - r.top;
+                    try { el.setPointerCapture(e.pointerId); } catch (_) {}
+                });
+                el.addEventListener('pointermove', (e) => {
+                    if (drag !== el) return;
+                    const br = board.getBoundingClientRect();
+                    let x = e.clientX - br.left - ox, y = e.clientY - br.top - oy;
+                    x = Math.max(0, Math.min(br.width - el.offsetWidth, x));
+                    y = Math.max(0, Math.min(br.height - el.offsetHeight, y));
+                    el.style.left = x + 'px'; el.style.top = y + 'px';
+                });
+                const up = (e) => {
+                    if (drag === el) { drag = null; el.classList.remove('dragging'); try { el.releasePointerCapture(e.pointerId); } catch (_) {} }
+                };
+                el.addEventListener('pointerup', up);
+                el.addEventListener('pointercancel', up);
             }
-        });
-        let startY = 0;
-        let endY = 0;
-
-        window.addEventListener('touchstart', (e) => {
-            startY = e.touches[0].clientY;
-        });
-
-        window.addEventListener('touchend', (e) => {
-            endY = e.changedTouches[0].clientY;
-            const deltaY = startY - endY;
-
-            if (Math.abs(deltaY) > 50) { // 최소 스와이프 거리 설정
-                if (deltaY > 0 && currentSectionIndex < sections.length - 1) {
-                    currentSectionIndex++;
-                } else if (deltaY < 0 && currentSectionIndex > 0) {
-                    currentSectionIndex--;
-                }
-                sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-
-        const navLinks = document.querySelectorAll('.top-menu a');
-
-        navLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-            if (link.getAttribute('target') === '_blank') return;
-
-            event.preventDefault();
-            const targetUrl = link.getAttribute('href');
-            window.location.assign(targetUrl);
-        });
-        });
-
-
+            stickers.forEach(s => makeDraggable(s, true));
+            if (polaroid) makeDraggable(polaroid, false);
+        })();
     </script>
 </body>
 </html>

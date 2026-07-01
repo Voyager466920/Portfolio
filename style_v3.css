@@ -92,13 +92,7 @@ body {
 }
 
 #darkModeToggle {
-    position: fixed;
-    top: 20px;
-    right: 26px;
-    font-size: 20px;
-    cursor: pointer;
-    transition: color 0.3s;
-    z-index: 11;
+    display: none;   /* 라이트모드 제거 — 다크 고정 */
 }
 
 #darkModeToggle:hover {
