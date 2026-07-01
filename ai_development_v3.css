@@ -1,0 +1,334 @@
+/*==================================================
+  AI Projects — v3 (3D Macintosh + floppy)
+==================================================*/
+
+.ai-v3-body {
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;                 /* 씬은 한 화면 고정 */
+  background: #050706;
+  scroll-snap-type: none;
+}
+
+/*========== 스테이지 ==========*/
+.mac-stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding-top: 50px;                /* 상단 고정 메뉴 */
+  box-sizing: border-box;
+  overflow: hidden;
+  /* 모니터 뒤에서 퍼지는 은은한 백색 글로우 */
+  background:
+    radial-gradient(58% 52% at 50% 46%, rgba(150,165,175,0.30) 0%, rgba(60,70,78,0.16) 32%, rgba(0,0,0,0) 66%),
+    #060708;
+}
+
+#scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+/* 프로젝트 로드 시 은은한 화면 발광 */
+.mac-stage::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 46vmin;
+  height: 34vmin;
+  transform: translate(-50%, -50%);
+  border-radius: 40%;
+  background: radial-gradient(circle, rgba(200, 215, 225, 0.28), rgba(200, 215, 225, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.mac-stage.screen-on::after { opacity: 0.9; }
+
+/*========== 안내 문구 ==========*/
+.stage-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  transform: translateX(-50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.stage-hint.gone { opacity: 0; transform: translateX(-50%) translateY(12px); }
+
+.hint-title {
+  font-family: 'Silkscreen', monospace;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: #c9cec9;
+  animation: hintBlink 1.4s steps(2, jump-none) infinite;
+}
+.hint-sub {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: #8a908c;
+}
+
+@keyframes hintBlink { 50% { opacity: 0.35; } }
+
+/*========== 좌측 세로 메뉴 색상 (AI 씬은 항상 어두우므로 밝게) ==========*/
+.ai-v3-body .top-menu a { color: #e7ecea; letter-spacing: 0.3px; }
+.ai-v3-body .top-menu a:hover { color: #ffffff; }
+.ai-v3-body #darkModeToggle { color: #e7ecea; }
+.ai-v3-body #darkModeToggle:hover { color: #ffffff; }
+/* 줌인(글 읽기) 중엔 메뉴 숨김 */
+.ai-v3-body.reading .top-menu { opacity: 0; pointer-events: none; }
+
+/*========== CRT 화면 오버레이 (3D 화면 위에 정렬) ==========*/
+.crt-screen-overlay {
+  position: absolute;
+  display: none;                 /* JS가 위치/크기 지정 후 표시 */
+  overflow: hidden;
+  background: radial-gradient(120% 130% at 50% 40%, #3b4045 0%, #23272a 70%, #14171a 100%);
+  color: #e7ecea;
+  border-radius: 6px;
+  z-index: 4;
+  line-height: 1.12;
+  text-shadow: 0 0 4px rgba(230, 240, 238, 0.35);
+  box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.65), inset 0 0 40px rgba(255, 255, 255, 0.05);
+  pointer-events: none;            /* 대기 중엔 캔버스(플로피) 조작 방해 안 함 */
+}
+.crt-screen-overlay.loaded { pointer-events: auto; }  /* 글 로드 시 스크롤/eject 가능 */
+.crt-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.crt-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(rgba(0, 0, 0, 0.28) 0 1px, transparent 1px 3px);
+  opacity: 0.6;
+}
+
+/* 대기 화면 */
+.crt-idle {
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+.crt-idle[hidden] { display: none; }
+.crt-floppy-glyph { font-size: 2.6em; color: #dfe4e2; }
+.crt-idle-text {
+  font-family: 'Silkscreen', monospace;
+  font-size: 0.85em;
+  letter-spacing: 1px;
+}
+.crt-caret { animation: hintBlink 1s steps(2) infinite; }
+
+/* 프로젝트 문서 */
+.crt-doc {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.crt-doc[hidden] { display: none; }
+.crt-eject {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1;
+  font-size: 1em;
+  color: #e7ecea;
+  background: transparent;
+  border: 1.5px solid rgba(231, 236, 234, 0.55);
+  border-radius: 3px;
+  cursor: pointer;
+  text-shadow: inherit;
+}
+.crt-eject:hover { background: rgba(231, 236, 234, 0.18); }
+.crt-doc h2 {
+  margin: 0 1.6em 0.25em 0;
+  font-family: 'Silkscreen', monospace;
+  font-size: 1.15em;
+  color: #ffffff;
+}
+.crt-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  margin-bottom: 0.5em;
+}
+.crt-tag {
+  font-family: 'VT323', monospace;
+  font-size: 0.9em;
+  line-height: 1;
+  padding: 0.12em 0.45em;
+  border: 1px solid rgba(231, 236, 234, 0.45);
+  border-radius: 2px;
+}
+/* 스크롤 영역 */
+.crt-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.5em;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(231, 236, 234, 0.4) transparent;
+}
+.crt-scroll::-webkit-scrollbar { width: 6px; }
+.crt-scroll::-webkit-scrollbar-thumb { background: rgba(231, 236, 234, 0.4); border-radius: 3px; }
+.crt-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* 기사 본문 */
+.crt-article .crt-subtitle {
+  font-family: 'VT323', monospace;
+  font-size: 1.05em;
+  opacity: 0.8;
+  margin: 0 0 0.7em;
+}
+.crt-article h3 {
+  font-family: 'Silkscreen', monospace;
+  font-size: 0.9em;
+  color: #ffffff;
+  margin: 1em 0 0.35em;
+}
+.crt-article .crt-para {
+  font-family: 'VT323', monospace;
+  font-size: 1.12em;
+  line-height: 1.24;
+  margin: 0 0 0.75em;
+}
+.crt-article .crt-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0.5em 0 0.8em;
+  border: 1px solid rgba(231, 236, 234, 0.22);
+  border-radius: 3px;
+  filter: grayscale(1) contrast(1.03) brightness(1.03);  /* 모노크롬 CRT 톤 */
+  opacity: 0.92;
+}
+.crt-loading {
+  font-family: 'Silkscreen', monospace;
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+/*========== 세리프 헤드라인 ==========*/
+.hero-line {
+  position: absolute;
+  top: 3.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 500;
+  color: #f2f4f0;
+  font-size: clamp(30px, 5.4vw, 66px);
+  line-height: 1.04;
+  letter-spacing: 0.3px;
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  text-shadow: 0 2px 26px rgba(0, 0, 0, 0.55);
+}
+.hero-line em { font-style: italic; }
+.hero-line.dim { opacity: 0; transform: translateX(-50%) translateY(-12px); }
+
+/*========== 크레딧 ==========*/
+.model-credit {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-family: 'VT323', monospace;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  color: #7a8090;
+  opacity: 0.8;
+  pointer-events: none;
+  max-width: 60vw;
+  text-align: right;
+}
+.dark-mode .model-credit { color: #6b7080; }
+
+/*========== 진단 배지 (조정 끝나면 삭제) ==========*/
+.scene-debug {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  font-family: 'VT323', monospace;
+  font-size: 13px;
+  color: #8a90a0;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 2px 8px;
+  border-radius: 3px;
+  pointer-events: none;
+  max-width: 60vw;
+}
+
+/*========== 데스크톱: 모바일 패널 숨김 ==========*/
+@media (min-width: 769px) {
+  .mobile-panel { display: none !important; }
+}
+
+/*========== 모바일 (AI) ==========*/
+@media (max-width: 768px) {
+  .ai-v3-body { overflow-y: auto; overflow-x: hidden; }
+  .mac-stage { height: 74vh; }
+  .crt-screen-overlay { display: none !important; }   /* 화면 대신 아래 패널에 표시 */
+  /* AI 씬은 어두우므로 상단 바를 어둡게 (밝은 링크가 보이도록) */
+  .ai-v3-body .top-menu { background-color: rgba(14, 16, 15, 0.92); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45); }
+  .hero-line { font-size: clamp(22px, 7.5vw, 40px); top: 64px; }
+  .model-credit { font-size: 10px; max-width: 90vw; }
+  .stage-hint { bottom: 4%; }
+
+  .mobile-panel {
+    display: block;
+    background: #0d0f0e;
+    color: #e7ecea;
+    font-size: 16px;
+    padding: 22px 18px 72px;
+    border-top: 1px solid rgba(231, 236, 234, 0.14);
+    min-height: 46vh;
+  }
+  .mobile-panel[hidden] { display: none; }
+  .mobile-panel h2 {
+    font-family: 'Silkscreen', monospace;
+    font-size: 1.3em;
+    margin: 0 0 0.5em;
+    color: #ffffff;
+    clear: both;
+  }
+  .mobile-panel .crt-tags { margin-bottom: 1em; }
+  .mobile-eject {
+    float: right;
+    font-family: 'Silkscreen', monospace;
+    font-size: 0.7em;
+    color: #e7ecea;
+    background: transparent;
+    border: 1px solid rgba(231, 236, 234, 0.5);
+    border-radius: 3px;
+    padding: 0.4em 0.7em;
+    cursor: pointer;
+  }
+  .mobile-eject:hover { background: rgba(231, 236, 234, 0.15); }
+}

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Projects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="style_v3.css?v=8"/>
+  <link rel="stylesheet" href="ai_development_v3.css?v=8"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+
+<body class="ai-v3-body">
+  <!-- 상단 메뉴 -->
+  <div class="top-menu">
+    <a href="index.html" id="home">Joonha</a>
+    <a href="ai_development_v3.html" id="AI">AI</a>
+    <a href="app_development_v2.html" id="App">App</a>
+    <a href="files/CV.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+    <i id="darkModeToggle" class="fas fa-moon"></i>
+  </div>
+
+  <section class="mac-stage" id="macStage">
+    <!-- 3D 씬 -->
+    <canvas id="scene"></canvas>
+
+    <!-- 세리프 헤드라인 -->
+    <div class="hero-line" id="heroLine">Let's make<br>it <em>think.</em></div>
+
+    <!-- 안내 문구 -->
+    <div class="stage-hint" id="stageHint">
+      <span class="hint-title">Insert a floppy disk</span>
+      <span class="hint-sub">drag a disk onto the computer</span>
+    </div>
+
+    <!-- CRT 화면 오버레이 (실제 3D 화면 위에 정렬) -->
+    <div class="crt-screen-overlay" id="crtScreen">
+      <div class="crt-inner">
+        <!-- 대기 화면 -->
+        <div class="crt-idle" id="crtIdle">
+          <div class="crt-floppy-glyph"><i class="fas fa-floppy-disk"></i></div>
+          <div class="crt-idle-text">Insert a disk<span class="crt-caret">_</span></div>
+        </div>
+        <!-- 프로젝트 문서 (스크롤) -->
+        <div class="crt-doc" id="crtDoc" hidden>
+          <button class="crt-eject" id="crtEject" title="Eject disk">&#9167;</button>
+          <div class="crt-scroll" id="crtScroll">
+            <h2 id="projTitle">Project</h2>
+            <div class="crt-tags" id="projTags"></div>
+            <div class="crt-article" id="projArticle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="crt-scanlines" aria-hidden="true"></div>
+    </div>
+
+    <!-- 라이선스 크레딧 -->
+    <div class="model-credit">
+      3D: "iFruit Vintage Computer" by TRASH&nbsp;-&nbsp;TANUKI [CC-BY] via Poly&nbsp;Pizza
+    </div>
+  </section>
+
+  <!-- 모바일: 글이 아래에 나타남 -->
+  <section class="mobile-panel" id="mobilePanel" hidden>
+    <button class="mobile-eject" id="mobileEject">&#9167; eject</button>
+    <h2 id="mProjTitle"></h2>
+    <div class="crt-tags" id="mProjTags"></div>
+    <div class="crt-article" id="mProjArticle"></div>
+  </section>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+    /* ---------- 프로젝트 데이터 (플로피 + 창 공용) ---------- */
+    const PROJECTS = [
+      { n: 1, short: 'MMMMoE',   color: '#e5533d',
+        title: 'MMMMoE',
+        tags: ['Vision-MoE', 'WACV', 'thermal'],
+        blurb: 'Robust thermal-image object detection with a multi-modal mixture-of-experts. Accepted at WACV.',
+        url: 'AI_Projects/RTIOD.html' },
+      { n: 2, short: 'KoRaptor', color: '#2f7ad6',
+        title: 'KoRaptor-150M',
+        tags: ['Korean LM', '150M', '1× RTX 3090'],
+        blurb: 'A 150M Korean language model pretrained from scratch on a single RTX 3090.',
+        url: 'AI_Projects/koraptor.html' },
+      { n: 3, short: 'Wait',     color: '#f0a92b',
+        title: 'Wait, However',
+        tags: ['LLM', 'on iOS', 'fact-checker'],
+        blurb: 'Mounting Llama3-2B on iOS — millions of failures, and the lessons they taught.',
+        url: 'AI_Projects/waithowever.html' },
+      { n: 4, short: 'Sealant',  color: '#38a56b',
+        title: 'Sealant-ViT',
+        tags: ['ViT / TinyVGG', 'defect cls'],
+        blurb: 'Sealant defect classification with ViT and TinyVGG — up to 98% accuracy.',
+        url: 'AI_Projects/sealant.html' },
+      { n: 5, short: 'GPT',      color: '#8a63d2',
+        title: 'GPT from Scratch',
+        tags: ['GPT', 'pretrain', 'accidental'],
+        blurb: 'Accidentally built GPT from scratch — the second model after ViT.',
+        url: 'AI_Projects/chatgpt.html' },
+    ];
+
+    /* ---------- 조정용 상수 (모델 방향/카메라 미세조정) ---------- */
+    const MODEL_YAW   = Math.PI;  // 앞면(화면)이 보이도록. 어긋나면 0 / ±Math.PI/2 로
+    const BASE_PITCH  = 0.20;     // 기본 카메라 높이각 (책상·플로피 라벨이 보이게 살짝 내려다봄)
+    const MAX_YAW     = 0.18;     // 마우스 좌우 패럴랙스 최대(라디안)
+    const MAX_PITCH   = 0.11;     // 마우스 상하 패럴랙스 최대
+    const FILL_PAD    = 1.12;     // 씬을 화면에 담는 여백(작을수록 꽉 참)
+    const TARGET_DROP = 0.05;     // 시선을 살짝 아래로
+    const PARALLAX_EASE = 0.08;   // 패럴랙스 따라가는 부드러움
+
+    const dbg = document.getElementById('sceneDebug') || {};   // 진단 배지 제거됨(안전 처리)
+    const mq = window.matchMedia('(max-width: 768px)');  // 모바일 여부 (라이브)
+
+    const canvas = document.getElementById('scene');
+    const stage  = document.getElementById('macStage');
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+
+    /* 조명 — 다크 시네마틱 + 모니터 뒤 초록 형광 */
+    scene.add(new THREE.HemisphereLight(0x9fb4c8, 0x0a0f0c, 0.35));
+    const key = new THREE.DirectionalLight(0xffffff, 1.5);
+    key.position.set(1.5, 3.5, 4);
+    scene.add(key);
+    const fill = new THREE.DirectionalLight(0xbfe9ff, 0.35);
+    fill.position.set(-3, 1, 3);
+    scene.add(fill);
+    const glow = new THREE.PointLight(0xcfe6ff, 5, 9, 2);
+    glow.position.set(0, 0.4, -1.4);
+    scene.add(glow);
+
+    /* 루트 그룹: 모델 + 플로피를 함께 담아 화면 중앙 정렬 */
+    const world = new THREE.Group();
+    scene.add(world);
+
+    const macGroup = new THREE.Group();
+    macGroup.rotation.y = MODEL_YAW;
+    world.add(macGroup);
+
+    let macSize = 2;   // 모델 실제 크기 (로드 후 갱신)
+    let deskY = -1;    // 책상 높이 (맥 바닥, 로드 후 갱신)
+
+    /* ---------- 나무 책상 ---------- */
+    let desk = null;
+    function makeWoodTexture() {
+      const c = document.createElement('canvas');
+      c.width = c.height = 256;
+      const x = c.getContext('2d');
+      x.fillStyle = '#6b4a30';
+      x.fillRect(0, 0, 256, 256);
+      for (let i = 0; i < 46; i++) {
+        const y = (i / 46) * 256;
+        x.strokeStyle = `rgba(40,26,14,${0.12 + (i % 3) * 0.05})`;
+        x.lineWidth = 1 + (i % 3);
+        x.beginPath();
+        x.moveTo(0, y + Math.sin(i * 1.7) * 3);
+        x.lineTo(256, y + Math.cos(i * 1.3) * 3);
+        x.stroke();
+      }
+      const t = new THREE.CanvasTexture(c);
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.wrapS = t.wrapT = THREE.RepeatWrapping;
+      t.repeat.set(4, 2.4);
+      return t;
+    }
+    const DESK_W = 4.4, DESK_D = 3.0, DESK_T = 0.16;   // 모바일에선 숨김(applyLayout)
+    function buildDesk(y) {
+      const top = makeWoodTexture();
+      const edge = makeWoodTexture(); edge.repeat.set(4, 0.6);
+      const woodTop  = new THREE.MeshStandardMaterial({ map: top,  color: 0xffffff, roughness: 0.8 });
+      const woodEdge = new THREE.MeshStandardMaterial({ map: edge, color: 0xdccdbd, roughness: 0.85 });
+      const under    = new THREE.MeshStandardMaterial({ color: 0x2a1b10, roughness: 0.9 });
+      // [ +x, -x, +y(상판), -y(밑), +z(앞), -z ]
+      const mats = [woodEdge, woodEdge, woodTop, under, woodEdge, woodEdge];
+      desk = new THREE.Mesh(new THREE.BoxGeometry(DESK_W, DESK_T, DESK_D), mats);
+      desk.position.set(0, y - DESK_T / 2, 0.55);  // 상판이 y에 오도록
+      world.add(desk);
+    }
+
+    /* ---------- 모델 로드 ---------- */
+    const loader = new GLTFLoader();
+    loader.load(
+      'models/ifruit.glb',
+      (gltf) => {
+        const model = gltf.scene;
+        // 바운딩 박스로 중심 정렬 + 크기 정규화
+        const box = new THREE.Box3().setFromObject(model);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z) || 1;
+        const scale = 2 / maxDim;                 // 높이 ~2 유닛으로 정규화
+        model.scale.setScalar(scale);
+        model.position.sub(center.multiplyScalar(scale));
+        macGroup.add(model);
+        macSize = 2;
+        screenMesh = findScreenMesh(model);
+        const macBox = new THREE.Box3().setFromObject(macGroup);
+        deskY = macBox.min.y;
+        buildDesk(deskY);
+        world.updateMatrixWorld(true);
+        buildScreenPlane();
+        dbg.textContent = `model OK · screen ${screenMesh ? 'found' : 'NOT found'}`;
+        buildFloppies();
+        applyLayout();
+      },
+      (e) => { if (e.total) dbg.textContent = `loading ${(e.loaded/e.total*100|0)}%`; },
+      (err) => {
+        console.warn('모델 로드 실패, 플레이스홀더로 대체:', err);
+        dbg.textContent = 'MODEL LOAD FAILED → placeholder. ' + (err && err.message ? err.message : err);
+        const ph = new THREE.Mesh(
+          new THREE.BoxGeometry(1.8, 1.8, 1.6),
+          new THREE.MeshStandardMaterial({ color: 0xd8d2c2, roughness: 0.7 })
+        );
+        macGroup.add(ph);
+        buildFloppies();
+        applyLayout();
+      }
+    );
+
+    let screenMesh = null;
+    const wideTarget = new THREE.Vector3(0, 0, 0);   // 책상 전체 샷
+    let wideDist = 4;
+    const focusTarget = new THREE.Vector3(0, 0, 0);  // 화면 클로즈업
+    let focusDist = 2.4;
+    const camTarget = new THREE.Vector3(0, 0, 0);    // 현재(보간)
+    let camDist = 4;
+    let focusT = 0, focusGoal = 0, focusFrom = 0, focusT0 = -1e9;   // 0=책상 전체, 1=화면 줌인
+    const FOCUS_DUR = 750;                            // 줌 인/아웃 동일 시간(ms)
+    function setFocus(goal) {
+      if (goal === focusGoal) return;
+      focusGoal = goal;
+      focusFrom = focusT;
+      focusT0 = performance.now();
+    }
+    let curYaw = 0, curPitch = BASE_PITCH;
+    let tgtYaw = 0, tgtPitch = BASE_PITCH;
+
+    /* 책상 전체 + 화면 클로즈업 두 구도를 계산 */
+    function frameAll() {
+      world.updateMatrixWorld(true);
+      const box = new THREE.Box3().setFromObject(macGroup);
+      floppies.forEach(f => box.expandByObject(f));   // 플로피까지 프레임에 포함
+      if (desk) box.expandByObject(desk);             // 책상 판 전체가 보이도록
+      const size = box.getSize(new THREE.Vector3());
+      box.getCenter(wideTarget);
+      wideTarget.y -= TARGET_DROP;
+      const fitH = Math.max(size.y, size.x / camera.aspect)
+                 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
+      wideDist = fitH * (mq.matches ? 1.0 : FILL_PAD);
+      computeFocus();
+      camTarget.copy(wideTarget);
+      camDist = wideDist;
+      updateCameraOrbit();
+    }
+
+    /* 맥킨토시 화면(mat16)을 프레임에 꽉 채우는 클로즈업 구도 */
+    function computeFocus() {
+      if (!screenMesh) { focusTarget.copy(wideTarget); focusDist = wideDist; return; }
+      const box = new THREE.Box3().setFromObject(screenMesh);
+      box.getCenter(focusTarget);
+      const size = box.getSize(new THREE.Vector3());
+      const fitH = Math.max(size.y, size.x / camera.aspect)
+                 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
+      focusDist = fitH * 0.88;   // 화면이 뷰포트를 넘치게 → 클램프로 회색 완전히 덮음
+    }
+
+    /* 마우스 패럴랙스: camTarget 주위를 조금씩 돈다 */
+    function updateCameraOrbit() {
+      const cp = Math.cos(curPitch), sp = Math.sin(curPitch);
+      camera.position.set(
+        camTarget.x + camDist * Math.sin(curYaw) * cp,
+        camTarget.y + camDist * sp,
+        camTarget.z + camDist * Math.cos(curYaw) * cp
+      );
+      camera.lookAt(camTarget);
+      camera.updateMatrixWorld();
+    }
+
+    /* 화면(teal glass = mat16) 메시 찾기 */
+    function findScreenMesh(root) {
+      let byName = null, byColor = null, best = 1e9;
+      const t = new THREE.Color(0.19, 0.28, 0.34);
+      root.traverse(o => {
+        if (!o.isMesh || !o.material || Array.isArray(o.material)) return;
+        const m = o.material;
+        if (m.name === 'mat16') byName = o;
+        if (m.color) {
+          const d = Math.abs(m.color.r - t.r) + Math.abs(m.color.g - t.g) + Math.abs(m.color.b - t.b);
+          if (d < best) { best = d; byColor = o; }
+        }
+      });
+      return byName || byColor;
+    }
+
+    /* 대기 화면("INSERT A DISK")을 3D 평면으로 → 플로피가 3D 깊이로 앞에 옴 */
+    let screenPlane = null;
+    function makeScreenIdleTexture() {
+      const c = document.createElement('canvas');
+      c.width = c.height = 512;
+      const x = c.getContext('2d');
+      const g = x.createRadialGradient(256, 210, 30, 256, 256, 380);
+      g.addColorStop(0, '#3b4045'); g.addColorStop(0.7, '#23272a'); g.addColorStop(1, '#131619');
+      x.fillStyle = g; x.fillRect(0, 0, 512, 512);
+      x.fillStyle = 'rgba(0,0,0,0.22)';
+      for (let y = 0; y < 512; y += 4) x.fillRect(0, y, 512, 2);
+      // 3.5" 플로피 아이콘
+      const cx = 256, cy = 196, s = 104, x0 = cx - s / 2, y0 = cy - s / 2, cut = 22;
+      x.fillStyle = '#dfe3e6';                       // 본체 (우상단 모서리 컷)
+      x.beginPath();
+      x.moveTo(x0, y0); x.lineTo(x0 + s - cut, y0); x.lineTo(x0 + s, y0 + cut);
+      x.lineTo(x0 + s, y0 + s); x.lineTo(x0, y0 + s); x.closePath(); x.fill();
+      x.fillStyle = '#9aa1a8';                        // 상단 금속 셔터
+      x.fillRect(x0 + s * 0.5, y0 + 8, s * 0.3, s * 0.34);
+      x.fillStyle = '#6b7076';
+      x.fillRect(x0 + s * 0.56, y0 + 12, s * 0.06, s * 0.26);
+      x.fillStyle = '#f5f7f6';                        // 라벨
+      x.fillRect(x0 + s * 0.14, y0 + s * 0.5, s * 0.72, s * 0.4);
+      x.strokeStyle = '#b9c0c4'; x.lineWidth = 2;     // 라벨 줄
+      x.beginPath(); x.moveTo(x0 + s * 0.22, y0 + s * 0.63); x.lineTo(x0 + s * 0.78, y0 + s * 0.63); x.stroke();
+      x.beginPath(); x.moveTo(x0 + s * 0.22, y0 + s * 0.74); x.lineTo(x0 + s * 0.78, y0 + s * 0.74); x.stroke();
+      // 텍스트
+      x.fillStyle = '#e7ecea';
+      x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.font = 'bold 26px "Courier New", monospace';
+      x.fillText('I N S E R T   A   D I S K', 256, 340);
+      const t = new THREE.CanvasTexture(c);
+      t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
+      return t;
+    }
+    function buildScreenPlane() {
+      if (!screenMesh) return;
+      const box = new THREE.Box3().setFromObject(screenMesh);
+      const size = box.getSize(new THREE.Vector3());
+      const center = box.getCenter(new THREE.Vector3());
+      const geo = new THREE.PlaneGeometry(size.x * 0.94, size.y * 0.94);
+      const mat = new THREE.MeshBasicMaterial({ map: makeScreenIdleTexture(), toneMapped: false });
+      screenPlane = new THREE.Mesh(geo, mat);
+      screenPlane.position.set(center.x, center.y, box.max.z + 0.006);
+      world.add(screenPlane);
+    }
+
+    /* 실제 3D 화면 위치에 HTML 오버레이를 매 프레임 정렬 */
+    const crtScreen = document.getElementById('crtScreen');
+    const _v = new THREE.Vector3();
+    function updateScreenOverlay() {
+      if (mq.matches) { crtScreen.style.display = 'none'; return; }   // 모바일: 글은 아래 패널
+      // 대기 프롬프트는 3D 평면이 담당 → HTML 오버레이는 글 로드 시에만
+      if (!screenMesh || !crtScreen.classList.contains('loaded')) { crtScreen.style.display = 'none'; return; }
+      const geo = screenMesh.geometry;
+      if (!geo.boundingBox) geo.computeBoundingBox();
+      const bb = geo.boundingBox;
+      const W = canvas.clientWidth, H = canvas.clientHeight;
+      let minx = Infinity, miny = Infinity, maxx = -Infinity, maxy = -Infinity;
+      for (let xi = 0; xi < 2; xi++) for (let yi = 0; yi < 2; yi++) for (let zi = 0; zi < 2; zi++) {
+        _v.set(xi ? bb.max.x : bb.min.x, yi ? bb.max.y : bb.min.y, zi ? bb.max.z : bb.min.z);
+        screenMesh.localToWorld(_v);
+        _v.project(camera);
+        const px = (_v.x * 0.5 + 0.5) * W, py = (-_v.y * 0.5 + 0.5) * H;
+        if (px < minx) minx = px; if (px > maxx) maxx = px;
+        if (py < miny) miny = py; if (py > maxy) maxy = py;
+      }
+      // 유리 안쪽 인셋
+      const rawW = maxx - minx, rawH = maxy - miny;
+      const ix = rawW * 0.035, iy = rawH * 0.035;
+      let L = minx + ix, T = miny + iy, R = maxx - ix, B = maxy - iy;
+      // 보이는 영역으로 클램프 (글이 밖으로 안 밀리게)
+      L = Math.max(0, L); T = Math.max(0, T);
+      R = Math.min(W, R); B = Math.min(H, B);
+      T = Math.max(T, 0);    // 상단 바 없음 → 위까지 사용
+      const w = Math.max(0, R - L), h = Math.max(0, B - T);
+      crtScreen.style.display = (w > 6 && h > 6) ? 'block' : 'none';
+      crtScreen.style.left = L + 'px';
+      crtScreen.style.top = T + 'px';
+      crtScreen.style.width = w + 'px';
+      crtScreen.style.height = h + 'px';
+      crtScreen.style.fontSize = Math.max(9, h * 0.032) + 'px';
+    }
+
+    /* ---------- 플로피 (코드 생성) ---------- */
+    const floppies = [];
+
+    function makeFloppyTexture(p) {
+      const c = document.createElement('canvas');
+      c.width = c.height = 256;
+      const x = c.getContext('2d');
+      // 본체
+      x.fillStyle = p.color; x.fillRect(0, 0, 256, 256);
+      // 좌상단 사선 컷(플로피 특유의 모서리)
+      x.fillStyle = 'rgba(0,0,0,0.18)';
+      x.beginPath(); x.moveTo(196, 0); x.lineTo(256, 0); x.lineTo(256, 60); x.closePath(); x.fill();
+      // 상단 금속 셔터
+      x.fillStyle = '#c7cbd1'; x.fillRect(150, 18, 74, 90);
+      x.fillStyle = '#9aa0a8'; x.fillRect(150, 18, 14, 90);
+      // 흰 라벨
+      x.fillStyle = '#f4f1e6';
+      x.fillRect(24, 118, 208, 112);
+      x.strokeStyle = 'rgba(0,0,0,0.25)'; x.lineWidth = 2;
+      x.strokeRect(24, 118, 208, 112);
+      // 라벨 텍스트
+      x.fillStyle = '#20242b';
+      x.textBaseline = 'middle';
+      x.font = 'bold 30px Arial, sans-serif';
+      x.fillText(p.short, 40, 160);
+      x.font = '20px Arial, sans-serif';
+      x.fillStyle = p.color;
+      x.fillText('DISK ' + p.n + ' / 5', 40, 196);
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = 4;
+      return tex;
+    }
+
+    // 책상에 눕혀 놓은 자리 { x, z, spin(테이블 위 회전), tilt(≈-π/2 이면 완전히 눕힘) }
+    const FLOPPY_SPOTS = [
+      { x: -1.48, z: 0.55, spin:  0.7,  tilt: -1.42 },
+      { x: -0.72, z: 0.92, spin: -0.4,  tilt: -1.38 },
+      { x:  1.22, z: 0.72, spin:  1.1,  tilt: -1.44 },
+      { x:  1.78, z: 0.42, spin: -0.7,  tilt: -1.40 },
+      { x:  0.12, z: 1.15, spin:  0.2,  tilt: -1.36 },
+    ];
+
+    // 모바일: 컴퓨터 옆·아래에 떠 있는 자리 (화면은 안 가림) { x, y, z, spin, tilt }
+    const MOBILE_SPOTS = [
+      { x: -1.05, y:  0.35, z: 0.9,  spin:  0.20, tilt: -0.14 },
+      { x:  1.05, y:  0.35, z: 0.9,  spin: -0.20, tilt: -0.14 },
+      { x: -1.05, y: -0.95, z: 1.15, spin:  0.26, tilt: -0.10 },
+      { x:  1.05, y: -0.95, z: 1.15, spin: -0.26, tilt: -0.10 },
+      { x:  0.00, y: -1.45, z: 1.40, spin:  0.05, tilt: -0.18 },
+    ];
+
+    // 현재 폭에 맞춰 i번 플로피의 위치/자세(home) 설정
+    function floppyHome(i) {
+      const m = floppies[i];
+      m.rotation.order = 'YXZ';
+      if (mq.matches) {
+        // 컴퓨터 주변에 떠 있음 (정면 바라봄)
+        const s = MOBILE_SPOTS[i] || { x: (i - 2) * 0.9, y: 0, z: 1.2, spin: 0, tilt: -0.12 };
+        m.rotation.set(s.tilt, s.spin, 0);
+        m.position.set(s.x, s.y, s.z);
+      } else {
+        // 책상 위에 눕힘: 바닥면이 책상에 닿도록 y 계산 (뚫림 방지)
+        const spot = FLOPPY_SPOTS[i] || { x: (i - 2) * 0.8, z: 1.0, spin: 0, tilt: -1.4 };
+        m.rotation.set(spot.tilt, spot.spin, 0);
+        const halfY = 0.30 * Math.abs(Math.cos(spot.tilt)) + 0.025 * Math.abs(Math.sin(spot.tilt));
+        m.position.set(spot.x, deskY + halfY + 0.03, spot.z);   // 여유 있게 책상 위
+      }
+      m.userData.home = m.position.clone();
+      m.userData.homeQuat = m.quaternion.clone();
+    }
+
+    function buildFloppies() {
+      const geo = new THREE.BoxGeometry(0.56, 0.60, 0.05);
+      PROJECTS.forEach((p, i) => {
+        const face = new THREE.MeshStandardMaterial({ map: makeFloppyTexture(p), roughness: 0.55 });
+        const side = new THREE.MeshStandardMaterial({ color: p.color, roughness: 0.6 });
+        const dark = new THREE.MeshStandardMaterial({ color: 0x1c1f24, roughness: 0.7 });
+        // [ +x, -x, +y, -y, +z(정면 라벨), -z ]
+        const mats = [side, side, side, side, face, dark];
+        const m = new THREE.Mesh(geo, mats);
+        m.userData = {
+          project: p,
+          hover: 0,          // 0→1 호버 보간
+          bob: i * 1.7,      // 모바일 떠다니는 위상
+          state: 'idle',     // idle | dragging | returning | inserting | gone
+          t0: 0,
+        };
+        world.add(m);
+        floppies.push(m);
+        floppyHome(i);
+      });
+    }
+
+    // 폭 변화 시 책상 표시/플로피 배치 갱신
+    function applyLayout() {
+      if (desk) desk.visible = !mq.matches;
+      floppies.forEach((f, i) => {
+        floppyHome(i);
+        if (f.userData.state === 'idle') {
+          f.position.copy(f.userData.home);
+          f.quaternion.copy(f.userData.homeQuat);
+        }
+      });
+      frameAll();
+    }
+
+    /* ---------- 포인터: 드래그 & 스냅 삽입 ---------- */
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    const dragPlane = new THREE.Plane();
+    const hitPoint = new THREE.Vector3();
+    const grabOffset = new THREE.Vector3();
+    const camDir = new THREE.Vector3();
+    const MAC_CENTER = new THREE.Vector3(0, 0, 0);        // 맥 중심(월드)
+    const SNAP_RADIUS = 0.95;                             // 이 반경 안에서 놓으면 삽입
+    const slotTarget = new THREE.Vector3(0, -0.4, 0.5);   // 빨려 들어갈 목표점(슬롯 근처)
+    // 삽입 시 슬롯(가로 입구)에 맞춰 눕혀 셔터부터 기울여 들어가는 자세
+    const INSERT_QUAT = new THREE.Quaternion().setFromEuler(new THREE.Euler(-1.37, 0, 0));
+
+    let hovered = null;
+    let dragging = null;
+    let inZone = false;
+    let activeFloppy = null;
+
+    function updatePointer(e) {
+      const r = canvas.getBoundingClientRect();
+      pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+      pointer.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+    }
+
+    function pickFloppy() {
+      const hits = raycaster.intersectObjects(floppies, false);
+      for (const h of hits) if (h.object.userData.state === 'idle') return h.object;
+      return null;
+    }
+
+    canvas.addEventListener('pointermove', (e) => {
+      updatePointer(e);
+      if (dragging) {
+        raycaster.ray.intersectPlane(dragPlane, hitPoint);
+        dragging.position.copy(hitPoint).add(grabOffset);
+        const dx = dragging.position.x - MAC_CENTER.x;
+        const dy = dragging.position.y - MAC_CENTER.y;
+        inZone = Math.hypot(dx, dy) < SNAP_RADIUS;
+        stage.classList.toggle('screen-on', inZone);
+        setHintMode(inZone ? 'drop' : 'drag');
+      } else {
+        hovered = pickFloppy();
+        canvas.style.cursor = hovered ? 'grab' : 'default';
+        tgtYaw = pointer.x * MAX_YAW;
+        tgtPitch = BASE_PITCH + pointer.y * MAX_PITCH;
+      }
+    });
+
+    canvas.addEventListener('pointerleave', () => {
+      if (!dragging) { tgtYaw = 0; tgtPitch = BASE_PITCH; }
+    });
+
+    canvas.addEventListener('pointerdown', (e) => {
+      updatePointer(e);
+      const target = pickFloppy();
+      if (!target) return;
+      dragging = target;
+      target.userData.state = 'dragging';
+      // 카메라를 향하고 플로피를 지나는 평면 위에서 드래그
+      camera.getWorldDirection(camDir);
+      dragPlane.setFromNormalAndCoplanarPoint(camDir.clone().negate(), target.position);
+      raycaster.ray.intersectPlane(dragPlane, hitPoint);
+      grabOffset.copy(target.position).sub(hitPoint);
+      target.quaternion.identity();            // 집어 들면 똑바로 세워 라벨이 정면
+      canvas.setPointerCapture(e.pointerId);
+      canvas.style.cursor = 'grabbing';
+      hideHint();
+    });
+
+    function endDrag(e) {
+      if (!dragging) return;
+      const f = dragging;
+      dragging = null;
+      canvas.style.cursor = 'default';
+      try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+      if (inZone) {
+        insertFloppy(f);
+      } else {
+        f.userData.state = 'returning';
+        f.userData.t0 = performance.now();
+        f.userData.from = f.position.clone();
+        f.userData.fromQuat = f.quaternion.clone();
+        showHint(); setHintMode('drag');
+      }
+      inZone = false;
+      stage.classList.remove('screen-on');
+    }
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
+
+    /* ---------- 삽입 연출 + 창 열기 ---------- */
+    function insertFloppy(m) {
+      floppies.forEach(f => { if (f !== m && f.userData.state === 'gone') resetFloppy(f); });
+      m.userData.state = 'inserting';
+      m.userData.t0 = performance.now();
+      m.userData.from = m.position.clone();
+      m.userData.fromQuat = m.quaternion.clone();
+      activeFloppy = m;
+      hideHint();
+    }
+
+    function resetFloppy(f) {
+      f.userData.state = 'idle';
+      f.position.copy(f.userData.home);
+      f.quaternion.copy(f.userData.homeQuat);
+      f.visible = true;
+      f.scale.setScalar(1);
+    }
+
+    /* ---------- CRT 화면에 프로젝트 표시 ---------- */
+    const crtIdle  = document.getElementById('crtIdle');
+    const crtDoc   = document.getElementById('crtDoc');
+    const crtEject = document.getElementById('crtEject');
+    const projTitle = document.getElementById('projTitle');
+    const projTags  = document.getElementById('projTags');
+    const projArticle = document.getElementById('projArticle');
+    const crtScroll = document.getElementById('crtScroll');
+    const stageHint = document.getElementById('stageHint');
+    const heroLine  = document.getElementById('heroLine');
+    // 모바일 하단 패널
+    const mobilePanel = document.getElementById('mobilePanel');
+    const mobileEject = document.getElementById('mobileEject');
+    const mProjTitle = document.getElementById('mProjTitle');
+    const mProjTags  = document.getElementById('mProjTags');
+    const mProjArticle = document.getElementById('mProjArticle');
+
+    function buildTags(el, p) {
+      el.innerHTML = '';
+      p.tags.forEach(t => {
+        const s = document.createElement('span');
+        s.className = 'crt-tag';
+        s.textContent = t;
+        el.appendChild(s);
+      });
+    }
+
+    let articleToken = 0;
+    async function renderArticle(p, articleEl) {
+      const token = ++articleToken;
+      articleEl.innerHTML = '<div class="crt-loading">loading disk…</div>';
+      try {
+        const res = await fetch(p.url);
+        const html = await res.text();
+        if (token !== articleToken) return;   // 그 사이 다른 디스크로 교체됨
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        articleEl.innerHTML = '';
+        const base = new URL(p.url, location.href);   // 이미지 상대경로 해석 기준
+        // 문서 순서대로 부제/소제목/본문/이미지 추출
+        doc.querySelectorAll('.subtitle, .sectorTitle, .description, .project-content img').forEach(el => {
+          if (el.tagName === 'IMG') {
+            const raw = el.getAttribute('src');
+            if (!raw) return;
+            let src;
+            try { src = new URL(raw, base).href; } catch (_) { return; }
+            const img = document.createElement('img');
+            img.className = 'crt-img';
+            img.loading = 'lazy';
+            img.alt = el.getAttribute('alt') || '';
+            img.src = src;
+            img.onerror = () => img.remove();     // 깨진 이미지는 숨김
+            articleEl.appendChild(img);
+            return;
+          }
+          const text = el.textContent.replace(/\s+/g, ' ').trim();
+          if (!text) return;
+          let node;
+          if (el.classList.contains('sectorTitle')) { node = document.createElement('h3'); }
+          else { node = document.createElement('p'); node.className = el.classList.contains('subtitle') ? 'crt-subtitle' : 'crt-para'; }
+          node.textContent = text;
+          articleEl.appendChild(node);
+        });
+        if (!articleEl.children.length) {
+          articleEl.innerHTML = `<p class="crt-para">${p.blurb || ''}</p>`;
+        }
+      } catch (e) {
+        if (token !== articleToken) return;
+        articleEl.innerHTML = `<p class="crt-para">${p.blurb || 'Unable to load article.'}</p>`;
+      }
+    }
+
+    function openProject(p) {
+      if (mq.matches) return openMobile(p);
+      buildTags(projTags, p);
+      projTitle.textContent = p.title;
+      crtIdle.hidden = true;
+      crtDoc.hidden = false;
+      crtScreen.classList.add('loaded');
+      if (screenPlane) screenPlane.visible = false;   // 3D 대기화면 숨기고 HTML 글로 교체
+      stage.classList.add('screen-on');
+      heroLine.classList.add('dim');
+      setFocus(1);                   // 맥킨토시 화면으로 줌인
+      document.body.classList.add('reading');   // 줌 중엔 메뉴 숨김
+      hideHint();
+      crtScroll.scrollTop = 0;
+      renderArticle(p, projArticle);
+    }
+
+    function ejectProject() {
+      if (mq.matches) return ejectMobile();
+      crtDoc.hidden = true;
+      crtIdle.hidden = false;
+      crtScreen.classList.remove('loaded');
+      if (screenPlane) screenPlane.visible = true;    // 3D 대기화면 다시 표시
+      stage.classList.remove('screen-on');
+      heroLine.classList.remove('dim');
+      setFocus(0);                   // 책상 전체 샷으로 줌아웃
+      document.body.classList.remove('reading');   // 메뉴 다시 표시
+      if (activeFloppy) { resetFloppy(activeFloppy); activeFloppy = null; }
+      showHint();
+    }
+    crtEject.addEventListener('click', ejectProject);
+
+    // 모바일: 글이 화면 아래에 나타남 (줌 없음)
+    function openMobile(p) {
+      mProjTitle.textContent = p.title;
+      buildTags(mProjTags, p);
+      mobilePanel.hidden = false;
+      heroLine.classList.add('dim');
+      hideHint();
+      renderArticle(p, mProjArticle);
+      requestAnimationFrame(() => mobilePanel.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    }
+    function ejectMobile() {
+      mobilePanel.hidden = true;
+      heroLine.classList.remove('dim');
+      if (activeFloppy) { resetFloppy(activeFloppy); activeFloppy = null; }
+      showHint();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    mobileEject.addEventListener('click', ejectProject);
+
+    const hintTitleEl = stageHint.querySelector('.hint-title');
+    const hintSubEl   = stageHint.querySelector('.hint-sub');
+    function setHintMode(mode) {
+      if (mode === 'drop') {
+        hintTitleEl.textContent = 'Release to insert';
+        hintSubEl.textContent   = 'drop the disk on the computer';
+      } else {
+        hintTitleEl.textContent = 'Insert a floppy disk';
+        hintSubEl.textContent   = 'drag a disk onto the computer';
+      }
+    }
+    let hintHidden = false;
+    function hideHint() { if (!hintHidden) { stageHint.classList.add('gone'); hintHidden = true; } }
+    function showHint() { stageHint.classList.remove('gone'); hintHidden = false; }
+
+    /* ---------- 리사이즈 ---------- */
+    function resize() {
+      const w = stage.clientWidth, h = stage.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      if (floppies.length) applyLayout();   // 폭에 따라 책상/플로피 배치 갱신
+    }
+    window.addEventListener('resize', resize);
+    if (mq.addEventListener) mq.addEventListener('change', resize);   // 모바일↔데스크톱 전환
+    resize();
+
+    /* ---------- 애니메이션 루프 ---------- */
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+    function tick(now) {
+      // 카메라: 책상 전체 ↔ 화면 줌인 + 마우스 패럴랙스
+      const fp = Math.min(1, (now - focusT0) / FOCUS_DUR);
+      const fe = fp < 0.5 ? 2 * fp * fp : 1 - Math.pow(-2 * fp + 2, 2) / 2;  // easeInOut
+      focusT = focusFrom + (focusGoal - focusFrom) * fe;
+      const pk = 1 - focusT;                        // 줌인 시 패럴랙스 완전 정지
+      const desiredYaw = tgtYaw * pk;
+      const desiredPitch = BASE_PITCH * (1 - focusT * 0.8) + (tgtPitch - BASE_PITCH) * pk;
+      curYaw += (desiredYaw - curYaw) * PARALLAX_EASE;
+      curPitch += (desiredPitch - curPitch) * PARALLAX_EASE;
+      camTarget.lerpVectors(wideTarget, focusTarget, focusT);
+      camDist = wideDist + (focusDist - wideDist) * focusT;
+      updateCameraOrbit();
+
+      // 플로피 상태별 처리
+      floppies.forEach(f => {
+        const u = f.userData;
+        if (u.state === 'idle') {
+          const targetHover = (f === hovered && !dragging) ? 1 : 0;
+          u.hover += (targetHover - u.hover) * 0.15;
+          const bob = mq.matches ? Math.sin(now * 0.0016 + u.bob) * 0.05 : 0;  // 떠다니는 느낌
+          f.position.y = u.home.y + bob + u.hover * 0.14;
+          f.position.z = u.home.z + u.hover * 0.10;
+        } else if (u.state === 'dragging') {
+          f.scale.setScalar(1.08);                  // 집어 든 느낌
+        } else if (u.state === 'returning') {
+          const p = Math.min(1, (now - u.t0) / 340);
+          const e = easeOut(p);
+          f.position.lerpVectors(u.from, u.home, e);
+          f.quaternion.slerpQuaternions(u.fromQuat, u.homeQuat, e);
+          f.scale.setScalar(1.08 + (1 - 1.08) * e);
+          if (p >= 1) resetFloppy(f);
+        } else if (u.state === 'inserting') {
+          const p = Math.min(1, (now - u.t0) / 600);
+          const e = easeOut(p);
+          f.position.lerpVectors(u.from, slotTarget, e);
+          f.quaternion.slerpQuaternions(u.fromQuat, INSERT_QUAT, e);  // 슬롯에 맞춰 눕혀 들어감
+          f.scale.setScalar(1.08 * (1 - e * 0.9));  // 기계 안으로 사라지듯
+          if (p >= 1) {
+            u.state = 'gone';
+            f.visible = false;
+            openProject(u.project);
+          }
+        }
+      });
+
+      renderer.render(scene, camera);
+      updateScreenOverlay();
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  </script>
+
+  <!-- 다크모드 + 네비게이션 -->
+  <script>
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    let darkModeEnabled = false;
+
+    if (localStorage.getItem('darkMode') !== 'disabled') {
+      darkModeEnabled = true;
+      document.body.classList.add('dark-mode');
+      darkModeToggle.classList.remove('fa-moon');
+      darkModeToggle.classList.add('fa-lightbulb');
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+      darkModeEnabled = !darkModeEnabled;
+      document.body.classList.toggle('dark-mode', darkModeEnabled);
+      if (darkModeEnabled) {
+        darkModeToggle.classList.remove('fa-moon');
+        darkModeToggle.classList.add('fa-lightbulb');
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        darkModeToggle.classList.remove('fa-lightbulb');
+        darkModeToggle.classList.add('fa-moon');
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    });
+
+    const navLinks = document.querySelectorAll('.top-menu a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', event => {
+        if (link.getAttribute('target') === '_blank') return;
+        event.preventDefault();
+        location.assign(link.getAttribute('href'));
+      });
+    });
+  </script>
+</body>
+</html>
