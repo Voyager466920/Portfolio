@@ -119,7 +119,7 @@
     const BASE_PITCH  = 0.20;     // 기본 카메라 높이각 (책상·플로피 라벨이 보이게 살짝 내려다봄)
     const MAX_YAW     = 0.18;     // 마우스 좌우 패럴랙스 최대(라디안)
     const MAX_PITCH   = 0.11;     // 마우스 상하 패럴랙스 최대
-    const FILL_PAD    = 1.12;     // 씬을 화면에 담는 여백(작을수록 꽉 참)
+    const FILL_PAD    = 1.5;      // 씬을 화면에 담는 여백(클수록 작게/여백 많이)
     const TARGET_DROP = 0.05;     // 시선을 살짝 아래로
     const PARALLAX_EASE = 0.08;   // 패럴랙스 따라가는 부드러움
 
@@ -534,6 +534,13 @@
       return null;
     }
 
+    // 드래그 중엔 깊이 무시하고 항상 맥 앞에 그림 → 놓으면 원래대로
+    function setFloppyOnTop(f, on) {
+      f.renderOrder = on ? 10 : 0;
+      const mats = Array.isArray(f.material) ? f.material : [f.material];
+      mats.forEach(m => { m.depthTest = !on; });
+    }
+
     canvas.addEventListener('pointermove', (e) => {
       updatePointer(e);
       if (dragging) {
@@ -562,6 +569,7 @@
       if (!target) return;
       dragging = target;
       target.userData.state = 'dragging';
+      setFloppyOnTop(target, true);            // 선택 즉시 맥보다 앞으로
       // 카메라를 향하고 플로피를 지나는 평면 위에서 드래그
       camera.getWorldDirection(camDir);
       dragPlane.setFromNormalAndCoplanarPoint(camDir.clone().negate(), target.position);
@@ -576,6 +584,7 @@
     function endDrag(e) {
       if (!dragging) return;
       const f = dragging;
+      setFloppyOnTop(f, false);               // 놓으면 원래 깊이 정렬로 복구
       dragging = null;
       canvas.style.cursor = 'default';
       try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
@@ -611,6 +620,7 @@
       f.quaternion.copy(f.userData.homeQuat);
       f.visible = true;
       f.scale.setScalar(1);
+      setFloppyOnTop(f, false);   // 안전: 깊이 정렬 정상화
     }
 
     /* ---------- CRT 화면에 프로젝트 표시 ---------- */
