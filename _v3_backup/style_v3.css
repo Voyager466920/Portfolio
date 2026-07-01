@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+/* 기본 스타일 설정 */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #F5F5F7;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory; /* 세로 방향 스크롤 스냅 */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: 60px auto 100px;
+    padding: 20px;
+    gap: 20px;
+}
+
+.highlight {
+    background-color: #ffe54c;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+
+/* 좌측 세로 메뉴 스타일 */
+.top-menu {
+    position: fixed;
+    top: 24px;
+    left: 30px;
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2px;
+    z-index: 10;
+    transition: opacity 0.4s ease, color 0.3s;
+}
+
+.top-menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.top-menu a:first-child {
+    font-family: 'Great Vibes', cursive;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1;
+    text-transform: lowercase;
+}
+
+.top-menu a:hover {
+    color: #007aff;
+}
+
+
+
+/* 다크모드 스타일 */
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-mode .top-menu {
+    background-color: transparent;   /* 세로 메뉴 뒤 회색 제거 (모바일 바에서만 배경) */
+    color: #ffffff;
+}
+
+.dark-mode a {
+    color: #ffffff;
+}
+
+.dark-mode .highlight {
+    background-color: 	#6b7280;
+    color: white;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+#darkModeToggle {
+    position: fixed;
+    top: 20px;
+    right: 26px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 11;
+}
+
+#darkModeToggle:hover {
+    color: #007aff;
+}
+
+.dark-mode #darkModeToggle {
+    color: #ffffff;
+}
+
+.dark-mode .sidebar li {
+    color: #ffffff;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 10px;
+        box-shadow: none;
+    }
+
+    .video-preview {
+        width: 90%;
+        height: auto;
+    }
+
+    /* 모바일: 상단 가로 바 유지 */
+    .top-menu {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 0;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .top-menu a {
+        text-decoration: none;
+        color: #333;
+        font-size: 0.95rem;
+        padding: 10px 12px;
+        transition: color 0.3s;
+    }
+
+    .top-menu a:hover {
+        color: #007aff;
+    }
+
+    /* 토글은 바 안으로 복귀 */
+    #darkModeToggle {
+        position: static;
+        top: auto;
+        right: auto;
+    }
+
+    .dark-mode .top-menu {
+        background-color: #1f1f1f;
+    }
+    .dark-mode .top-menu a {
+        color: #ffffff;
+    }
+    .dark-mode .top-menu a:hover {
+        color: #007aff;
+    }
+}
