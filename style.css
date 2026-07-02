@@ -127,7 +127,7 @@ body {
         height: auto;
     }
 
-    /* 모바일: 상단 가로 바 유지 */
+    /* 모바일: 상단 가로 바 (다른 화면과 동일한 다크) */
     .top-menu {
         top: 0;
         left: 0;
@@ -137,18 +137,18 @@ body {
         align-items: center;
         justify-content: space-evenly;
         gap: 0;
-        background-color: #fff;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: #0b0c0b;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
     }
 
     .top-menu a {
         text-decoration: none;
-        color: #333;
+        color: #e9ece7;
         font-size: 1rem;
         padding: 10px 12px;
         transition: color 0.3s;
     }
-    .top-menu a:first-child { font-size: 1.15rem; }
+    /* first-child 크기는 데스크톱(32px) 그대로 → 다른 화면과 일치 */
 
     .top-menu a:hover {
         color: #007aff;
@@ -158,15 +158,5 @@ body {
         position: static;
         top: auto;
         right: auto;
-    }
-
-    .dark-mode .top-menu {
-        background-color: #1f1f1f;
-    }
-    .dark-mode .top-menu a {
-        color: #ffffff;
-    }
-    .dark-mode .top-menu a:hover {
-        color: #007aff;
     }
 }
