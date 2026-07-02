@@ -116,12 +116,22 @@
 }
 
 /*========== ABOUT + MIXTAPE ==========*/
+/* About — 중앙 정렬, 두 칸 1:1 */
+.home-about {
+  align-items: center;
+  text-align: center;
+  padding-left: 9vw;                /* 대칭 여백 → 가운데 */
+}
 .about-grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 56px;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;   /* 스티커 : 글 = 1:1 */
+  gap: 48px;
+  align-items: center;
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
 }
+.about-bio { text-align: left; }    /* 본문은 읽기 좋게 좌측 */
 .about-bio p {
   font-size: clamp(15px, 1.4vw, 18px);
   line-height: 1.75;

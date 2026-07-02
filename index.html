@@ -7,7 +7,7 @@
     <link rel="icon" href="images/favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@0,500;0,600;1,600&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style_v3.css?v=9">
-    <link rel="stylesheet" href="home.css?v=18">
+    <link rel="stylesheet" href="home.css?v=21">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script type="importmap">
     {
@@ -62,7 +62,7 @@
                 <button class="sticker sticker--img" data-label="PlayStation"><img src="images/sticker/playstation.png" alt=""></button>
                 <button class="sticker sticker--img" data-label="Space exploration"><img src="images/sticker/artemis.png" alt=""></button>
                 <button class="sticker sticker--img" data-label="Apollo Program"><img src="images/sticker/apollo.png" alt=""></button>
-                <button class="sticker sticker--img" data-label="Batman"><img src="images/sticker/batman.png" alt=""></button>
+                <button class="sticker sticker--img" data-label="Batman"><img src="images/sticker/batman.png?v=2" alt=""></button>
                 <button class="sticker sticker--img" data-label="Watchmen"><img src="images/sticker/watchmen.png" alt=""></button>
                 <button class="sticker sticker--img" data-label="Resident Evil"><img src="images/sticker/residentevil.png" alt=""></button>
                 <button class="sticker sticker--img" data-label="Pulp Fiction"><img src="images/sticker/pulpfiction.png" alt=""></button>
@@ -85,7 +85,7 @@
                 </p>
                 <p>
                     Off the clock I'm chasing the retro-future — the space race, ’80s sci-fi,
-                    analog everything, and a good story. A few of the things that keep me curious →
+                    analog everything, and a good story. A few of the things that keep me curious.
                 </p>
             </div>
         </div>
@@ -227,6 +227,7 @@
         const w = hero.clientWidth, h = hero.clientHeight;
         renderer.setSize(w, h, false);
         camera.aspect = w / h;
+        camera.position.z = w <= 768 ? 6.8 : 4.8;   // 모바일에선 뒤로 빼 구를 작게
         camera.updateProjectionMatrix();
       }
       window.addEventListener('resize', resize);
